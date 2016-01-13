@@ -27,6 +27,33 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
 
 #pragma mark LoadAuction
 
+//NSString *_urlstring =[NSString stringWithFormat:@"%@/list_events.php?location_id=%@",BaseUrl,location.ID];
+
++ (void)fetchEventListForLocation:(NSString *)locationID withComplitionHandler:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:[NSString stringWithFormat:@"%@/list_events.php",BaseUrl] parameters:@{@"location_id" : locationID} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            [SVProgressHUD dismiss];
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            completionBlock(dataDict, nil);
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+    }
+}
+
 + (void)loadAcutionsForCity:(NSString *)cityID withComplitionHandler:(CompletionHandler)completionBlock{
 
     if ([SharedPreferences isNetworkAvailable])
@@ -35,8 +62,13 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+
+        NSDictionary *dict = nil;
+        if (cityID) {
+            dict = @{@"location_id" : cityID};
+        }
         
-        [manager GET:[NSString stringWithFormat:@"%@/auctions.php",BaseUrl] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:[NSString stringWithFormat:@"%@/auctions.php",BaseUrl] parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             [SVProgressHUD dismiss];
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
@@ -74,9 +106,32 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     }else{
         [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
     }
-    
 }
 
++ (void)searchEventForString:(NSString *)searchString withComplitionHandler:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:[NSString stringWithFormat:@"%@/search_events.php",BaseUrl] parameters:@{@"search_box" : searchString} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            [SVProgressHUD dismiss];
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            completionBlock(dataDict, nil);
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+    }
+}
 
 + (void)loadAuctionDetailsForAuction:(NSString *)auctionID withComplitionHandler:(CompletionHandler)completionBlock{
     

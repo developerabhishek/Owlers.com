@@ -33,22 +33,20 @@ NSURLConnection *conne_ction ,*connection_;
     [tableView1 setDataSource:self];
     [citytable setDelegate:self];
     [citytable setDataSource:self];
-    NSLog(@"%@",[[UIDevice currentDevice] model]);
-    NSLog(@"%@",[[UIDevice currentDevice] name]);
-    
     
     self.citytable.hidden=YES;
     [self loadData];
 }
 
 - (void)loadData{
-    [NetworkManager loadAcutionsForCity:nil withComplitionHandler:^(id result, NSError *err) {
-        serverDict = result;
-        [self.tableView1 reloadData];
-    }];
-    
+//    [NetworkManager loadAcutionsForCity:nil withComplitionHandler:^(id result, NSError *err) {
+//        serverDict = result;
+//        [self.tableView1 reloadData];
+//    }];
+//    
     [NetworkManager loadLocationWithComplitionHandler:^(id result, NSError *err) {
         serDICT = result;
+        [self loadActionForLocation:[[serDICT objectForKey:(@"Locations")] firstObject]];
         [self.citytable reloadData];
     }];
 }
@@ -108,17 +106,23 @@ NSURLConnection *conne_ction ,*connection_;
         [self.navigationController pushViewController:bid animated:YES];
     }
     else {
-        [cityBtn setTitle:[[[serDICT objectForKey:(@"Locations")]objectAtIndex:indexPath.row]objectForKey:@"location_name"] forState:UIControlStateNormal];
+        [cityBtn setTitle:[[[serDICT objectForKey:(@"Locations")]objectAtIndex:indexPath.row]objectForKey:@"location_name"]
+                 forState:UIControlStateNormal];
         
-        NSString *cityID = [[[serDICT objectForKey:(@"Locations")]objectAtIndex:indexPath.row]objectForKey:@"location_id"];
+        [self loadActionForLocation:[[serDICT objectForKey:(@"Locations")]objectAtIndex:indexPath.row]];
         citytable.hidden=YES;
-        
-        [NetworkManager loadAcutionsForCity:cityID withComplitionHandler:^(id result, NSError *err) {
-            serverDict = result;
-            [self.tableView1 reloadData];
-        }];
     }
 }
+
+- (void)loadActionForLocation:(NSDictionary *)locationDict{
+    
+    NSString *locationID = [locationDict objectForKey:@"location_id"];
+    [NetworkManager loadAcutionsForCity:locationID withComplitionHandler:^(id result, NSError *err) {
+        serverDict = result;
+        [self.tableView1 reloadData];
+    }];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

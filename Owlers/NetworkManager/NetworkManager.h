@@ -13,6 +13,7 @@ typedef void (^CompletionHandler)(id result, NSError *err);
 @interface NetworkManager : NSObject
 
 //Auction
++ (void)fetchEventListForLocation:(NSString *)locationID withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)loadAcutionsForCity:(NSString *)cityID withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)loadLocationWithComplitionHandler:(CompletionHandler)completionBlock;
 + (void)loadAuctionDetailsForAuction:(NSString *)auctionID withComplitionHandler:(CompletionHandler)completionBlock;
@@ -20,6 +21,7 @@ typedef void (^CompletionHandler)(id result, NSError *err);
 + (void)saveBidForAuction:(NSString *)auctionID andBidAmount:(NSString *)amount andBuyNow:(BOOL)isBuyNow
     withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)getMyBidsWithComplitionHandler:(CompletionHandler)completionBlock;
++ (void)searchEventForString:(NSString *)searchString withComplitionHandler:(CompletionHandler)completionBlock;
 
 // Login
 + (void)signUpWithEmail:(NSString *)email andPassword:(NSString *)password andMobile:(NSString *)mobile andName:(NSString *)name withComplitionHandler:(CompletionHandler)completionBlock;

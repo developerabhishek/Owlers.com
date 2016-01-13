@@ -19,6 +19,8 @@
 #import "Event.h"
 #import "SegueMenuItem.h"
 
+#import "SharedPreferences.h"
+#import "NetworkManager.h"
 
 #define MENU_ITEM_HEIGHT 45
 #define MENU_ITEM_WIDTH 150
@@ -68,19 +70,26 @@ UIRefreshControl *refreshControl;
     [self.loaderOwlersImage.layer addAnimation:animation forKey:@"activityIndicatorAnimation"];
     /**********[OWLERS LOADER WORK END]***********/
     
-    NSString *_urlstring =[NSString stringWithFormat:@"%@/list_events.php?location_id=1",BaseUrl];
-    
-    NSURL *url=[[NSURL alloc]initWithString:_urlstring];
-    NSURLRequest *request=[[NSURLRequest alloc]initWithURL:url];
-    NSURLConnection *connection_jso=[[NSURLConnection alloc]initWithRequest:request delegate:self];
-    [connection_jso start];
-    
-    NSString *url_string=[NSString stringWithFormat:@"%@/get_locations.php",BaseUrl];
-    NSURL *url_json=[[NSURL alloc]initWithString:url_string];
-    NSURLRequest *request_json=[[NSURLRequest alloc]initWithURL:url_json];
-    connection_json=[[NSURLConnection alloc]initWithRequest:request_json delegate:self];
-    [connection_json start];
-
+    [NetworkManager loadLocationWithComplitionHandler:^(id result, NSError *err) {
+        
+        NSArray *temparr = [result objectForKey:@"Locations"];
+        
+        for (NSDictionary *dic in temparr) {
+            
+            NSString *location = [dic objectForKey:@"location_name"];
+            NSString *locationid = [dic objectForKey:@"location_id"];
+            if (location && locationid) {
+                [self.locationItems addObject:[Location cityWithLocation:location locationID:locationid]];
+            }
+        }
+        if ([self.locationItems count]) {
+            [self fetchEventsForLocation:[self.locationItems firstObject]];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.locationCollectionView reloadData];
+        });
+    }];
     /*********[Table Refresh Control]************/
     
     refreshControl = [[UIRefreshControl alloc] init];
@@ -151,17 +160,9 @@ UIRefreshControl *refreshControl;
 
 - (void)handleRefresh:(id)sender
 {
-    NSLog(@"Hello Refreshing");
-   
-    NSString *_urlstring =[NSString stringWithFormat:@"%@/list_events.php?location_id=1",BaseUrl];
-    
-    NSURL *url=[[NSURL alloc]initWithString:_urlstring];
-    NSURLRequest *request=[[NSURLRequest alloc]initWithURL:url];
-    NSURLConnection *connection_jso=[[NSURLConnection alloc]initWithRequest:request delegate:self];
-    [connection_jso start];
-    [connection_json start];
-    
-    [refreshControl endRefreshing];
+    [NetworkManager fetchEventListForLocation:@"1" withComplitionHandler:^(id result, NSError *err) {
+        [refreshControl endRefreshing];
+    }];
 }
 
 -(void)viewDidLayoutSubviews {
@@ -170,115 +171,6 @@ UIRefreshControl *refreshControl;
     self.auctionBtn.layer.borderColor = [UIColor colorWithRed:251.0f/255 green:156.0f/255 blue:0.0f/255 alpha:1].CGColor;
     self.auctionBtn.layer.borderWidth = 2.0f;
 }
-
-
-#pragma marks IBAction
-- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
-
-{
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    
-    [NSURLConnection sendAsynchronousRequest:request
-     
-                                       queue:[NSOperationQueue mainQueue]
-     
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               
-                               if ( !error )
-                                   
-                               {
-                                   
-                                   UIImage *image = [[UIImage alloc] initWithData:data];
-                                   
-                                   completionBlock(YES,image);
-                                   
-                               } else{
-                                   
-                                   completionBlock(NO,nil);
-                                   
-                               }
-                               
-                           }];
-    
-}
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex==1) {
-        LoginViewController *login = [[LoginViewController alloc]init];
-        [self.navigationController pushViewController:login animated:YES];
-    }
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"Error = %@", [error localizedDescription]);
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    
-    serverData = [[NSMutableData alloc]init];
-    locationData = [[NSMutableData alloc]init];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    
-    [serverData appendData:data];
-    [locationData appendData:data];
-    
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    if (connection == connection_json) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:locationData options:NSJSONReadingMutableLeaves error:nil];
-        
-        NSArray *temparr = [dic objectForKey:@"Locations"];
-
-        for (NSDictionary *dic in temparr) {
-            
-            NSString *location = [dic objectForKey:@"location_name"];
-            NSString *locationid = [dic objectForKey:@"location_id"];
-            if (location && locationid) {
-                [self.locationItems addObject:[Location cityWithLocation:location locationID:locationid]];
-            }
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.locationCollectionView reloadData];
-        });
-        
-        NSLog(@"Location Array : %@",self.locationItems);
-        
-        return;
-    }
-    
-    // Clear event list and populate with new data
-    [self.eventItems removeAllObjects];
-    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:serverData options:NSJSONReadingMutableLeaves error:nil];
-    NSArray *items = [jsonData objectForKey:@"items"];
-    for (NSDictionary *dict in items) {
-        Event *event = [[Event alloc] init];
-        event.address = [dict objectForKey:@"address"];
-        event.createdDate = [dict objectForKey:@"created_date"];
-        event.eventDescription = [dict objectForKey:@"event_desc"];
-        event.endTime = [dict objectForKey:@"event_end"];
-        event.ID = [dict objectForKey:@"event_id"];
-        event.imageURL = [dict objectForKey:@"event_image"];
-        event.location = [dict objectForKey:@"event_location"];
-        event.name = [dict objectForKey:@"event_name"];
-        event.startTime = [dict objectForKey:@"event_start"];
-        event.locationCode = [dict objectForKey:@"location_code"];
-        event.title = [dict objectForKey:@"title"];
-        event.venue = [dict objectForKey:@"venue"];
-        [self.eventItems addObject:event];
-    }
-    NSLog(@"serverDataArray =%@",jsonData);
-    NSLog(@"\n\n\n events =%@",self.eventItems);
-    [self.productsTbl reloadData];
-}
-
 
 #pragma marks UITableView Delegate
 
@@ -289,66 +181,12 @@ UIRefreshControl *refreshControl;
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    OwlersViewController *owlers=[[OwlersViewController alloc]init];
-//    [owlers setEvent_id:[(Event*)[self.eventItems objectAtIndex:indexPath.row] ID]];
-    
     self.selectedEvent = (Event*)[self.eventItems objectAtIndex:indexPath.row];
-//    [self.navigationController pushViewController:owlers animated:YES];
     [self performSegueWithIdentifier:@"segueOwlers" sender:nil];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (tableView ==self.tableView)
-//    {
-//        NSString *cellIdentifier = @"CustomCell";
-//        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//      
-//
-//        if (cell == nil)
-//        {
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-//        }
-//        
-//        cell.textLabel.text = self.dataArray[indexPath.row];
-//        cell.textLabel.font = [UIFont systemFontOfSize:22];
-//        cell.textLabel.numberOfLines = 0;
-//        cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//
-//        
-//        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(5, 50, 200, 1)];
-//        view.backgroundColor =[UIColor colorWithRed:241.0f/255 green:241.0f/255 blue:241.0f/255 alpha:0.35];
-//        [cell addSubview:view];
-//        
-//       
-//        self.tableView.separatorColor = [UIColor clearColor];
-//        if (indexPath.row==0) {
-//            cell.backgroundColor= [UIColor colorWithRed:48.0f/255 green:48.0f/255 blue:48.0f/255 alpha:1];
-//            
-//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            cell.textLabel.textColor = [UIColor whiteColor];
-//        }
-//        if (indexPath.row) {
-//            cell.backgroundColor= [UIColor colorWithRed:48.0f/255 green:48.0f/255 blue:48.0f/255 alpha:1];
-//            
-//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            cell.textLabel.textColor = [UIColor whiteColor];
-//        }
-//        if(myInteger == 0){
-//            
-//            [self.tableView setHidden:NO];
-//            myInteger = 1;
-//        }else{
-//            
-//            [self.tableView setHidden:YES];
-//            myInteger = 0;
-//        }
-//        return cell;
-//    }
-    
-    
-//    self.loaderOwlersImage.hidden = YES;
-    
     ProductTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseProductCell"];
     Event *event = [self.eventItems objectAtIndex:indexPath.row];
     cell.eventLbl.text = event.name;
@@ -385,23 +223,31 @@ UIRefreshControl *refreshControl;
 
 -(void)fetchEventsForLocation:(Location*)location{
     
-    NSString *_urlstring =[NSString stringWithFormat:@"%@/list_events.php?location_id=%@",BaseUrl,location.ID];
-    NSURL *url=[[NSURL alloc]initWithString:_urlstring];
-    NSURLRequest *request=[[NSURLRequest alloc]initWithURL:url];
-    NSURLConnection *connection_jso=[[NSURLConnection alloc]initWithRequest:request delegate:self];
-    
-    /**********[OWLERS LOADER WORK START]***********/
-    //self.loaderOwlersImage.hidden = NO;
-    //    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    //    animation.toValue = [NSNumber numberWithDouble:M_PI_2];
-    //    animation.duration = 0.4f;
-    //    animation.cumulative = YES;
-    //    animation.repeatCount = HUGE_VALF;
-    //    [self.loaderOwlersImage.layer addAnimation:animation forKey:@"activityIndicatorAnimation"];
-    //    /**********[OWLERS LOADER WORK END]***********/
-    
-    
-    [connection_jso start];
+    [NetworkManager fetchEventListForLocation:location.ID withComplitionHandler:^(id result, NSError *err) {
+        [self reloadTableData:result];
+    }];
+}
+
+- (void)reloadTableData:(NSDictionary *)data{
+    [self.eventItems removeAllObjects];
+    NSArray *items = [data objectForKey:@"items"];
+    for (NSDictionary *dict in items) {
+        Event *event = [[Event alloc] init];
+        event.address = [dict objectForKey:@"address"];
+        event.createdDate = [dict objectForKey:@"created_date"];
+        event.eventDescription = [dict objectForKey:@"event_desc"];
+        event.endTime = [dict objectForKey:@"event_end"];
+        event.ID = [dict objectForKey:@"event_id"];
+        event.imageURL = [dict objectForKey:@"event_image"];
+        event.location = [dict objectForKey:@"event_location"];
+        event.name = [dict objectForKey:@"event_name"];
+        event.startTime = [dict objectForKey:@"event_start"];
+        event.locationCode = [dict objectForKey:@"location_code"];
+        event.title = [dict objectForKey:@"title"];
+        event.venue = [dict objectForKey:@"venue"];
+        [self.eventItems addObject:event];
+    }
+    [self.productsTbl reloadData];
 }
 
 
@@ -413,37 +259,6 @@ UIRefreshControl *refreshControl;
     
     return YES;
 }
-
-
-#pragma mark private methods
-
-
-/*
--(void)locationSearching:(NSString*)search_txt{
-    
-    
-    NSPredicate *predicate=[NSPredicate predicateWithFormat:@"self.address contains[cd] %@",search_txt];
-    arr_searching=[arr_slapsall filteredArrayUsingPredicate:predicate ];
-    for (SlapsList *sl in arr_slapsall) {
-        NSLog(@"---%@",sl.address);
-    }
-    if (arr_searching.count>0)
-    {
-        isSlapSearching=YES;
-        [table_location reloadData];
-    }else{
-        if ([search_location.text isEqualToString:@""]) {
-            isSlapSearching=NO;
-        }
-        isSlapSearching=YES;
-        [table_location reloadData];
-        
-        
-    }
-    
-}
-
- */
 
 #pragma calendar coding
 
@@ -618,15 +433,12 @@ UIRefreshControl *refreshControl;
         
         if(self.searchTxtField.text.length != 0){
 
-            NSString *_urlstring =[NSString stringWithFormat:@"%@/search_events.php?search_box=%@",BaseUrl,self.searchTxtField.text.self];
-            NSURL *url=[[NSURL alloc]initWithString:_urlstring];
-            NSURLRequest *request=[[NSURLRequest alloc]initWithURL:url];
-            NSURLConnection *connection_jso=[[NSURLConnection alloc] initWithRequest:request delegate:self];
-            [connection_jso start];
-            
+            [NetworkManager searchEventForString:self.searchTxtField.text.self withComplitionHandler:^(id result, NSError *err) {
+                [self reloadTableData:result];
+            }];
         }else{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Search cannot be empty" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:NULL, nil];
-            [alertView show];
+            
+            [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Search cannot be empty" withObject:self];
         }
     }
     
