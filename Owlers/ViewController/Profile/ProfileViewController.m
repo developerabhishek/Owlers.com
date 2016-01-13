@@ -37,26 +37,6 @@ NSURLConnection *connection_, *_connection;
     [self.navigationItem setRightBarButtonItem:nil];
     self.navigationItem.hidesBackButton = YES;
     
-    
-//    NSString *_urlstring=[NSString stringWithFormat:@"%@/profile.php?user_id=%@",BaseUrl,[[NSUserDefaults standardUserDefaults] valueForKey:@"user_id"]];
-//    
-//    NSLog(@"Url to fetch profile details : %@",_urlstring);
-//    //  [defaults objectForKey:@"userID"]];
-//    NSURL *url_=[[NSURL alloc]initWithString:_urlstring];
-//    NSURLRequest *request_=[[NSURLRequest alloc]initWithURL:url_];
-//    connection_=[[NSURLConnection alloc]initWithRequest:request_ delegate:self];
-//    [connection_ start];
-//    
-//  //  NSString *string_url=[NSString stringWithFormat:@"%@/get_booking.php?user_id=%@",BaseUrl,[[NSUserDefaults standardUserDefaults] valueForKey:@"user_id"]];
-//    NSString *string_url=[NSString stringWithFormat:@"%@/get_booking.php?user_id=41",BaseUrl];
-//    
-//    
-//    // NSLog(@"my json data =%@",string_url);
-//    NSURL *_url=[[NSURL alloc]initWithString:string_url];
-//    NSURLRequest *_request=[[NSURLRequest alloc]initWithURL:_url];
-//    _connection=[[NSURLConnection alloc]initWithRequest:_request delegate:self];
-//    [_connection start];
-    
     [NetworkManager getUserProfileFromServerWithComplitionHandler:^(id result, NSError *err) {
         if ([[result objectForKey:@"status"] isEqualToString:@"Y"]) {
             serverDictionary = result;

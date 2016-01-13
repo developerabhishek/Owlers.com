@@ -68,7 +68,6 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
 //    signIn.delegate = self;
     
     /************[GOOGLE SIGNIN END]**********/
-    [self pushToVerificationControllerWith:nil];
 }
 
 - (IBAction)backbtnaction:(id)sender {
@@ -241,14 +240,11 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
 }
 - (void)pushToVerificationControllerWith:(NSDictionary *)data{
     
-//    NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
-//    [defauls setObject:[data objectForKey:@"user_email"] forKey:@"userEmail"];
-//    [defauls setObject:[data objectForKey:@"name"] forKey:@"name"];
-//    [defauls setObject:[data objectForKey:@"user_id"] forKey:@"userID"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-//    VerificationViewController *verficationController = [[VerificationViewController alloc] init];
-//    [self.navigationController pushViewController:verficationController animated:YES];
+    NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
+    [defauls setObject:[data objectForKey:@"user_email"] forKey:@"userEmail"];
+    [defauls setObject:[data objectForKey:@"name"] forKey:@"name"];
+    [defauls setObject:[data objectForKey:@"user_id"] forKey:@"userID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self performSegueWithIdentifier:@"segueVerification" sender:nil];
 }
 

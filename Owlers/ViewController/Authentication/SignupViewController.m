@@ -12,9 +12,10 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "ProductViewController.h"
-//#import "AFHTTPRequestOperationManager.h"
 #import "SVProgressHUD.h"
-//#import <FacebookSDK/FacebookSDK.h>
+#import "SharedPreferences.h"
+#import "NetworkManager.h"
+
 
 @interface SignupViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *continueBtn;
@@ -29,7 +30,6 @@
 @end
 
 @implementation SignupViewController
-NSDictionary *parsedObject;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -72,70 +72,28 @@ NSDictionary *parsedObject;
 
         if (message.length != 0)
         {
-            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alertView show];
+            [[SharedPreferences sharedInstance] showCommonAlertWithMessage:message withObject:self];
         }
         else
         {
             [self performSelector:@selector(signupInapplication) withObject:nil];
-
-           // [self webServicePlans];
         }
 }
 
 -(void)signupInapplication
 {
 
-    if ([[ConnectionManager getSharedInstance] isConnectionAvailable])
-    {
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            //Background Thread
-
-            [self.continueBtn setEnabled:NO];
-
-            NSString *urlString = [[NSString stringWithFormat:@"%@/signup.php?name=%@&email=%@&password=%@&phone=%@&source=iPhone&@&mac_addr=4545.7765.767",BaseUrl,self.userNameTxtFld.text,self.emailTxtFld.text,self.pwdTxtFld.text,self.mobileNoTxtFld.text,self.confirmPassTxtFld.text]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            NSURL *url = [[NSURL alloc] initWithString:urlString];
-
-            NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-
-
-            [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-
-             {
-                 dispatch_async(dispatch_get_main_queue(), ^(void){
-                     //Run UI Updates
-                     if (data.length > 0)
-                     {
-                         [self.continueBtn setEnabled:YES];
-
-                         parsedObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-
-                         NSLog(@"parsedObject =%@",parsedObject);
-
-
-                         if ([[parsedObject valueForKey:@"status"]  isEqual: @"success"])
-                         {
-                             UIAlertView  *alertView = [[UIAlertView alloc] initWithTitle:nil message:[parsedObject valueForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                             [alertView show];
-
-                             NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-                             [user setObject:[parsedObject objectForKey:@"user_id"] forKey:@"userID"];
-//                             ProductViewController *product = [[ProductViewController alloc]init];
-//                             [self.navigationController pushViewController:product animated:YES];
-                             [self signUpSuccess];
-                         }
-                         else
-                         {
-                             UIAlertView  *alertView = [[UIAlertView alloc] initWithTitle:nil message:[parsedObject valueForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                             [alertView show];
-                         }
-                     }
-
-                 });
-             }];
-        });
-
-    }
+    [NetworkManager signUpWithEmail:self.emailTxtFld.text andPassword:self.pwdTxtFld.text andMobile:self.mobileNoTxtFld.text andName:self.userNameTxtFld.text withComplitionHandler:^(id result, NSError *err) {
+        
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[result valueForKey:@"message"] withObject:self];
+        
+        if ([[result valueForKey:@"status"]  isEqual: @"success"])
+        {
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setObject:[result objectForKey:@"user_id"] forKey:@"userID"];
+            [userDefaults synchronize];            
+        }
+    }];
 }
 
 
@@ -168,147 +126,31 @@ NSDictionary *parsedObject;
 {
     FBSDKAccessToken *token = notification.userInfo[FBSDKAccessTokenChangeNewKey];
 
-    if (!token) {
-
-    } else {
-
+    if (token) {
         if ([FBSDKAccessToken currentAccessToken]) {
-
-
             [self fetchUserInfo];
-
-
-        }}     }
+        }
+    }
+}
 
 -(void)fetchUserInfo
 {
     [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
-             NSLog(@"fetched user:%@", result);
-
-//             ProductViewController *product = [[ProductViewController alloc]init];
-//             [self.navigationController pushViewController:product animated:YES];
              [self signUpSuccess];
-
          }else{
-             // [SVProgressHUD dismiss];
-             UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"Could not connect to server" message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
-             [alertView show];
+             
+             [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[error localizedDescription] withObject:self];
          }
      }];
 }
-
-
 
 - (IBAction)googlebtnaction:(id)sender {
     [self hideKeyBoard];
 
 
 }
-
-
-
-//#pragma mark Webservice ............
-//
-////-(void)webServicePlans{
-////
-////
-////    if (![[ConnectionManager getSharedInstance] isConnectionAvailable])
-////    {
-////
-////
-////        return;
-////    }
-////
-////
-////     NSString *urlString = [[NSString stringWithFormat:@"%@/signup.php?name=%@&email=%@&password=%@&phone=%@&source=iPhone&@&mac_addr=4545.7765.767",BaseUrl,self.userNameTf.text,self.emailTF.text,self.pwdTF.text,self.mobilenotf.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-////    [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
-////
-////    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
-////
-////    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-////
-////   // [manager.requestSerializer setValue:[userdef objectForKey:@"access_token"] forHTTPHeaderField:@"Authorization"];
-////
-////
-////
-////    [manager GET:urlString parameters:nil
-////          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-////             // globalManager.isRequestFetchedForInboxPlan=YES;
-////              NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-////              NSLog(@"web service PLANS %@",dataDictionary);
-////          /*    if (dataDictionary.count<=0 ||dataDictionary==0 || [[dataDictionary valueForKey:@"message"] isEqualToString:@"No Plan Found"]) {
-////
-////                  if (globalManager.isRequestFetchedForTimeLine &&
-////                      globalManager.isRequestFetchedForInboxPlan &&
-////                      globalManager.isRequestFetchedForInboxSlap &&
-////                      globalManager.isRequestFetchedForInboxSlapall){
-////                      [SVProgressHUD dismiss];
-////                  }
-////                  return ;
-////              }
-////
-////              arr_planList =nil;
-////              arr_planList = [NSMutableArray new];
-////              //  [arr_planList removeAllObjects];
-////              NSArray *temp_arr =  [dataDictionary objectForKey:@"data"];
-////              // NSDictionary *dic_temp = [temp_arr objectAtIndex:0];
-////
-////
-////              for (NSDictionary *dic in temp_arr) {
-////
-////                  PlanLists *events = [[PlanLists alloc] initWithDictionary:dic error:nil];
-////
-////                  [arr_planList addObject:events];
-////                  [globalManager.arr_planList addObject:events];
-////              }
-////
-////              self.segmented.selectedSegmentIndex=0;
-////              if (globalManager.isRequestFetchedForTimeLine &&
-////                  globalManager.isRequestFetchedForInboxPlan &&
-////                  globalManager.isRequestFetchedForInboxSlap &&
-////                  globalManager.isRequestFetchedForInboxSlapall){
-////                  [SVProgressHUD dismiss];
-////              }*/
-////             [SVProgressHUD dismiss];
-////
-////
-////          } failure:^(AFHTTPRequestOperation *operation,NSError *error){
-////
-////
-////              NSLog(@"error%@",error.description);
-////              [SVProgressHUD dismiss];
-////
-////            /*  [[tView viewWithTag:8787] removeFromSuperview];
-////              UIView *netconnectionview = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height/2-50, self.view.frame.size.width,100)];
-////              [netconnectionview setTag:8787];
-////              UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, netconnectionview.frame.size.width-20,50)];
-////              [label setTextColor:[UIColor whiteColor]];
-////              [netconnectionview addSubview:label];
-////              [label setNumberOfLines:0];
-////              [label setTextAlignment:NSTextAlignmentCenter];
-////              [label setLineBreakMode:NSLineBreakByWordWrapping];
-////              [label setFont:[UIFont fontWithName:@"Titillium-Light" size:17]];
-////              [label setText:@"Unable to load data from the server. Tap to retry"];
-////              UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fetchAgainPlans:)];
-////              [netconnectionview setUserInteractionEnabled:YES];
-////              [netconnectionview addGestureRecognizer:tap];
-////
-////
-////              [tView addSubview:netconnectionview];
-////              */
-////
-////          }];
-////}
-//
-////-(void)fetchAgainPlans:(UITapGestureRecognizer *)sender{
-////   // [[tView viewWithTag:8787] removeFromSuperview];
-////
-////    [self webServicePlans];
-////}
-
-
 -(BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     NSInteger nextTag = textField.tag + 1;

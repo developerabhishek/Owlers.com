@@ -189,6 +189,29 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
 #pragma mark Login/Signup/Passowrdchange
 #pragma mark
 
++ (void)signUpWithEmail:(NSString *)email andPassword:(NSString *)password andMobile:(NSString *)mobile andName:(NSString *)name withComplitionHandler:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+
+        [manager GET:[NSString stringWithFormat:@"%@/signup.php",BaseUrl] parameters:@{@"name":name , @"email":email , @"password" : password, @"phone" : mobile, @"source" : @"iPhone" , @"mac_addr" : @"4545.7765.767" } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            [SVProgressHUD dismiss];
+            completionBlock(dataDict, nil);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+    }
+}
+
+
 + (void)loginWithEmail:(NSString *)email andPassword:(NSString *)password withComplitionHandler:(CompletionHandler)completionBlock{
     
     if ([SharedPreferences isNetworkAvailable])

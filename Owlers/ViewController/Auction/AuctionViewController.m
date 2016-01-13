@@ -29,6 +29,10 @@ NSURLConnection *conne_ction ,*connection_;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [tableView1 setDelegate:self];
+    [tableView1 setDataSource:self];
+    [citytable setDelegate:self];
+    [citytable setDataSource:self];
     NSLog(@"%@",[[UIDevice currentDevice] model]);
     NSLog(@"%@",[[UIDevice currentDevice] name]);
     
@@ -86,7 +90,6 @@ NSURLConnection *conne_ction ,*connection_;
     if (cell1 == nil)
     {
         NSArray *nib1 = [[NSBundle mainBundle] loadNibNamed:@"CustomCell4" owner:self options:nil];
-        
         cell1 = [nib1 firstObject];
     }
     
