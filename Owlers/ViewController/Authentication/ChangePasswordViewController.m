@@ -29,8 +29,8 @@ NSString *UserId;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    UserId= [defaults objectForKey:@"userID"];
+
+    UserId= [[SharedPreferences sharedInstance] getUserID];
     
     UITapGestureRecognizer *keyBoardHideRecognizer = [[UITapGestureRecognizer alloc] init];
     [keyBoardHideRecognizer addTarget:self action:@selector(hideKeyBoard)];

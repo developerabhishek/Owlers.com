@@ -11,8 +11,6 @@
 @interface MyBidsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate>
 
 {
-    NSArray *arr;
-    NSMutableData *serverdata;
     NSMutableDictionary *dictionary;
     IBOutlet UILabel *mybidsLabel;
     IBOutlet UILabel *bidsLabel;

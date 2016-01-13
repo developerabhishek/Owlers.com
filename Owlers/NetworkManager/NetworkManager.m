@@ -158,6 +158,33 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
 }
 
 
++ (void)getMyBidsWithComplitionHandler:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *userID = [defaults objectForKey:@"userID"] ? [defaults objectForKey:@"userID"] : @"31";
+        
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:[NSString stringWithFormat:@"%@/auctions.php",BaseUrl] parameters:@{@"user_id" : userID} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            [SVProgressHUD dismiss];
+            completionBlock(dataDict, nil);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+    }
+}
+
+
 #pragma mark
 #pragma mark Login/Signup/Passowrdchange
 #pragma mark

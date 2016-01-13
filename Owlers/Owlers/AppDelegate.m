@@ -79,47 +79,13 @@
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
-    //NSLog(@"userInfo %@",userInfo);
-    UIAlertView *pushAlertView = [[UIAlertView alloc] initWithTitle:@"Notification" message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [pushAlertView show];
+    [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] withObject:nil];
     
 }
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
     //NSLog(@"Failed to get token, error: %@", error);
 }
-
-
-
-
-/*
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    
-    if ([[url scheme] isEqualToString:@"myapp"] == YES)
-    {
-        NSDictionary *d = [self parametersDictionaryFromQueryString:[url query]];
-        
-        NSString *token = d[@"oauth_token"];
-        NSString *verifier = d[@"oauth_verifier"];
-        
-        
-        
-        return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url   sourceApplication:sourceApplication
-                                                           annotation:annotation];
-
-    }
-    else
-    {
-        //return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication   withSession:self.session];
-            }
-
-       return [GPPURLHandler handleURL:url
-                  sourceApplication:sourceApplication
-                         annotation:annotation];
-
-}
-
-*/
 
 #pragma mark - Operation With Locaal database
 -(void)saveLocalStoredSurveyOnServer:(NSArray *)array

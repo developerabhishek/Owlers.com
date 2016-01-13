@@ -19,6 +19,7 @@ typedef void (^CompletionHandler)(id result, NSError *err);
 + (void)checkAuctionBidForAuction:(NSString *)auctionID withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)saveBidForAuction:(NSString *)auctionID andBidAmount:(NSString *)amount andBuyNow:(BOOL)isBuyNow
     withComplitionHandler:(CompletionHandler)completionBlock;
++ (void)getMyBidsWithComplitionHandler:(CompletionHandler)completionBlock;
 
 // Login
 + (void)changeOldPassword:(NSString *)oldPassword toNewPassword:(NSString *)newPassword withComplitionHandler:(CompletionHandler)completionBlock;

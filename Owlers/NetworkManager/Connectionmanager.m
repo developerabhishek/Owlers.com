@@ -34,8 +34,6 @@ static ConnectionManager * sharedInstance = Nil;
     
     if (!receivedFlags || (flags == 0) )
     {
-        //  UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"Internet not available, can't fetch information,offline audit available" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        //   [alertView show];
         return FALSE;
     }
     else
@@ -58,13 +56,10 @@ static ConnectionManager * sharedInstance = Nil;
     
     if (!receivedFlags || (flags == 0) )
     {
-        // UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"You are not connected to internet" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        //[alertView show];
         return FALSE;
     }
     else
     {
-        //NSLog(@"True");
         return TRUE;
     }
 }

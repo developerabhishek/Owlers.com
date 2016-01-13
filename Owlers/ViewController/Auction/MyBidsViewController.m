@@ -8,8 +8,9 @@
 
 #import "MyBidsViewController.h"
 #import "CustomCell1.h"
-#import "ProductViewController.h"
-#import "Header.h"
+#import "SharedPreferences.h"
+#import "NetworkManager.h"
+
 @interface MyBidsViewController ()
 
 @end
@@ -18,44 +19,13 @@
 NSString *UserId;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    UserId= [defaults objectForKey:@"userID"];
     
+    [NetworkManager getMyBidsWithComplitionHandler:^(id result, NSError *err) {
+        dictionary = (NSMutableDictionary *)result;
+        [self.tableView reloadData];
+    }];
+}
 
-    NSString *urlstring =[NSString stringWithFormat:@"%@/auctions.php?user_id=41",BaseUrl];
-    NSURL *url =[[NSURL alloc]initWithString:urlstring];
-    NSURLRequest *request =[[NSURLRequest alloc]initWithURL:url];
-    NSURLConnection *connection =[[NSURLConnection alloc]initWithRequest:request delegate:self];
-    [connection start];
-    
-    }
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"Error = %@", [error localizedDescription]);
-}
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    serverdata =[[NSMutableData alloc]init];
-}
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [serverdata appendData:data];
-    
-}
--(void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    dictionary =[NSJSONSerialization JSONObjectWithData:serverdata options:NSJSONReadingMutableLeaves error:nil];
-    NSLog(@"my json data =%@",dictionary);
-    
-    NSArray *bidArray = [[NSMutableArray alloc] init];
-    bidArray = [dictionary objectForKey:(@"items")];
-    if (bidArray.count == 0) {
-    }else{
-    [self.tableView reloadData];
-    }
-    
-}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return dictionary.count;
@@ -68,17 +38,17 @@ NSString *UserId;
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell1" owner:self options:nil];
         
-        cell =[nib objectAtIndex:0];
+        cell =[nib firstObject];
     }
     
-    cell.label1.text=[[[dictionary objectForKey:(@"items")]objectAtIndex:indexPath.row]objectForKey:@"auction_name"];
+    NSDictionary *dict = [[dictionary objectForKey:(@"items")]objectAtIndex:indexPath.row];
+    if (dict) {
+        cell.label1.text=[dict objectForKey:@"auction_name"];
+        cell.label2.text =[dict objectForKey:@"venue"];
+        cell.label3.text =[dict objectForKey:@"created_date"];
+        cell.label4.text =[dict objectForKey:@"total_bids"];
+    }
     
-    cell.label2.text =[[[dictionary objectForKey:(@"items")]objectAtIndex:indexPath.row]objectForKey:@"venue"];
-    
-    cell.label3.text =[[[dictionary objectForKey:(@"items")]objectAtIndex:indexPath.row]objectForKey:@"created_date"];
-    
-    cell.label4.text =[[[dictionary objectForKey:(@"items")]objectAtIndex:indexPath.row]objectForKey:@"total_bids"];
-     
     return cell;
 }
 - (void)didReceiveMemoryWarning {
