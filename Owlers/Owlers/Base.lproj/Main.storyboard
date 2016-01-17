@@ -1006,6 +1006,7 @@
                     <connections>
                         <outlet property="auctionBtn" destination="ZV2-QI-4t6" id="euY-SZ-BjR"/>
                         <outlet property="calendarView" destination="P91-N8-2uq" id="hQ3-nB-lh6"/>
+                        <outlet property="calenderButton" destination="HLV-4F-Eiz" id="yg1-29-2fy"/>
                         <outlet property="locationBtn" destination="ZmZ-0y-0gY" id="JA0-7Z-b9X"/>
                         <outlet property="locationCollectionView" destination="Qmc-Zn-k5P" id="w7q-22-rFg"/>
                         <outlet property="menuBtn" destination="1Do-tN-iEN" id="K85-an-2PC"/>
@@ -5074,9 +5075,9 @@
         <image name="zxzzccz.png" width="24" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="szT-g1-nGL"/>
-        <segue reference="0sS-F9-FBs"/>
+        <segue reference="tNb-Um-tHJ"/>
+        <segue reference="raw-hh-jA5"/>
+        <segue reference="BHX-tv-XHf"/>
         <segue reference="4Xm-zK-GNa"/>
-        <segue reference="dFM-Yw-7x1"/>
     </inferredMetricsTieBreakers>
 </document>

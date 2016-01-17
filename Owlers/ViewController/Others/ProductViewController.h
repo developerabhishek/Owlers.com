@@ -15,14 +15,7 @@
 #import "CalendarView.h"
 #import "MenuPopUpViewController.h"
 
-@interface ProductViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIAlertViewDelegate , UIAdaptivePresentationControllerDelegate, CalendarDelegate, MenuDelegate>
-
-{
-    NSArray *searchResults;
-    IBOutlet UIActivityIndicatorView *activityindicator;
-    NSMutableData *serverData;
-    NSMutableData *locationData;
-}
+@interface ProductViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIAlertViewDelegate , UIAdaptivePresentationControllerDelegate, MenuDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *loaderOwlersImage;
 

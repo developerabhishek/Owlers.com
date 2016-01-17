@@ -38,7 +38,6 @@
 @property (nonatomic, weak) IBOutlet UICollectionView *locationCollectionView;
 @property (nonatomic, weak) IBOutlet UIButton *auctionBtn;
 @property (nonatomic, weak) IBOutlet UIButton *locationBtn;
-@property (nonatomic, strong) CalendarView * sampleView;
 @property (nonatomic, strong) NSDate * selectedDate;
 @property (nonatomic, strong) NSMutableArray *locationItems;
 @property (nonatomic, strong) NSMutableArray *eventItems;
@@ -47,6 +46,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *searchTxtField;
 
 @property (strong, nonatomic) Event *selectedEvent;
+@property (weak, nonatomic) IBOutlet UIButton *calenderButton;
 
 @end
 
@@ -91,6 +91,9 @@ UIRefreshControl *refreshControl;
             [self.locationCollectionView reloadData];
         });
     }];
+    [self setDateButtonTitleForDate:[NSDate date]];
+    
+    [calendarView setDelegate:self];
     /*********[Table Refresh Control]************/
     
     refreshControl = [[UIRefreshControl alloc] init];
@@ -103,19 +106,17 @@ UIRefreshControl *refreshControl;
     
     /*****[CALENDER VIEW]*****/
     
-    _sampleView= [[CalendarView alloc]initWithFrame:CGRectMake(0, 60, 320, 360)];
-    _sampleView.delegate    = self;
-    _sampleView.calendarDate = [NSDate date];
-   // _sampleView.backgroundColor = [UIColor blackColor];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.view addSubview:_sampleView];
-        _sampleView.center = CGPointMake(self.view.center.x, _sampleView.center.y);
-    });
-    _sampleView.hidden=YES;
-    
     self.secondaryViewHeightConstraint.constant = 0;
     [self.view layoutIfNeeded];
+}
+
+- (void)setDateButtonTitleForDate:(NSDate *)date{
+
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"dd-MMMM-yyyy"];
+    NSString *dateStr  = [dateFormatter stringFromDate:date];
+    [self.calenderButton setTitle:dateStr forState:UIControlStateNormal];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -266,59 +267,8 @@ UIRefreshControl *refreshControl;
 - (void)calendarView:(DSLCalendarView*)calendarView didSelectRange:(DSLCalendarRange*)range
 {
     if (range != nil) {
-        NSLog( @"Selected %ld/%ld - %ld/%ld", (long)range.startDay.day, (long)range.startDay.month, (long)range.endDay.day, (long)range.endDay.month);
-        
-        NSString *month =@"";
-        if (range.startDay.month==1) {
-            
-            month = @"January";
-        }
-        if (range.startDay.month==2) {
-            
-            month = @"February";
-        }
-        if (range.startDay.month==3) {
-            
-            month = @"March";
-        }
-        if (range.startDay.month==4) {
-            
-            month = @"April";
-        }
-        if (range.startDay.month==5) {
-            
-            month = @"May";
-        }
-        if (range.startDay.month==6) {
-            
-            month = @"June";
-        }if (range.startDay.month==7) {
-            
-            month = @"July";
-        }
-        if (range.startDay.month==8) {
-            
-            month = @"August";
-        }
-        if (range.startDay.month==9) {
-            
-            month = @"September";
-        }
-        if (range.startDay.month==10) {
-            
-            month = @"October";
-        }
-        if (range.startDay.month==11) {
-            
-            month = @"November";
-        }
-        if (range.startDay.month==12) {
-            
-            month = @"December";
-        }
-        
-        //[btn_calender setTitle:[NSString stringWithFormat:@"%@ %ld",month,range.startDay.year] forState:UIControlStateNormal];
-        
+        [self setDateButtonTitleForDate:range.startDay.date];
+        self.calendarView.hidden = YES;
     }
     else {
         NSLog( @"No selection" );
