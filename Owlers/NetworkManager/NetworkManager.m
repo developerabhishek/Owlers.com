@@ -186,7 +186,6 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     if ([SharedPreferences isNetworkAvailable])
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *userID = [defaults objectForKey:@"userID"] ? [defaults objectForKey:@"userID"] : @"31";
 
         [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
         
@@ -198,7 +197,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         
-        [manager GET:[NSString stringWithFormat:@"%@/%@",BaseUrl,serviceName] parameters:@{@"auction_id":auctionID , @"user_id" : userID , @"bid_amount" : amount} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:[NSString stringWithFormat:@"%@/%@",BaseUrl,serviceName] parameters:@{@"auction_id":auctionID , @"user_id" : [[SharedPreferences sharedInstance] getUserID] , @"bid_amount" : amount} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             [SVProgressHUD dismiss];
             completionBlock(dataDict, nil);
@@ -217,15 +216,12 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     
     if ([SharedPreferences isNetworkAvailable])
     {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *userID = [defaults objectForKey:@"userID"] ? [defaults objectForKey:@"userID"] : @"31";
-        
         [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
         
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         
-        [manager GET:[NSString stringWithFormat:@"%@/auctions.php",BaseUrl] parameters:@{@"user_id" : userID} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:[NSString stringWithFormat:@"%@/auctions.php",BaseUrl] parameters:@{@"user_id" : [[SharedPreferences sharedInstance] getUserID]} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             [SVProgressHUD dismiss];
             completionBlock(dataDict, nil);
@@ -238,6 +234,30 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
     }
 }
+
++ (void)getAllBooking:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:[NSString stringWithFormat:@"%@/get_booking.php",BaseUrl] parameters:@{@"user_id" : [[SharedPreferences sharedInstance] getUserID]} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            [SVProgressHUD dismiss];
+            completionBlock(dataDict, nil);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+    }
+}
+
 
 
 #pragma mark
@@ -337,15 +357,12 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
 
     if ([SharedPreferences isNetworkAvailable])
     {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *userID = [defaults objectForKey:@"userID"] ? [defaults objectForKey:@"userID"] : @"31";
-        
         [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
 
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         
-        [manager GET:[NSString stringWithFormat:@"%@/change_pwd.php",BaseUrl] parameters:@{@"oldPwd":oldPassword , @"userID" : userID , @"newPwd" : newPassword} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:[NSString stringWithFormat:@"%@/change_pwd.php",BaseUrl] parameters:@{@"oldPwd":oldPassword , @"userID" : [[SharedPreferences sharedInstance] getUserID] , @"newPwd" : newPassword} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             [SVProgressHUD dismiss];
             completionBlock(dataDict, nil);
@@ -367,7 +384,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         
-        [manager GET:[NSString stringWithFormat:@"%@/forgot.php",BaseUrl] parameters:@{@"Email":email} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:[NSString stringWithFormat:@"%@/forgot.php",BaseUrl] parameters:@{@"email_id":email} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             [SVProgressHUD dismiss];
             completionBlock(dataDict, nil);
@@ -389,10 +406,8 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
-        [manager GET:[NSString stringWithFormat:@"%@/update_profile.php",BaseUrl] parameters:@{@"name" : name, @"user_id" :[defaults objectForKey:@"userID"], @"mob_no" : mobile} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:[NSString stringWithFormat:@"%@/update_profile.php",BaseUrl] parameters:@{@"name" : name, @"user_id" :[[SharedPreferences sharedInstance] getUserID], @"mob_no" : mobile} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             [SVProgressHUD dismiss];
@@ -406,6 +421,8 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
     }
 }
+
+
 
 
 @end

@@ -19,6 +19,9 @@
 
 
 @interface ProfileViewController ()
+
+@property(nonatomic,strong) NSDictionary *bookingDictionary;
+
 @end
 
 @implementation ProfileViewController
@@ -36,6 +39,10 @@ NSURLConnection *connection_, *_connection;
             _mobileNoLabel.text=[result objectForKey:@"phone"];
         }
     }];
+    
+    [NetworkManager getAllBooking:^(id result, NSError *err) {
+        self.bookingDictionary = (NSDictionary *) result;
+    }];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -48,50 +55,6 @@ NSURLConnection *connection_, *_connection;
     }
     
 }
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    
-    if (connection ==connection_) {
-        serverData = [[NSMutableData alloc]init];
-    }
-    else if (connection ==_connection){
-        serDATA =[[NSMutableData alloc]init];
-    }
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    
-    if (connection ==connection_) {
-        [serverData appendData:data];
-    }
-    else if (connection ==_connection)
-    {
-        [serDATA appendData:data];
-    }
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    
-    if (connection ==connection_) {
-        serverDictionary = [NSJSONSerialization JSONObjectWithData:serverData options:NSJSONReadingMutableLeaves error:nil];
-        
-        _nameLabel.text=[NSString stringWithFormat:@"%@",[serverDictionary  objectForKey:@"name"]];
-        _emaillabel.text=[NSString stringWithFormat:@"%@",[serverDictionary objectForKey:@"email"]];
-        _mobileNoLabel.text=[NSString stringWithFormat:@"%@",[serverDictionary objectForKey:@"phone"]];
-    }
-    
-    else if (connection ==_connection)
-    {
-        serDICT =[NSJSONSerialization JSONObjectWithData:serDATA options:NSJSONReadingMutableLeaves error:nil];
-        
-        [self.profileTbl reloadData];
-    }
-    
-}
-
 
 -(IBAction)bookingAction:(id)sender{
 }
@@ -165,92 +128,8 @@ NSURLConnection *connection_, *_connection;
     [self.navigationController pushViewController:edit animated:YES];
 }
 
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return serDICT.count;
-}
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *celid =@"cell";
-    CustomCell3*cell = [tableView dequeueReusableCellWithIdentifier:celid];
-    
-    /*******[CHECKING SERVER DATA IS EMPTY OR NOT]*********/
-    if([[serDICT objectForKey:(@"history")] isEqualToString:@"No Data Found"]){
-        NSLog(@"its not found");
-        cell.label1.text = @"No Data Found";
-    }
-    else
-    {
-        if (cell == nil)
-        {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell3" owner:self options:nil];
-            cell =(CustomCell3*)[nib objectAtIndex:0];
-        }
-        
-        if (indexPath==indexpath) {
-            cell.viewd.hidden = NO;
-        }else
-            cell.viewd.hidden=YES;
-        cell.label1.text=[[[serDICT objectForKey:(@"history")]objectAtIndex:indexPath.row]objectForKey:@"event_name"];
-        cell.label2.text=[[[serDICT objectForKey:(@"history")]objectAtIndex:indexPath.row]objectForKey:@"event_venue"];
-        cell.rupees_Lab.text =[[[serDICT objectForKey:@"history"]objectAtIndex:indexpath.row]objectForKey:@"total_amount"];
-        NSString *strgfhfg=[[[serDICT objectForKey:(@"history")]objectAtIndex:indexPath.row]objectForKey:@"event_date"];
-        
-        NSArray *itemsrr = [strgfhfg componentsSeparatedByString:@" "];   //take the one arraysplit the string
-        
-        
-        NSString *dddd = [itemsrr objectAtIndex:0];
-        cell.date_label.text =dddd;
-        NSString *ddddff = [itemsrr objectAtIndex:1];
-        cell.time_label.text =ddddff;
-        NSString *payment_mrthod = [[[serDICT objectForKey:(@"history")]objectAtIndex:indexPath.row]objectForKey:@"payment_method"];
-        
-        if([payment_mrthod isEqual:@"Cash"]){
-            cell.label3.text = @"Cash Payment !!";
-        }else{
-            cell.label3.text = @"Online Payment !!";
-        }
-        
-    }
-    
-    return cell;
-    
-}
-
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    NSUserDefaults *userdefault = [NSUserDefaults standardUserDefaults];
-    [userdefault setObject:@"" forKey:@"index"];
-    
-    if (indexpath==indexPath) {
-        NSLog(@"this is same indexpath");
-        indexpath=nil;
-        [userdefault setObject:@"60" forKey:@"changecell"];
-    }else{
-        indexpath=indexPath;
-        [userdefault setObject:@"250" forKey:@"changecell"];
-    }
-    
-    [self.profileTbl reloadData];
-    
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    if (indexpath==indexPath) {
-        return 248;
-    }
-    
-    return 83;
-    
-}
-
 - (IBAction)backBtnAction:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-    
+    [self.navigationController popViewControllerAnimated:YES];    
 }
 
 @end

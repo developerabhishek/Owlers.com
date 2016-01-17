@@ -56,10 +56,10 @@
     {
         [NetworkManager forgetPasswordForEmail:self.emailAddress.text withComplitionHandler:^(id result, NSError *err) {
         
-            if (result && [[result valueForKey:@"success"] integerValue] == 1)
+            if (result && [[result valueForKey:@"status"] isEqualToString:@"success"])
             {
 
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"JNT" message:@"Your password sent to your email address" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"JNT" message:[result valueForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * action)

@@ -12,6 +12,7 @@
 
 - (id)initWithDict:(NSDictionary *)dict;
 - (IBAction)backBtnAction:(id)sender;
+- (IBAction)backBtn:(UIBarButtonItem *)sender;
 - (IBAction)updateProfile:(id)sender;
 - (IBAction)logout:(id)sender;
 @end

@@ -91,9 +91,21 @@ NSString *UserId;
     {
         [NetworkManager changeOldPassword:self.currnetPassword.text toNewPassword:self.confirmPassword.text withComplitionHandler:^(id result, NSError *err) {
             
-            if ([result valueForKey:@"message"])
+             if (result && [[result valueForKey:@"status"] isEqualToString:@"success"])
             {
                 
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"JNT" message:[result valueForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action)
+                                     {
+                                         [self.navigationController popViewControllerAnimated:YES];
+                                         
+                                     }];
+                [alertController addAction:ok];
+                [self presentViewController:alertController animated:YES completion:nil];
+                
+            }else{
                 [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[result valueForKey:@"message"] withObject:self];
             }
             

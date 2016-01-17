@@ -8,16 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileViewController : UIViewController<UINavigationBarDelegate,UIImagePickerControllerDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate,UINavigationControllerDelegate,UIAlertViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
+@interface ProfileViewController : UIViewController<UINavigationBarDelegate,UIImagePickerControllerDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate,UINavigationControllerDelegate,UIAlertViewDelegate,UIActionSheetDelegate,UIActionSheetDelegate>
 
 {
-    NSArray *array;
-    NSMutableData *serDATA;
-    NSMutableDictionary *serDICT;
-    NSMutableData *serverData;
     NSMutableDictionary *serverDictionary;
     IBOutlet UIButton *addImageButton;
-    NSIndexPath *indexpath;
 }
 
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
