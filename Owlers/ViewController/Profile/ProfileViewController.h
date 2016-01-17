@@ -21,7 +21,7 @@
 - (IBAction)actionSheet:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIImageView *profileImage;
-@property(nonatomic,strong) IBOutlet UITableView *profileTbl;
+@property(nonatomic,strong) IBOutlet UITableView *bookingsTbl;
 
 - (IBAction)backBtnAction:(id)sender;
 - (IBAction)bookingAction:(id)sender;

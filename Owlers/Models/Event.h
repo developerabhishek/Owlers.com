@@ -35,5 +35,6 @@
 @property (nonatomic) int couplePrice;
 @property (nonatomic, copy) NSString *discountTitle;
 @property (nonatomic) int discountValue;
+@property (nonatomic, copy) NSString *eventDate;
 
 @end

@@ -13,7 +13,6 @@
 
 @interface EditViewController ()
 
-@property(nonatomic,strong) NSDictionary *dataDict;
 @property(nonatomic,strong) IBOutlet    UITextField *userName;
 @property(nonatomic,strong) IBOutlet    UITextField *email;
 @property(nonatomic,strong) IBOutlet    UITextField *phone;
@@ -22,22 +21,10 @@
 
 @implementation EditViewController
 
-- (id)initWithDict:(NSDictionary *)dict{
-    if (self == [super init]) {
-        _dataDict = [[NSDictionary alloc] initWithDictionary:dict];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self showDataOnView];
     // Do any additional setup after loading the view from its nib.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)showDataOnView{
@@ -48,17 +35,7 @@
     _phone.text=[_dataDict objectForKey:@"phone"];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-- (IBAction)backBtnAction:(id)sender{
+- (IBAction)backBtnAction:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 

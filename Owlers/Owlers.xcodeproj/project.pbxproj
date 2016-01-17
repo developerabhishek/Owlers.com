@@ -30,8 +30,6 @@
 		4690B0491C3AEAA5003A719C /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4690B0431C3AEAA5003A719C /* GooglePlus.bundle */; };
 		4690B04A1C3AEAA5003A719C /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4690B0441C3AEAA5003A719C /* GooglePlus.framework */; };
 		4690B04E1C3AEAC4003A719C /* DBmanager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4690B04D1C3AEAC4003A719C /* DBmanager.m */; };
-		4690B06A1C3AEACB003A719C /* CustomCell3.m in Sources */ = {isa = PBXBuildFile; fileRef = 4690B05D1C3AEACB003A719C /* CustomCell3.m */; };
-		4690B06B1C3AEACB003A719C /* CustomCell3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4690B05E1C3AEACB003A719C /* CustomCell3.xib */; };
 		4690B0D01C3AEAD7003A719C /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4690B06F1C3AEAD7003A719C /* 1.png */; };
 		4690B0D11C3AEAD7003A719C /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4690B0701C3AEAD7003A719C /* 2.png */; };
 		4690B0D21C3AEAD7003A719C /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4690B0711C3AEAD7003A719C /* 3.png */; };
@@ -229,6 +227,11 @@
 		CBE9B0811C4A685C0073A504 /* CustomCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE9B07F1C4A685C0073A504 /* CustomCell1.m */; };
 		CBE9B0821C4A685C0073A504 /* CustomCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = CBE9B0801C4A685C0073A504 /* CustomCell1.xib */; };
 		CBE9B0861C4A7E070073A504 /* PopOverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE9B0851C4A7E070073A504 /* PopOverBackgroundView.m */; };
+		CBE9B08C1C4BFAB10073A504 /* Booking.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE9B08B1C4BFAB10073A504 /* Booking.m */; };
+		CBE9B08F1C4BFF500073A504 /* BookingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE9B08E1C4BFF500073A504 /* BookingsTableViewCell.m */; };
+		CBE9B0931C4C325F0073A504 /* GothamBook-1.otf in Resources */ = {isa = PBXBuildFile; fileRef = CBE9B0901C4C325F0073A504 /* GothamBook-1.otf */; };
+		CBE9B0941C4C325F0073A504 /* GothamHTF-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBE9B0911C4C325F0073A504 /* GothamHTF-Book.ttf */; };
+		CBE9B0951C4C325F0073A504 /* GothamMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CBE9B0921C4C325F0073A504 /* GothamMedium.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -273,9 +276,6 @@
 		4690B0441C3AEAA5003A719C /* GooglePlus.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlus.framework; sourceTree = "<group>"; };
 		4690B04C1C3AEAC4003A719C /* DBmanager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBmanager.h; sourceTree = "<group>"; };
 		4690B04D1C3AEAC4003A719C /* DBmanager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBmanager.m; sourceTree = "<group>"; };
-		4690B05C1C3AEACB003A719C /* CustomCell3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell3.h; sourceTree = "<group>"; };
-		4690B05D1C3AEACB003A719C /* CustomCell3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell3.m; sourceTree = "<group>"; };
-		4690B05E1C3AEACB003A719C /* CustomCell3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell3.xib; sourceTree = "<group>"; };
 		4690B06F1C3AEAD7003A719C /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		4690B0701C3AEAD7003A719C /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		4690B0711C3AEAD7003A719C /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
@@ -498,7 +498,6 @@
 		5B6EFD6F1BE49F2D00D97003 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = "Third party/Custom loading/SVProgressHUD.h"; sourceTree = "<group>"; };
 		5B6EFD701BE49F2D00D97003 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = "Third party/Custom loading/SVProgressHUD.m"; sourceTree = "<group>"; };
 		5B7CD83A1BFC9D2C009ABE6F /* GothamHTF-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamHTF-Book.ttf"; sourceTree = "<group>"; };
-		5B7CD83B1BFC9D61009ABE6F /* gotham-book-1361523257_0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gotham-book-1361523257_0.ttf"; sourceTree = "<group>"; };
 		5B86F4F31C339DC100A61C7C /* GothamBook-1.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamBook-1.otf"; sourceTree = "<group>"; };
 		5B86F4F51C33A5FE00A61C7C /* GothamMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GothamMedium.otf; sourceTree = "<group>"; };
 		5BA0E5EF1BC5835200A66C09 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -554,6 +553,13 @@
 		CBE9B0801C4A685C0073A504 /* CustomCell1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell1.xib; sourceTree = "<group>"; };
 		CBE9B0841C4A7E070073A504 /* PopOverBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopOverBackgroundView.h; sourceTree = "<group>"; };
 		CBE9B0851C4A7E070073A504 /* PopOverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopOverBackgroundView.m; sourceTree = "<group>"; };
+		CBE9B08A1C4BFAB10073A504 /* Booking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Booking.h; sourceTree = "<group>"; };
+		CBE9B08B1C4BFAB10073A504 /* Booking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Booking.m; sourceTree = "<group>"; };
+		CBE9B08D1C4BFF500073A504 /* BookingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookingsTableViewCell.h; sourceTree = "<group>"; };
+		CBE9B08E1C4BFF500073A504 /* BookingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookingsTableViewCell.m; sourceTree = "<group>"; };
+		CBE9B0901C4C325F0073A504 /* GothamBook-1.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamBook-1.otf"; sourceTree = "<group>"; };
+		CBE9B0911C4C325F0073A504 /* GothamHTF-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamHTF-Book.ttf"; sourceTree = "<group>"; };
+		CBE9B0921C4C325F0073A504 /* GothamMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GothamMedium.otf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -654,9 +660,6 @@
 				CBE9B07E1C4A685C0073A504 /* CustomCell1.h */,
 				CBE9B07F1C4A685C0073A504 /* CustomCell1.m */,
 				CBE9B0801C4A685C0073A504 /* CustomCell1.xib */,
-				4690B05C1C3AEACB003A719C /* CustomCell3.h */,
-				4690B05D1C3AEACB003A719C /* CustomCell3.m */,
-				4690B05E1C3AEACB003A719C /* CustomCell3.xib */,
 				CB9A4FDE1C4243A0003BA5AE /* ProductTableViewCell.h */,
 				CB9A4FDF1C4243A0003BA5AE /* ProductTableViewCell.m */,
 				CB9A4FDA1C419BD5003BA5AE /* SettingsTableViewCell.h */,
@@ -667,6 +670,8 @@
 				CBB9AE0D1C43F10100D77D34 /* MenuTableViewCell.m */,
 				CBE9B0781C4A41770073A504 /* AuctionTableViewCell.h */,
 				CBE9B0791C4A41770073A504 /* AuctionTableViewCell.m */,
+				CBE9B08D1C4BFF500073A504 /* BookingsTableViewCell.h */,
+				CBE9B08E1C4BFF500073A504 /* BookingsTableViewCell.m */,
 			);
 			path = CustomCell;
 			sourceTree = "<group>";
@@ -970,7 +975,9 @@
 				4690B04B1C3AEAC4003A719C /* DBManager */,
 				4690B03E1C3AEAA5003A719C /* Framework */,
 				8A6CA3C01801485208FE34DA /* Frameworks */,
-				5B7CD83B1BFC9D61009ABE6F /* gotham-book-1361523257_0.ttf */,
+				CBE9B0901C4C325F0073A504 /* GothamBook-1.otf */,
+				CBE9B0911C4C325F0073A504 /* GothamHTF-Book.ttf */,
+				CBE9B0921C4C325F0073A504 /* GothamMedium.otf */,
 				4690B06E1C3AEAD7003A719C /* Images */,
 				CB9A4FD21C419B68003BA5AE /* Models */,
 				46F2121D1C3B906700AB6AFE /* NetworkManager */,
@@ -1134,6 +1141,8 @@
 				CBB9AE071C43E9C500D77D34 /* SegueMenuItem.m */,
 				CBE9B07B1C4A5CDF0073A504 /* Auction.h */,
 				CBE9B07C1C4A5CDF0073A504 /* Auction.m */,
+				CBE9B08A1C4BFAB10073A504 /* Booking.h */,
+				CBE9B08B1C4BFAB10073A504 /* Booking.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1243,6 +1252,7 @@
 				5B6EFD711BE49F2D00D97003 /* angle-mask.png in Resources */,
 				4690B0DD1C3AEAD7003A719C /* calender_monunew.png in Resources */,
 				5B6EFD741BE49F2D00D97003 /* success@2x.png in Resources */,
+				CBE9B0941C4C325F0073A504 /* GothamHTF-Book.ttf in Resources */,
 				4690B0E21C3AEAD7003A719C /* clock_new.png in Resources */,
 				4690B10A1C3AEAD7003A719C /* launchersss.png in Resources */,
 				4690B0DF1C3AEAD7003A719C /* call_icons.png in Resources */,
@@ -1253,6 +1263,7 @@
 				4690B0E81C3AEAD7003A719C /* custom_tab_indicator_focused.9.png in Resources */,
 				4690B1151C3AEAD7003A719C /* navbargoldbackarrow.png in Resources */,
 				4690B1291C3AEAD7003A719C /* swipe_deal_depak.png in Resources */,
+				CBE9B0931C4C325F0073A504 /* GothamBook-1.otf in Resources */,
 				4690B0D11C3AEAD7003A719C /* 2.png in Resources */,
 				4690B0FA1C3AEAD7003A719C /* global_icon_left_logo.png in Resources */,
 				4690B12D1C3AEAD7003A719C /* turn_navigation.png in Resources */,
@@ -1292,7 +1303,6 @@
 				4690B0DA1C3AEAD7003A719C /* border.png in Resources */,
 				4690B1301C3AEAD7003A719C /* zxzzccz.png in Resources */,
 				5B6EFD721BE49F2D00D97003 /* error@2x.png in Resources */,
-				4690B06B1C3AEACB003A719C /* CustomCell3.xib in Resources */,
 				5B6EFD751BE49F2D00D97003 /* success@2x.png in Resources */,
 				4690B1161C3AEAD7003A719C /* new_background_ullu.png in Resources */,
 				4690B10E1C3AEAD7003A719C /* loc_immggmgm.png in Resources */,
@@ -1307,6 +1317,7 @@
 				5B458F571BB3D30500EEADD7 /* Images.xcassets in Resources */,
 				4690B1BB1C3AEAF3003A719C /* DSLCalendarDayCalloutView.xib in Resources */,
 				4690B0491C3AEAA5003A719C /* GooglePlus.bundle in Resources */,
+				CBE9B0951C4C325F0073A504 /* GothamMedium.otf in Resources */,
 				4690B12C1C3AEAD7003A719C /* transparent.png in Resources */,
 				4690B0F11C3AEAD7003A719C /* favicon.png in Resources */,
 				4690B0F81C3AEAD7003A719C /* global_bbgg.jpg in Resources */,
@@ -1341,10 +1352,10 @@
 				46581A931C3D9D1B00CDF50C /* SDWebImagePrefetcher.m in Sources */,
 				CBB9AE081C43E9C500D77D34 /* SegueMenuItem.m in Sources */,
 				CBE9B0861C4A7E070073A504 /* PopOverBackgroundView.m in Sources */,
-				4690B06A1C3AEACB003A719C /* CustomCell3.m in Sources */,
 				46F212261C3B906700AB6AFE /* Reachability.m in Sources */,
 				5B6EFD471BE49CE600D97003 /* AFHTTPSessionManager.m in Sources */,
 				5B6EFD661BE49DA300D97003 /* UIRefreshControl+AFNetworking.m in Sources */,
+				CBE9B08F1C4BFF500073A504 /* BookingsTableViewCell.m in Sources */,
 				46581A991C3D9D1B00CDF50C /* UIImageView+WebCache.m in Sources */,
 				46F211431C3AF55300AB6AFE /* SharedPreferences.m in Sources */,
 				46F212011C3B904D00AB6AFE /* ForgotpasswordViewController.m in Sources */,
@@ -1391,6 +1402,7 @@
 				CBB9AE021C43BD9E00D77D34 /* Event.m in Sources */,
 				4690B1BD1C3AEAF3003A719C /* DSLCalendarMonthSelectorView.m in Sources */,
 				5B6EFD491BE49CE600D97003 /* AFSecurityPolicy.m in Sources */,
+				CBE9B08C1C4BFAB10073A504 /* Booking.m in Sources */,
 				CBB9AE0E1C43F10100D77D34 /* MenuTableViewCell.m in Sources */,
 				4690B1BF1C3AEAF3003A719C /* DSLCalendarMonthView.m in Sources */,
 				46F211B61C3B904300AB6AFE /* Annotation.m in Sources */,

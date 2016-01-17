@@ -10,9 +10,9 @@
 
 @interface EditViewController : UIViewController
 
-- (id)initWithDict:(NSDictionary *)dict;
+@property(nonatomic,strong) NSDictionary *dataDict;
+
 - (IBAction)backBtnAction:(id)sender;
-- (IBAction)backBtn:(UIBarButtonItem *)sender;
 - (IBAction)updateProfile:(id)sender;
 - (IBAction)logout:(id)sender;
 @end

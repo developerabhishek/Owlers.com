@@ -408,6 +408,7 @@ UIRefreshControl *refreshControl;
 
 - (IBAction)seachBackAction:(id)sender{    
     self.searchBarContainer.hidden = YES;
+    [self.searchTxtField resignFirstResponder];
 }
 
 
