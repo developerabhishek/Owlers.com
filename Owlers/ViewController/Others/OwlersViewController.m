@@ -7,18 +7,17 @@
 //
 
 #import "OwlersViewController.h"
-#import "ProductViewController.h"
 #import "Header.h"
 #import "LoginViewController.h"
 #import "Connectionmanager.h"
 #import "SharedPreferences.h"
 #import "APPChildViewController.h"
 #import "SplashChildPageData.h"
+#import "TesteventViewController.h"
 
 @interface OwlersViewController ()
 -(id) imageWithName:(NSArray *)arr;
 @property (strong,nonatomic) IBOutlet UIView *subview;
-
 @property (strong, nonatomic) UIPageViewController *pageController;
 @property (strong, nonatomic) NSMutableArray *pageDatalist;
 @property (strong, nonatomic) NSTimer *timer;
@@ -27,17 +26,9 @@
 
 @implementation OwlersViewController
 
-
-NSString *UserId, *_address, *discount_value = @"0";
-
-
-bool male_status = YES,female_status = YES,couple_status = YES;
+NSString *UserId, *discount_value = @"0";
 
 int currentPageIndex = 0;
-@synthesize mapview;
-
-
-
 
 -(void)mapurl:(NSString*)address
 {
@@ -73,59 +64,59 @@ int currentPageIndex = 0;
         NSLog(@"33   3333333");
         NSString *mapsURL = [NSString stringWithFormat:@"http://maps.google.com/maps?q=%@", [address stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         NSLog(@"my url =%@",mapsURL);
-}
-}
--(void)offermethodcall{
-    if (array_offers.count>0) {
-        scroll_offer.backgroundColor = [UIColor yellowColor];
-        scroll_offer.frame = CGRectMake(10, scroll_offer.frame.origin.y, 320*6, 50);
-        scroll_offer.scrollEnabled = YES;
-        scroll_offer.pagingEnabled=NO;
-        scroll_offer.contentSize = CGSizeMake(420*3, 0);
-        
-        for (int i =0; i<=array_offers.count; i++) {
-            
-            
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(i*self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
-            if (i%2==0) {
-                view.backgroundColor = [UIColor greenColor];
-            }else
-                view.backgroundColor = [UIColor blueColor];
-            
-            UIButton *btn_call = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 30, 30)];
-            
-            [btn_call setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-            
-            UIView *viewInside = [[UIView alloc] initWithFrame:CGRectMake(i*self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
-            UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, 30, 30)];
-            
-            UILabel *label = [[ UILabel alloc] initWithFrame:CGRectMake(40, 15, self.view.frame.size.width-50, 20)];
-            
-           // NSDictionary *tempdic = [array_offers objectAtIndex:i];
-            
-           // label.text = [tempdic objectForKey:@"title"];
-            label.textColor = [UIColor blackColor];
-            label.font = [UIFont systemFontOfSize:15];
-            [viewInside addSubview:image];
-            [viewInside addSubview:label];
-            [view addSubview:btn_call];
-            [view addSubview:viewInside];
-            
-            [scroll_offer addSubview:view];
-            
-            
-        }
-        
     }
-    
-    
-    
 }
+//-(void)offermethodcall{
+//    if (array_offers.count>0) {
+//        scroll_offer.backgroundColor = [UIColor yellowColor];
+//        scroll_offer.frame = CGRectMake(10, scroll_offer.frame.origin.y, 320*6, 50);
+//        scroll_offer.scrollEnabled = YES;
+//        scroll_offer.pagingEnabled=NO;
+//        scroll_offer.contentSize = CGSizeMake(420*3, 0);
+//        
+//        for (int i =0; i<=array_offers.count; i++) {
+//            
+//            
+//            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(i*self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
+//            if (i%2==0) {
+//                view.backgroundColor = [UIColor greenColor];
+//            }else
+//                view.backgroundColor = [UIColor blueColor];
+//            
+//            UIButton *btn_call = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 30, 30)];
+//            
+//            [btn_call setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+//            
+//            UIView *viewInside = [[UIView alloc] initWithFrame:CGRectMake(i*self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
+//            UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, 30, 30)];
+//            
+//            UILabel *label = [[ UILabel alloc] initWithFrame:CGRectMake(40, 15, self.view.frame.size.width-50, 20)];
+//            
+//           // NSDictionary *tempdic = [array_offers objectAtIndex:i];
+//            
+//           // label.text = [tempdic objectForKey:@"title"];
+//            label.textColor = [UIColor blackColor];
+//            label.font = [UIFont systemFontOfSize:15];
+//            [viewInside addSubview:image];
+//            [viewInside addSubview:label];
+//            [view addSubview:btn_call];
+//            [view addSubview:viewInside];
+//            
+//            [scroll_offer addSubview:view];
+//            
+//            
+//        }
+//        
+//    }
+//    
+//    
+//    
+//}
 
 -(void)timerCalled
 {
-    if(currentPageIndex <= 3 || currentPageIndex >= 0){
-        if(currentPageIndex==3){
+    if(currentPageIndex < self.pageDatalist.count || currentPageIndex >= 0){
+        if(currentPageIndex == self.pageDatalist.count-1){
             
             currentPageIndex = 0;
         }else{
@@ -145,6 +136,9 @@ int currentPageIndex = 0;
     if ([segue.identifier isEqualToString:@"segueOwelrsPageContainer"]) {
         self.pageController = (UIPageViewController*)segue.destinationViewController;
         self.pageController.dataSource = self;
+    }else if ([segue.identifier isEqualToString:@"seguePayment"]) {
+        TesteventViewController *controller = (TesteventViewController*)segue.destinationViewController;
+        controller.event = self.event;
     }
 }
 
@@ -186,7 +180,7 @@ int currentPageIndex = 0;
 
 - (APPChildViewController *)viewControllerAtIndex:(NSUInteger)index {
     APPChildViewController *childViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"APPChildViewController"];
-    [childViewController showMessage:NO];
+    childViewController.hideMessage = YES;
     childViewController.index = index;
     childViewController.data = (SplashChildPageData*)[self.pageDatalist objectAtIndex:index];
     
@@ -199,10 +193,10 @@ int currentPageIndex = 0;
     
     [super viewDidLoad];
     
-    APPChildViewController *initialViewController = [self viewControllerAtIndex:0];
-    NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
-    [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-//    
+//    APPChildViewController *initialViewController = [self viewControllerAtIndex:0];
+//    NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
+//    [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+//
 //    locationmanager = [[CLLocationManager alloc] init];
 //    self.mapview.delegate = self;
 //    locationmanager.delegate = self;
@@ -253,20 +247,12 @@ int currentPageIndex = 0;
 //    
 //    
 //    
-//    NSString *urlstring =[NSString stringWithFormat:@"%@/event_details.php?event_id=%@",BaseUrl,self.event_id];
-//    NSURL *url=[[NSURL alloc]initWithString:urlstring];
-//    NSURLRequest *request=[[NSURLRequest alloc]initWithURL:url];
-//    NSURLConnection *connection=[[NSURLConnection alloc]initWithRequest:request delegate:self];
-//    [connection start];
-//    firstLaunch=YES;
-//
-//    
-//    NSTimer *_timer;
-//    _timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(timer) userInfo:nil repeats:YES];
-//
-//    
-//    
-//    
+    NSString *urlstring =[NSString stringWithFormat:@"%@/event_details.php?event_id=%@",BaseUrl,self.event.ID];
+    NSURL *url=[[NSURL alloc]initWithString:urlstring];
+    NSURLRequest *request=[[NSURLRequest alloc]initWithURL:url];
+    NSURLConnection *connection=[[NSURLConnection alloc]initWithRequest:request delegate:self];
+    [connection start];
+
 //    /*******[ACTIVITY INDICATOR]********/
 //    CGRect frame = CGRectMake (120.0, 200.0, 100, 100);
 //    self.activity = [[UIActivityIndicatorView alloc] initWithFrame:frame];
@@ -292,6 +278,35 @@ int currentPageIndex = 0;
 //    
 //    
    }
+
+- (void)downloadEventImages {
+    if (self.event.sliderImages.count==0) {
+        return;
+    }
+    
+//    [_timer invalidate];
+//    _timer = nil;
+    
+    [self.pageDatalist removeAllObjects];
+    for (int i=0; i < self.event.sliderImages.count; i++) {
+        UIImageView *temp_btn = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*i, 0, self.view.frame.size.width, scroll1.frame.size.height)];
+        [temp_btn setBackgroundColor:[UIColor blackColor]];
+        
+        temp_btn.clipsToBounds = YES;
+        NSString *temp_img = @"http://owlers.com/event_images/";
+        temp_img = [temp_img stringByAppendingString:[self.event.sliderImages objectAtIndex:i ]];
+        [self downloadImageWithURL:[NSURL URLWithString:temp_img] completionBlock:^(BOOL succeeded, UIImage *image) {
+            if (succeeded) {
+                temp_btn.image = image;
+                SplashChildPageData *data = [SplashChildPageData dataWithImage:image displayText:@""];
+                [self.pageDatalist addObject:data];
+            }}];
+        [scroll1 addSubview:temp_btn];
+    }
+    
+//    currentPageIndex = 0;
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerCalled) userInfo:nil repeats:YES];
+}
 
 
 
@@ -464,10 +479,6 @@ int currentPageIndex = 0;
     return nil;
 }
 
--(void)viewWillLayoutSubviews{
-
-    
-}
 -(void)viewtrans2Hidden:(UITapGestureRecognizer*)tapgesture{
     
     
@@ -480,385 +491,10 @@ int currentPageIndex = 0;
 }
 -(void)viewTransparentHidden:(UITapGestureRecognizer*)tapgesture{
     
-    
-
     view_transparent.hidden = YES;
-    
-        view_rsvp.hidden = YES;
-    
-
+//    
+//        view_rsvp.hidden = YES;
 }
-
-#pragma mark IBAction methods
-
--(IBAction)male_minus_action:(id)sender{
-    
-    NSString *get_male_count = txt_male.text;
-    if([get_male_count intValue] <= 0){
-        //Do nothing if male count 0 or less than 0
-    }else{
-        int total_male = [get_male_count intValue] - 1;
-        [txt_male setText:[NSString stringWithFormat:@"%d",total_male]];
-        /****[REMOVE COUPLE]*****/
-        if([lb_couple.text intValue] > 0 && [lb_male.text intValue] == 0){
-            NSString *get_female_counts = lb_female.text;
-            int total_females = [get_female_counts intValue];
-            int bbb = total_females + 1;
-            [lb_female setText:[NSString stringWithFormat:@"%d", bbb]];
-            int c = [lb_couple.text intValue] - 1;
-            [lb_couple setText:[NSString stringWithFormat:@"%d",c]];
-            /***************************[PRICE CALCULATION START]*****************************/
-            int only_male_prc = [lb_male.text intValue] * [lab_TopMale.text intValue];
-            int only_female_prc = [lb_female.text intValue] * [lab_TopFeMale.text intValue];
-            int only_couple_prc = [lb_couple.text intValue] * [lab_TopCouple.text intValue];
-            
-            [lb_male_rupee setText:[NSString stringWithFormat:@"%d",only_male_prc]];
-            [lb_female_rupee setText:[NSString stringWithFormat:@"%d", only_female_prc]];
-            [lb_couple_rupee setText:[NSString stringWithFormat:@"%d",only_couple_prc]];
-            
-            int total_prc = [lb_male_rupee.text intValue] + [lb_female_rupee.text intValue] + [lb_couple_rupee.text intValue];
-            [lb_Total_rupee setText:[NSString stringWithFormat:@"%d",total_prc]];
-            
-            [without_payment setText:[NSString stringWithFormat:@"%d",total_prc]];
-            int aaaa = 0;
-            if([discount_value intValue] > 0){
-                float per = total_prc * [discount_value intValue] / 100;
-                float per2 = total_prc - per;
-                aaaa = roundf(per2);
-                [pay_now setText:[NSString stringWithFormat:@"%d",aaaa]];
-            }else{
-                [pay_now setText:[NSString stringWithFormat:@"%d",total_prc]];
-            }
-            /***************************[PRICE CALCULATION END]*****************************/
-        }else if([lb_couple.text intValue] > 0 && [lb_male.text intValue] > 0){
-            NSString *get_male_counts = lb_male.text;
-            int total_males = [get_male_counts intValue];
-            int aaa = total_males - 1;
-            [lb_male setText:[NSString stringWithFormat:@"%d",aaa]];
-            /***************************[PRICE CALCULATION START]*****************************/
-            int only_male_prc = [lb_male.text intValue] * [lab_TopMale.text intValue];
-            int only_female_prc = [lb_female.text intValue] * [lab_TopFeMale.text intValue];
-            int only_couple_prc = [lb_couple.text intValue] * [lab_TopCouple.text intValue];
-            
-            [lb_male_rupee setText:[NSString stringWithFormat:@"%d",only_male_prc]];
-            [lb_female_rupee setText:[NSString stringWithFormat:@"%d", only_female_prc]];
-            [lb_couple_rupee setText:[NSString stringWithFormat:@"%d", only_couple_prc]];
-            
-            int total_prc = [lb_male_rupee.text intValue] + [lb_female_rupee.text intValue] + [lb_couple_rupee.text intValue];
-            [lb_Total_rupee setText:[NSString stringWithFormat:@"%d",total_prc]];
-            
-            [without_payment setText:[NSString stringWithFormat:@"%d",total_prc]];
-            int aaaa = 0;
-            if([discount_value intValue] > 0){
-                float per = total_prc * [discount_value intValue]/100;
-                float per2 = total_prc - per;
-                aaaa = roundf(per2);
-                [pay_now setText:[NSString stringWithFormat:@"%d",aaaa]];
-            }else{
-                [pay_now setText:[NSString stringWithFormat:@"%d",total_prc]];
-            }
-            /***************************[PRICE CALCULATION END]*****************************/
-        }else if([lb_couple.text intValue] == 0 && [lb_male.text intValue] > 0){
-            NSString *get_male_counts = txt_male.text;
-            int total_males = [get_male_counts intValue];
-            int aaa = total_males - 1;
-            [lb_male setText:[NSString stringWithFormat:@"%d",aaa]];
-            /***************************[PRICE CALCULATION START]*****************************/
-            int only_male_prc = [lb_male.text intValue] * [lab_TopMale.text intValue];
-            int only_female_prc = [lb_female.text intValue] * [lab_TopFeMale.text intValue];
-            int only_couple_prc = [lb_couple_rupee.text intValue] * [lab_TopCouple.text intValue];
-            
-            [lb_male_rupee setText:[NSString stringWithFormat:@"%d",only_male_prc]];
-            [lb_female_rupee setText:[NSString stringWithFormat:@"%d", only_female_prc]];
-            [lb_couple_rupee setText:[NSString stringWithFormat:@"%d", only_couple_prc]];
-            
-            int total_prc = [lb_male_rupee.text intValue] + [lb_female_rupee.text intValue] + [lb_couple_rupee.text intValue];
-            
-            [lb_Total_rupee setText:[NSString stringWithFormat:@"%d",total_prc]];
-            
-            [without_payment setText:[NSString stringWithFormat:@"%d", total_prc]];
-            int aaaa = 0;
-            if([discount_value intValue] > 0){
-                float per = total_prc * [discount_value intValue]/100;
-                float per2  = total_prc - per;
-                aaaa =  roundf(per2);
-                [pay_now setText:[NSString stringWithFormat:@"%d",aaaa]];
-            }else{
-                [pay_now setText:[NSString stringWithFormat:@"%d",total_prc]];
-            }
-            /***************************[PRICE CALCULATION END]*****************************/
-        }else{
-            //Do nothing
-        }
-    }
-}
-
--(IBAction)male_plus_action:(id)sender{
-    
-    NSString *get_male_count = txt_male.text;
-    int total_male = [get_male_count intValue] + 1;
-    [txt_male setText:[NSString stringWithFormat:@"%d", total_male]];
-    
-    NSString *get_male_counts = lb_male.text;
-    int total_males = [get_male_counts intValue];
-    int aaa = total_males + 1;
-    [lb_male setText:[NSString stringWithFormat:@"%d",aaa]];
-    /*********[MAKE COUPLE]*********/
-    if([lb_male.text intValue] <= [lb_female.text intValue]){
-        int m = [lb_male.text intValue];
-        int f = [lb_female.text intValue];
-        [lb_male setText:[NSString stringWithFormat:@"%d",m - 1]];
-        [lb_female setText:[NSString stringWithFormat:@"%d",f - 1]];
-        
-        int c = [lb_couple.text intValue] + 1;
-        [lb_couple setText:[NSString stringWithFormat:@"%d",c]];
-    }
-    /*********[END MAKE COUPLE]*********/
-    
-    /***************************[PRICE CALCULATION START]*****************************/
-    int only_male_prc = [lb_male.text intValue] * [lab_TopMale.text intValue];
-    int only_female_prc = [lb_female.text intValue] * [lab_TopFeMale.text intValue];
-    int only_couple_prc = [lb_couple.text intValue] * [lab_TopCouple.text intValue];
-    
-    [lb_male_rupee setText:[NSString stringWithFormat:@"%d",only_male_prc]];
-    [lb_female_rupee setText:[NSString stringWithFormat:@"%d",only_female_prc]];
-    [lb_couple_rupee setText:[NSString stringWithFormat:@"%d", only_couple_prc]];
-    
-    int total_prc = [lb_male_rupee.text intValue] + [lb_female_rupee.text intValue] +[lb_couple_rupee.text intValue];
-    
-    [lb_Total_rupee setText:[NSString stringWithFormat:@"%d",total_prc]];
-    [without_payment setText:[NSString stringWithFormat:@"%d",total_prc]];
-    
-    int aaaa = 0;
-    if([discount_value intValue] > 0){
-        float per = total_prc * [discount_value intValue] / 100;
-        float per2 = total_prc - per;
-        aaaa = roundf(per2);
-        [pay_now setText:[NSString stringWithFormat:@"%d",aaaa]];
-    }else{
-        [pay_now setText:[NSString stringWithFormat:@"%d",total_prc]];
-    }
-    /***************************[PRICE CALCULATION END]*****************************/
-    
-}
-
--(IBAction)female_minus_action:(id)sender{
-    
-    NSString *get_female_count = txt_female.text;
-    if([get_female_count intValue] <= 0){
-        //Do nothing if 0
-    }else{
-        int total_female = [get_female_count intValue] - 1;
-        [txt_female setText:[NSString stringWithFormat:@"%d",total_female]];
-        /************[REMOVE COUPLE]************/
-        if([lb_couple.text intValue] > 0 && [lb_female.text intValue] == 0){
-            NSString *get_male_counts = lb_male.text;
-            int total_males = [get_male_counts intValue];
-            int bbb = total_males + 1;
-            [lb_male setText:[NSString stringWithFormat:@"%d",bbb]];
-            
-            int c = [lb_couple.text intValue] - 1;
-            [lb_couple setText:[NSString stringWithFormat:@"%d",c]];
-            /***************************[PRICE CALCULATION START]*****************************/
-            int only_male_prc = [lb_male.text intValue] * [lab_TopMale.text intValue];
-            int only_female_prc = [lb_female.text intValue] * [lab_TopFeMale.text intValue];
-            int only_couple_prc = [lb_couple.text intValue] * [lab_TopCouple.text intValue];
-            
-            [lb_male_rupee setText:[NSString stringWithFormat:@"%d",only_male_prc]];
-            [lb_female_rupee setText:[NSString stringWithFormat:@"%d", only_female_prc]];
-            [lb_couple_rupee setText:[NSString stringWithFormat:@"%d",only_couple_prc]];
-            
-            int total_prc = [lb_male_rupee.text intValue] + [lb_female_rupee.text intValue] + [lb_couple_rupee.text intValue];
-            [lb_Total_rupee setText:[NSString stringWithFormat:@"%d",total_prc]];
-            
-            [without_payment setText:[NSString stringWithFormat:@"%d",total_prc]];
-            int aaaa = 0;
-            if([discount_value intValue] > 0){
-                float per = total_prc * [discount_value intValue];
-                float per2 = total_prc - per;
-                aaaa = roundf(per2);
-                [pay_now setText:[NSString stringWithFormat:@"%d",aaaa]];
-            }else{
-                [pay_now setText:[NSString stringWithFormat:@"%d",total_prc]];
-            }
-
-            /***************************[PRICE CALCULATION END]*****************************/
-        }else if([lb_couple.text intValue] > 0 && [lb_female.text intValue] > 0){
-            NSString *get_female_counts = lb_female.text;
-            int total_females =[get_female_counts intValue];
-            int aaa = total_females -1;
-            [lb_female setText:[NSString stringWithFormat:@"%d",aaa]];
-            /***************************[PRICE CALCULATION START]*****************************/
-            int only_male_prc = [lb_male.text intValue] * [lab_TopMale.text intValue];
-            int only_female_prc = [lb_female.text intValue] * [lab_TopFeMale.text intValue];
-            int only_couple_prc = [lb_couple.text intValue] * [lab_TopCouple.text intValue];
-            
-            [lb_male_rupee setText:[NSString stringWithFormat:@"%d",only_male_prc]];
-            [lb_female_rupee setText:[NSString stringWithFormat:@"%d", only_female_prc]];
-            [lb_couple_rupee setText:[NSString stringWithFormat:@"%d", only_couple_prc]];
-            
-            int total_prc = [lb_male_rupee.text intValue] + [lb_female_rupee.text intValue] + [lb_couple_rupee.text intValue];
-            [lb_Total_rupee setText:[NSString stringWithFormat:@"%d",total_prc]];
-            
-            [without_payment setText:[NSString stringWithFormat:@"%d",total_prc]];
-            int aaaa = 0;
-            if([discount_value intValue] > 0){
-                float per = total_prc * [discount_value intValue]/100;
-                float per2 = total_prc - per;
-                aaaa = roundf(per2);
-                [pay_now setText:[NSString stringWithFormat:@"%d",aaaa]];
-            }else{
-                [pay_now setText:[NSString stringWithFormat:@"%d",total_prc]];
-            }
-
-            /***************************[PRICE CALCULATION END]*****************************/
-        }else if([lb_couple.text intValue] == 0 && [lb_female.text intValue] > 0){
-            NSString *get_female_counts = lb_female.text;
-            int total_females = [get_female_counts intValue];
-            int aaa = total_females - 1;
-            [lb_female setText:[NSString stringWithFormat:@"%d",aaa]];
-            /***************************[PRICE CALCULATION START]*****************************/
-            int only_male_prc = [lb_male.text intValue] * [lab_TopMale.text intValue];
-            int only_female_prc = [lb_female.text intValue] * [lab_TopFeMale.text intValue];
-            int only_couple_prc = [lb_couple_rupee.text intValue] * [lab_TopCouple.text intValue];
-            
-            [lb_male_rupee setText:[NSString stringWithFormat:@"%d",only_male_prc]];
-            [lb_female_rupee setText:[NSString stringWithFormat:@"%d", only_female_prc]];
-            [lb_couple_rupee setText:[NSString stringWithFormat:@"%d", only_couple_prc]];
-            
-            int total_prc = [lb_male_rupee.text intValue] + [lb_female_rupee.text intValue] + [lb_couple_rupee.text intValue];
-            
-            [lb_Total_rupee setText:[NSString stringWithFormat:@"%d",total_prc]];
-            
-            [without_payment setText:[NSString stringWithFormat:@"%d", total_prc]];
-            int aaaa = 0;
-            if([discount_value intValue] > 0){
-                float per = total_prc * [discount_value intValue]/100;
-                float per2  = total_prc - per;
-                aaaa =  roundf(per2);
-                [pay_now setText:[NSString stringWithFormat:@"%d",aaaa]];
-            }else{
-                [pay_now setText:[NSString stringWithFormat:@"%d",total_prc]];
-            }
-            /***************************[PRICE CALCULATION END]*****************************/
-        }else{
-            // Do nothing in else case
-        }
-    }
-}
-
--(IBAction)female_plus_action:(id)sender{
-    NSString *get_female_count = txt_female.text;
-    int total_female = [get_female_count intValue] + 1;
-    [txt_female setText:[NSString stringWithFormat:@"%d", total_female]];
-    
-    NSString * get_female_counts = lb_female.text;
-    int total_females = [get_female_counts intValue];
-    int aaa = total_females + 1;
-    [lb_female setText:[NSString stringWithFormat:@"%d",aaa]];
-    
-    /*********[MAKE COUPLE]********/
-    if([lb_female.text intValue] <= [lb_male.text intValue]){
-        int m = [lb_male.text intValue];
-        int f = [lb_female.text intValue];
-        [lb_male setText:[NSString stringWithFormat:@"%d", m-1]];
-        [lb_female setText:[NSString stringWithFormat:@"%d", f-1]];
-        int c = [lb_couple.text intValue] + 1;
-        [lb_couple setText:[NSString stringWithFormat:@"%d",c]];
-    }
-    /***************************[PRICE CALCULATION START]*****************************/
-    int only_male_prc = [lb_male.text intValue] * [lab_TopMale.text intValue];
-    int only_female_prc = [lb_female.text intValue] * [lab_TopFeMale.text intValue];
-    int only_couple_prc = [lb_couple.text intValue] * [lab_TopCouple.text intValue];
-    [lb_male_rupee setText:[NSString stringWithFormat:@"%d",only_male_prc]];
-    [lb_female_rupee setText:[NSString stringWithFormat:@"%d",only_female_prc]];
-    [lb_couple_rupee setText:[NSString stringWithFormat:@"%d", only_couple_prc]];
-    int total_prc = [lb_male_rupee.text intValue] + [lb_female_rupee.text intValue] +[lb_couple_rupee.text intValue];
-    [lb_Total_rupee setText:[NSString stringWithFormat:@"%d",total_prc]];
-    [without_payment setText:[NSString stringWithFormat:@"%d",total_prc]];
-    int aaaa = 0;
-    if([discount_value intValue] > 0){
-        float per = total_prc * [discount_value intValue] / 100;
-        float per2 = total_prc - per;
-        aaaa = roundf(per2);
-        [pay_now setText:[NSString stringWithFormat:@"%d",total_prc]];
-    }
-    /***************************[PRICE CALCULATION END]*****************************/
-    
-}
-
--(IBAction)continue_pay_action:(id)sender{
-    if ([[ConnectionManager getSharedInstance] isConnectionAvailable])
-    {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            
-            
-            NSString *urlString = [NSString stringWithFormat:@"%@/book_event.php?event_id=70&user_id=44&total_amount=450&no_of_males=3&no_of_females=1&no_of_couples=2&sub_total=500&discount_percent=10&payment_method=online&event_description=hi",BaseUrl];
-            NSURL *url = [[NSURL alloc]initWithString:urlString];
-            NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-            
-            [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-             {
-                 dispatch_async(dispatch_get_main_queue(), ^(void){
-                     if (data.length > 0)
-                     {
-                         NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-                         
-                         NSLog(@"parsedObject =%@",parsedObject);
-                         
-                         NSString* message = [parsedObject  objectForKey:@"message"];
-                         NSLog(@"message   =%@",message);
-
-                         UIAlertView  *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Event successfully booked" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                         [alertView show];
-                         
-                     }
-                     
-                 });
-             }];
-        });
-    }
-    
-
-    
-}
-
--(IBAction)without_pay_action:(id)sender{
-    
-    if ([[ConnectionManager getSharedInstance] isConnectionAvailable])
-    {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            
-            
-            NSString *urlString = [NSString stringWithFormat:@"%@/book_event.php?event_id=70&user_id=44&total_amount=450&no_of_males=3&no_of_females=1&no_of_couples=2&sub_total=500&discount_percent=10&payment_method=cash&event_description=hi",BaseUrl];
-            NSURL *url = [[NSURL alloc]initWithString:urlString];
-            NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-            
-            [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-             {
-                 dispatch_async(dispatch_get_main_queue(), ^(void){
-                     if (data.length > 0)
-                     {
-                         NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-                         
-                         NSLog(@"parsedObject =%@",parsedObject);
-                         
-                         NSString* message = [parsedObject  objectForKey:@"message"];
-                         NSLog(@"message   =%@",message);
-                         
-                         UIAlertView  *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Event successfully booked" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                         [alertView show];
-                         
-                     }
-                     
-                 });
-             }];
-        });
-    }
-    
-}
-
-
 
 -(void)timer{
     
@@ -870,7 +506,7 @@ int currentPageIndex = 0;
     }
     else{
         [ scroll1 setContentOffset:CGPointMake(scroll1.contentOffset.x+self.view.frame.size.width, 0)];
-        if (scroll1.contentOffset.x == self.view.frame.size.width*(array_slider.count-1)) {
+        if (scroll1.contentOffset.x == self.view.frame.size.width*(self.event.sliderImages.count-1)) {
             check_slider=YES;
         }
     }
@@ -881,28 +517,32 @@ int currentPageIndex = 0;
     
     /*****[TOP IMAGE HORIZONTAL SLIDER]*****/
     scroll1.scrollEnabled=YES;
-    [scroll1 setContentSize:CGSizeMake(self.view.frame.size.width*array_slider.count, 0)];
-    if (array_slider.count==0) {
-        return;
-    }
-    for (int i=0; i<=array_slider.count-1; i++) {
-        UIImageView *temp_btn = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*i, 0, self.view.frame.size.width, scroll1.frame.size.height)];
-        [temp_btn setBackgroundColor:[UIColor blackColor]];
-        
-        temp_btn.clipsToBounds = YES;
-        NSString *temp_img = @"http://owlers.com/event_images/";
-        temp_img = [temp_img stringByAppendingString:[array_slider objectAtIndex:i ]];
-        [self downloadImageWithURL:[NSURL URLWithString:temp_img] completionBlock:^(BOOL succeeded, UIImage *image) {
-            if (succeeded) {
-                temp_btn.image = image;
-            }}];
-        [scroll1 addSubview:temp_btn];
-    }
+    [scroll1 setContentSize:CGSizeMake(self.view.frame.size.width*self.event.sliderImages.count, 0)];
+//    if (self.event.sliderImages.count==0) {
+//        return;
+//    }
+//    
+//    [self.pageDatalist removeAllObjects];
+//    for (int i=0; i < self.event.sliderImages.count; i++) {
+//        UIImageView *temp_btn = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*i, 0, self.view.frame.size.width, scroll1.frame.size.height)];
+//        [temp_btn setBackgroundColor:[UIColor blackColor]];
+//        
+//        temp_btn.clipsToBounds = YES;
+//        NSString *temp_img = @"http://owlers.com/event_images/";
+//        temp_img = [temp_img stringByAppendingString:[self.event.sliderImages objectAtIndex:i ]];
+//        [self downloadImageWithURL:[NSURL URLWithString:temp_img] completionBlock:^(BOOL succeeded, UIImage *image) {
+//            if (succeeded) {
+//                temp_btn.image = image;
+//                SplashChildPageData *data = [SplashChildPageData dataWithImage:image displayText:@""];
+//                [self.pageDatalist addObject:data];
+//            }}];
+//        [scroll1 addSubview:temp_btn];
+//    }
     
     
     /*****[OWLERS MENU HORIZONTAL SLIDER]*****/
     scroll_offer.scrollEnabled=YES;
-    [scroll_offer setContentSize:CGSizeMake(self.view.frame.size.width*array_offers.count, 0)];
+    [scroll_offer setContentSize:CGSizeMake(self.view.frame.size.width*self.event.offers.count, 0)];
     
     
 //    scroll_offer.backgroundColor = [UIColor yellowColor];
@@ -911,10 +551,10 @@ int currentPageIndex = 0;
 //    scroll_offer.pagingEnabled=NO;
     //scroll_offer.contentSize = CGSizeMake(420*3, 0);
     
-    if (array_offers.count==0) {
+    if (self.event.offers.count==0) {
         return;
     }
-    for (int i=0; i<array_offers.count; i++) {
+    for (int i=0; i<self.event.offers.count; i++) {
 
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
         UIButton *btn_call = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 30, 15)];
@@ -925,7 +565,7 @@ int currentPageIndex = 0;
         UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, 30, 15)];
         
         
-        NSLog(@"offer Label :%@",[[array_offers objectAtIndex:i]objectForKey:@"title"]);
+        NSLog(@"offer Label :%@",[[self.event.offers objectAtIndex:i]objectForKey:@"title"]);
         
         
         
@@ -940,7 +580,7 @@ int currentPageIndex = 0;
         
         UILabel *label = [[ UILabel alloc] initWithFrame:CGRectMake(15, 5, self.view.frame.size.width, 20)];
         
-        label.text = [[array_offers objectAtIndex:i] objectForKey:@"title"];
+        label.text = [[self.event.offers objectAtIndex:i] objectForKey:@"title"];
         
         label.textColor = [UIColor blackColor];
         label.font = [UIFont systemFontOfSize:15];
@@ -954,15 +594,6 @@ int currentPageIndex = 0;
       //  [self.view addSubview:scroll_offer];
       
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 }
 
@@ -991,8 +622,6 @@ int currentPageIndex = 0;
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    
-   
     serverdata = [[NSMutableData alloc]init];
 }
 
@@ -1001,99 +630,64 @@ int currentPageIndex = 0;
     [serverdata appendData:data];
 }
 
-
-
-
-
-
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     
 //    self.activity.hidden =YES;
     [self.activity stopAnimating];
-    serverdict = [NSJSONSerialization JSONObjectWithData:serverdata options:NSJSONReadingMutableLeaves error:nil];
-    NSLog(@"serverData =%@",serverdict);
+    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:serverdata options:NSJSONReadingMutableLeaves error:nil];
+    NSLog(@"serverData =%@",jsonData);
     
-   
-    array_slider = [[[serverdict objectForKey:@"events"] objectAtIndex:0] objectForKey:@"slider_images"];
- //[self viewDidLayoutSubviews];
-    //[self offermethodcall];
-//    
-//    NSArray *temparr = [serverdict objectForKey:@"events"] ;
-//    NSDictionary *tempdic = [temparr objectAtIndex:0];
-//    NSArray *temp2 = [[tempdic objectForKey:@"offers"] objectAtIndex:0];
-    
-    NSArray *offer_slider_array = [[[serverdict objectForKey:@"events"]objectAtIndex:0]objectForKey:@"offers"];
-    
-    
-    NSLog(@"OFFERS DATA : %@",offer_slider_array);
-   
-    array_offers = [offer_slider_array copy];
-    [self viewDidLayoutSubviews];
-   // [self offermethodcall];
-    
-    /******************************[TO BE COPIED START]**********************************/
-    if([[[serverdict objectForKey:@"events"] objectAtIndex:0] objectForKey:@"discounts"]) {
-        NSLog(@"Discount exists");
-        NSArray *local_array = [[[serverdict objectForKey:@"events"] objectAtIndex:0] objectForKey:@"discounts"];
-        discount_value = [[local_array objectAtIndex:0] objectForKey:@"value"];
-        NSString *discount = [[local_array objectAtIndex:0] objectForKey:@"title"];
-        NSString *dis_total = [NSString stringWithFormat:@"PAY  NOW ( %@ )",discount];
+    NSDictionary *eventDict = [[jsonData objectForKey:@"events"] objectAtIndex:0];
+    self.event.malePrice = [[eventDict objectForKey:@"ev_price_male"] intValue];
+    self.event.femalePrice = [[eventDict objectForKey:@"ev_price_female"] intValue];
+    self.event.couplePrice = [[eventDict objectForKey:@"ev_price_couple"] intValue];
+    self.event.name = [eventDict objectForKey:@"event_name"];
+    self.event.address = [eventDict objectForKey:@"address"];
+    self.event.startTime = [eventDict objectForKey:@"event_start"];
+    self.event.eventDescription = [eventDict objectForKey:@"event_desc"];
+    self.event.venue = [eventDict objectForKey:@"venue"];
+    self.event.atmosphere = [eventDict objectForKey:@"atmosphere"];
+    self.event.genreOfMusic = [eventDict objectForKey:@"genre_of_music"];
+    self.event.sliderImages = [eventDict objectForKey:@"slider_images"];
+    self.event.offers = [eventDict objectForKey:@"offers"];
 
-        [continue_pay_action setTitle:dis_total forState:nil];
-        
-    }
-    else {
-        NSLog(@"Discount does not exists");
+    [self viewDidLayoutSubviews];
+    [self downloadEventImages];
+   // [self offermethodcall];
+
+    if([eventDict objectForKey:@"discounts"]) {
+        NSArray *local_array = [eventDict objectForKey:@"discounts"];
+        self.event.discountValue = [[[local_array objectAtIndex:0] objectForKey:@"value"] intValue];
+        self.event.discountTitle = [[local_array objectAtIndex:0] objectForKey:@"title"];
     }
     
-        NSString *status_check = [NSString stringWithFormat:@"%@",[[[serverdict objectForKey:@"events"] objectAtIndex:0] objectForKey:@"entry_exists_for"]];
-    if([status_check  isEqual: @""]){}else{
+    NSString *status_check = [NSString stringWithFormat:@"%@",[eventDict objectForKey:@"entry_exists_for"]];
+    if(status_check.length > 0){
         NSArray* foo = [status_check componentsSeparatedByString: @","];
-        
-        NSLog(@"FOO: %@", foo);
-        
-        NSLog(@"array count : %lu ",(unsigned long)foo.count);
-        if(foo.count <= 0){}else{
-            for (int i = 0; i < foo.count; i++) {
-                
-                if([[foo objectAtIndex:i] isEqualToString:@"M"]){
-                    NSLog(@"male checked");
-                    male_status = YES;
-                }else if([[foo objectAtIndex:i] isEqualToString:@"F"]){
-                    NSLog(@"female checked");
-                    female_status = YES;
-                }else{
-                    NSLog(@"couple checked");
-                    couple_status = YES;
-                }
-                
+
+        for (int i = 0; i < foo.count; i++) {
+            
+            if([[foo objectAtIndex:i] isEqualToString:@"M"]){
+                self.event.entryExistsForMale = YES;
+            }else if([[foo objectAtIndex:i] isEqualToString:@"F"]){
+                self.event.entryExistsForFemale = YES;
+            }else{
+                self.event.entryExistsForCouple = YES;
             }
         }
     }
-    /******************************[TO BE COPIED END]**********************************/
     
-    
-    
-    _gettimeDatelabel.text=[NSString stringWithFormat:@"%@",[[[serverdict objectForKey:@"events"] objectAtIndex:0] objectForKey:@"event_start"]];
-    
-    
-    _getDetailLabel.text=[NSString stringWithFormat:@"%@",[[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"event_desc"]];
-    
-    _imageLabel1.text=[NSString stringWithFormat:@"%@",[[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"event_name"]];
-    _imagelabel2.text=[NSString stringWithFormat:@"%@",[[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"venue"]];
-//    _offerLabel.text =[NSString stringWithFormat:@"%@",[[[[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"offers"]objectAtIndex:0]objectForKey:@"title"]];
-    
-    lab_TopMale.text=[NSString stringWithFormat:@"%@", [[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"ev_price_male"]];
-    lab_TopFeMale.text=[NSString stringWithFormat:@"%@", [[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"ev_price_female"]];
-    lab_TopCouple.text=[NSString stringWithFormat:@"%@", [[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"ev_price_couple"]];
-    NSLog(@"this is the event name : %@",[[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"event_name"]);
-    eventName.text=[NSString stringWithFormat:@"%@", [[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"event_name"]];
-    
-    _address = [NSString stringWithFormat:@"%@",[[[serverdict objectForKey:@"events"]objectAtIndex:0]objectForKey:@"address"]];
+    self.gettimeDatelabel.text = self.event.startTime;
+    self.getDetailLabel.text = self.event.eventDescription;
+    self.getLocationLabel.text = self.event.address;
+    self.atmospherelLabel.text = self.event.atmosphere;
+    self.musicLabel.text = self.event.genreOfMusic;
+    self.eventName.text = self.event.name;
+    self.eventVenue.text = self.event.venue;
     
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:_address completionHandler:^(NSArray* placemarks, NSError* error){
+    [geocoder geocodeAddressString:self.event.address completionHandler:^(NSArray* placemarks, NSError* error){
         
         
         for (CLPlacemark* aPlacemark in placemarks)
@@ -1137,19 +731,8 @@ int currentPageIndex = 0;
                 
         
     }];
-    
-    
 
-    
-    _getLocationLabel.text=[NSString stringWithFormat:@"%@", _address];
-    
-    _imageLabel1.text=[NSString stringWithFormat:@"%@",[[[serverdict objectForKey:@"events"]objectAtIndex:0]objectForKey:@"event_name"]];
-    _atmospherelLabel.text=[NSString stringWithFormat:@"%@",[[[serverdict objectForKey:@"events"]objectAtIndex:0]objectForKey:@"atmosphere"]];
-    _musicLabel.text=[NSString stringWithFormat:@"%@",[[[serverdict objectForKey:@"events"]objectAtIndex:0]objectForKey:@"genre_of_music"]];
     NSArray *frames = [[NSArray alloc]init];
-    
-    
-    
     UIImageView *animatedIMvw = [[UIImageView alloc] init];
     animatedIMvw.animationImages = frames;
     [animatedIMvw startAnimating];
@@ -1158,7 +741,6 @@ int currentPageIndex = 0;
     ////  Here call Google Map
     //[self mapurl:_address];
   }
-
 
 
 #pragma mark MapView Delegate
@@ -1205,7 +787,6 @@ int currentPageIndex = 0;
 //}
 //
 
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     showLocation = [locations objectAtIndex:0];
     [locationmanager stopUpdatingLocation];
@@ -1226,43 +807,16 @@ int currentPageIndex = 0;
 
 
 - (IBAction)backBtnAction:(id)sender {
-    
-    ProductViewController *product=[[ProductViewController alloc]initWithNibName:@"ProductViewController" bundle:nil];
-    UINavigationController *navController = self.navigationController;
-    [navController popViewControllerAnimated:YES];
-
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)rsvpbtnAction:(id)sender {
-    
-    self.loginViewController = [[LoginViewController alloc] init];
-    Boolean check_login = [[SharedPreferences sharedInstance] isLogin];
-    
-
-    
-    
-    
-    if(check_login){
-        if (view_rsvp.hidden) {
-            view_transparent.hidden= NO;
-            view_rsvp.hidden = NO;
-        }else
-            view_rsvp.hidden = YES;
-        view_transparent.hidden= NO;
-    }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Status" message:@"Please login to proceed" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Login", nil];
-        [alertView show];
+    if ([[SharedPreferences sharedInstance] isLogin]) {
+        [self performSegueWithIdentifier:@"seguePayment" sender:nil];
     }
-    
-    
-    
-    
 }
 
-
-
-- (void)alertView:(UIAlertView *)alertView
-clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == [alertView cancelButtonIndex]){
         //cancel clicked ...do your action
     }else{
@@ -1274,24 +828,12 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 }
 - (IBAction)moreBtnAction:(id)sender {
     
-    //self.getDetailLabel.frame = CGRectMake(40,74,278,80);
-    //[_getDetailLabel setTextColor:[UIColor blackColor]];
-    
     _getDetailLabel.numberOfLines = 0;
     CGSize maxSize = CGSizeMake(_getDetailLabel.bounds.size.width, CGFLOAT_MAX);
     CGSize textSize = [_getDetailLabel.text sizeWithFont:_getDetailLabel.font constrainedToSize:maxSize];
     
-    
-
-    
     _getDetailLabel.frame = CGRectMake(10, 10, textSize.width, textSize.height);
     [moreBtn setTitle:[NSString stringWithFormat:@"Less"] forState:nil];
-    
-    
-//    [UIView animateWithDuration:0.3 animations:^{
-//        [containerView setFrame:rect];
-//        [bottomView setFrame:rect2];
-//    }];
     
     NSLog(@"label expanded");
 }
@@ -1328,7 +870,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
                                      start.latitude, start.longitude, destination.latitude, destination.longitude];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:googleMapsURLString]];
-    [self mapurl:_address];
+    [self mapurl:self.event.address];
     
 }
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
@@ -1352,14 +894,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex{
 - (NSMutableArray*)pageDatalist {
     if (!_pageDatalist) {
         _pageDatalist = [[NSMutableArray alloc] init];
-        SplashChildPageData *data1 = [SplashChildPageData dataWithImage:[UIImage imageNamed:@"1.png"] displayText:@""];
-        [_pageDatalist addObject:data1];
-        SplashChildPageData *data2 = [SplashChildPageData dataWithImage:[UIImage imageNamed:@"3.png"] displayText:@"Bid for amaging offers, use them on-the-go"];
-        [_pageDatalist addObject:data2];
-        SplashChildPageData *data3 = [SplashChildPageData dataWithImage:[UIImage imageNamed:@"2.png"] displayText:@"Get access to the best party locations right from your phone"];
-        [_pageDatalist addObject:data3];
-        SplashChildPageData *data4 = [SplashChildPageData dataWithImage:[UIImage imageNamed:@"4.png"] displayText:@"Find the most exciting events in your city"];
-        [_pageDatalist addObject:data4];
     }
     return _pageDatalist;
 }

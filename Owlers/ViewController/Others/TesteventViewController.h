@@ -7,19 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Event.h"
 
 @interface TesteventViewController : UIViewController
 
-- (IBAction)btn1Action:(id)sender;
-- (IBAction)btn2Action:(id)sender;
-- (IBAction)btn3Action:(id)sender;
-- (IBAction)btn4Action:(id)sender;
-
-- (IBAction)continueAction:(id)sender;
-
-- (IBAction)paynowAction:(id)sender;
+@property (strong, nonatomic) Event *event;
 
 - (IBAction)backBtnAction:(id)sender;
+- (IBAction)maleMinusAction:(id)sender;
+- (IBAction)malePlusAction:(id)sender;
+- (IBAction)femaleMinusAction:(id)sender;
+- (IBAction)femalePlusAction:(id)sender;
+- (IBAction)continueWithoutPayAction:(id)sender;
+- (IBAction)payNowAction:(id)sender;
 
 
 @end

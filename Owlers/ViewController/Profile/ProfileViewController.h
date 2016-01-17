@@ -14,32 +14,21 @@
     NSArray *array;
     NSMutableData *serDATA;
     NSMutableDictionary *serDICT;
-    
     NSMutableData *serverData;
     NSMutableDictionary *serverDictionary;
-    IBOutlet UIImageView *profileImage;
     IBOutlet UIButton *addImageButton;
-    IBOutlet UIScrollView *scrolview;
-    
     NSIndexPath *indexpath;
 }
-@property (strong, nonatomic) IBOutlet UINavigationItem *profileLabel;
+
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *emaillabel;
 @property (strong, nonatomic) IBOutlet UILabel *mobileNoLabel;
 - (IBAction)actionSheet:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIImageView *profileImage;
-@property (strong, nonatomic) IBOutlet UIImageView *imageView;
-
-@property(nonatomic,strong) IBOutlet UITableView *tableview;
-- (IBAction)editbtnAction:(id)sender;
-- (IBAction)backBtn:(UIBarButtonItem *)sender;
-
-
+@property(nonatomic,strong) IBOutlet UITableView *profileTbl;
 
 - (IBAction)backBtnAction:(id)sender;
-- (IBAction)profileEditAction:(id)sender;
 - (IBAction)bookingAction:(id)sender;
 - (IBAction)walletAction:(id)sender;
 @end

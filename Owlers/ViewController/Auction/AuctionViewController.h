@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MenuPopUpViewController.h"
 
-@interface AuctionViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate>
+@interface AuctionViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate, UIAdaptivePresentationControllerDelegate, MenuDelegate>
 {
     NSMutableData *serverData;
     NSMutableDictionary *serverDict;
@@ -17,15 +18,10 @@
     NSMutableData *serDATA;
     NSMutableDictionary *serDICT;
     NSArray *arr;
-    
-    BOOL citycheck;
-    IBOutlet UIButton *cityBtn;
+  
 }
 
 @property (strong, nonatomic)  NSString *location_id;
-@property (strong, nonatomic) IBOutlet UITableView *tableView1;
-@property(nonatomic,strong) IBOutlet UITableView *citytable;
 - (IBAction)backBtnAction:(id)sender;
-- (IBAction)cityBtn:(id)sender;
 
 @end

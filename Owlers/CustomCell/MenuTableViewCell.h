@@ -10,5 +10,6 @@
 
 @interface MenuTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *displayName;
+@property (weak, nonatomic) IBOutlet UIImageView *separator;
 
 @end

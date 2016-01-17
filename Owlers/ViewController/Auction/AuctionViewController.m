@@ -7,141 +7,165 @@
 //
 
 #import "AuctionViewController.h"
-#import "CustomCell2.h"
-#import "CustomCell4.h"
-#import "ProductViewController.h"
 #import "BidSectionViewController.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "SVProgressHUD.h"
 #import "Header.h"
 #import "SharedPreferences.h"
 #import "NetworkManager.h"
+#import "Location.h"
+#import "LocationMenuItem.h"
+#import "PopOverBackgroundView.h"
+#import "AuctionTableViewCell.h"
+#import "Auction.h"
+
+#define MENU_ITEM_HEIGHT 45
+#define MENU_ITEM_WIDTH 150
+#define MENU_MAX_HEIGHT  self.view.frame.size.height * 2/3
 
 @interface AuctionViewController ()
+
+@property (weak, nonatomic) IBOutlet UITableView *auctionTbl;
+@property (weak, nonatomic) IBOutlet UIButton *locationBtn;
+@property (nonatomic, strong) Auction *auction;
+@property (nonatomic, strong) NSMutableArray *locationItems;
+@property (nonatomic, strong) NSMutableArray *auctionItems;
 
 @end
 
 @implementation AuctionViewController
 
-@synthesize tableView1;
-@synthesize citytable;
+
 NSURLConnection *conne_ction ,*connection_;
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [tableView1 setDelegate:self];
-    [tableView1 setDataSource:self];
-    [citytable setDelegate:self];
-    [citytable setDataSource:self];
-    
-    self.citytable.hidden=YES;
     [self loadData];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"segueBidSection"]) {
+        BidSectionViewController *controller = (BidSectionViewController*)segue.destinationViewController;
+        controller.auction = self.auction;
+    }else if ([segue.identifier isEqualToString:@"seguePopupLocations"]) {
+        MenuPopUpViewController *menuPopUp = (MenuPopUpViewController*)segue.destinationViewController;
+        menuPopUp.menuSeparatorColor = [UIColor colorWithRed:251.0f/255 green:156.0f/255 blue:21.0f/255 alpha:1];
+        menuPopUp.menuItems = [LocationMenuItem menuItemsWithLocations:self.locationItems];
+        menuPopUp.delegate = self;
+        
+        menuPopUp.preferredContentSize = [self sizeForMenuPopUp];
+        menuPopUp.presentationController.delegate = self;
+        menuPopUp.popoverPresentationController.sourceRect = CGRectMake(self.locationBtn.frame.size.width/2, self.locationBtn.frame.size.height, 0, 0);
+        menuPopUp.popoverPresentationController.popoverBackgroundViewClass = [PopOverBackgroundView class];
+    }
+}
+
 - (void)loadData{
-//    [NetworkManager loadAcutionsForCity:nil withComplitionHandler:^(id result, NSError *err) {
-//        serverDict = result;
-//        [self.tableView1 reloadData];
-//    }];
-//    
+    
     [NetworkManager loadLocationWithComplitionHandler:^(id result, NSError *err) {
         serDICT = result;
-        [self loadActionForLocation:[[serDICT objectForKey:(@"Locations")] firstObject]];
-        [self.citytable reloadData];
+        NSArray *locArr = [serDICT objectForKey:(@"Locations")];
+        for (NSDictionary *locDict in locArr) {
+            Location *loc = [[Location alloc] init];
+            loc.ID = [locDict objectForKey:@"location_id"];
+            loc.name = [locDict objectForKey:@"location_name"];
+            [self.locationItems addObject:loc];
+        }
+        if (self.locationItems.count > 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+            [self loadAuctionsForLocation:[self.locationItems objectAtIndex:0]];
+            });
+        }
     }];
+}
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    return UIModalPresentationNone;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  tableView ==tableView1 ?  [[serverDict objectForKey:@"items"] count] : [[serDICT objectForKey:@"Locations"] count];
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return tableView == citytable ? 48 : 160;
+    return  [[serverDict objectForKey:@"items"] count];
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Auction *auction = [self.auctionItems objectAtIndex:indexPath.row];
+    AuctionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseActionTblCell"];
+    cell.auctionName.text = auction.name;
+    cell.timeLeft.text = auction.timeElapsed;
+    cell.venue.text = auction.venue;
+    cell.totalBids.text = auction.totalBids;
     
-    if (tableView ==tableView1) {
-        static NSString *celid =@"cell";
-        CustomCell2 *cell = [tableView dequeueReusableCellWithIdentifier:celid];
-        if (cell == nil)
-        {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell2" owner:self options:nil];
-            
-            cell = [nib firstObject];
-        }
-        
-        citytable.backgroundColor = [UIColor darkGrayColor];
-        cell.label1.text=[[[serverDict objectForKey:(@"items")]objectAtIndex:indexPath.row]objectForKey:@"auction_name"];
-        cell.label2.text =[[[serverDict objectForKey:(@"items")]objectAtIndex:indexPath.row]objectForKey:@"time_elapsed"];
-        cell.label3.text =[[[serverDict objectForKey:(@"items")]objectAtIndex:indexPath.row]objectForKey:@"venue"];
-        cell.label4.text =[[[serverDict objectForKey:(@"items")]objectAtIndex:indexPath.row]objectForKey:@"total_bids"];
-        return cell;
-        
-    }
-    static NSString *celid1 =@"cell";
-    CustomCell4*cell1 = [tableView dequeueReusableCellWithIdentifier:celid1];
-    if (cell1 == nil)
-    {
-        NSArray *nib1 = [[NSBundle mainBundle] loadNibNamed:@"CustomCell4" owner:self options:nil];
-        cell1 = [nib1 firstObject];
-    }
-    
-    cell1.backgroundColor = [UIColor clearColor];
-    cell1.label.text=[[[serDICT objectForKey:(@"Locations")]objectAtIndex:indexPath.row]objectForKey:@"location_name"];
-    
-    return cell1;
+    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView ==tableView1) {
-        
-        NSDictionary *dict = [[serverDict objectForKey:(@"items")]objectAtIndex:indexPath.row];
-        BidSectionViewController *bid =[[BidSectionViewController alloc]initwithDict:dict];
-        [self.navigationController pushViewController:bid animated:YES];
-    }
-    else {
-        [cityBtn setTitle:[[[serDICT objectForKey:(@"Locations")]objectAtIndex:indexPath.row]objectForKey:@"location_name"]
-                 forState:UIControlStateNormal];
-        
-        [self loadActionForLocation:[[serDICT objectForKey:(@"Locations")]objectAtIndex:indexPath.row]];
-        citytable.hidden=YES;
-    }
+    self.auction = [self.auctionItems objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"segueBidSection" sender:nil];
 }
 
-- (void)loadActionForLocation:(NSDictionary *)locationDict{
-    
-    NSString *locationID = [locationDict objectForKey:@"location_id"];
-    [NetworkManager loadAcutionsForCity:locationID withComplitionHandler:^(id result, NSError *err) {
+- (void)loadAuctionsForLocation:(Location *)location{
+    [NetworkManager loadAcutionsForCity:location.ID withComplitionHandler:^(id result, NSError *err) {
         serverDict = result;
-        [self.tableView1 reloadData];
+        NSArray *items = [serverDict objectForKey:@"items"];
+        for (NSDictionary *dict in items) {
+            Auction *auction = [[Auction alloc] init];
+            auction.ID = [dict objectForKey:@"auction_id"];
+            auction.name = [dict objectForKey:@"auction_name"];
+            auction.timeElapsed = [dict objectForKey:@"time_elapsed"];
+            auction.venue = [dict objectForKey:@"venue"];
+            auction.totalBids = [dict objectForKey:@"total_bids"];
+            auction.auctionDescription = [dict objectForKey:@"auction_desc"];
+            auction.buyPrice = [dict objectForKey:@"buy_now_price"];
+            auction.openingPrice = [dict objectForKey:@"opening_price"];
+            auction.imgURL = [dict objectForKey:@"auction_image"];
+            
+            [self.auctionItems addObject:auction];
+        }
+        [self.auctionTbl reloadData];
     }];
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 - (IBAction)backBtnAction:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)cityBtn:(id)sender {
+- (NSMutableArray*)locationItems {
+    if (!_locationItems) {
+        _locationItems = [[NSMutableArray alloc] init];
+    }
+    return _locationItems;
+}
+
+- (NSMutableArray*)auctionItems {
+    if (!_auctionItems) {
+        _auctionItems = [[NSMutableArray alloc] init];
+    }
+    return _auctionItems;
+}
+
+- (CGSize)sizeForMenuPopUp {
     
-    if (citycheck) {
-        citycheck=NO;
-        self.citytable.hidden=YES;
+    CGSize size = CGSizeMake(self.locationBtn.frame.size.width, MENU_MAX_HEIGHT);
+    float height = self.locationItems.count * MENU_ITEM_HEIGHT;
+    if (height < MENU_MAX_HEIGHT) {
+        size.height = height;
     }
-    else{
-        citycheck=YES;
-        self.citytable.hidden=NO;
-    }
+    return size;
+}
+
+
+#pragma -mark MenuDelegate methods
+- (void)menuItemClicked:(MenuItem *)item {
+    [self dismissViewControllerAnimated:NO completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        Location *location = [(LocationMenuItem*)item location];
+        [self.locationBtn setTitle:location.name forState:UIControlStateNormal];
+        [self loadAuctionsForLocation:location];
+    });
 }
 
 @end

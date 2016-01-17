@@ -11,6 +11,7 @@
 @interface Event : NSObject
 
 @property (nonatomic, copy) NSString *address;
+@property (nonatomic, copy) NSString *atmosphere;
 @property (nonatomic, copy) NSString *createdDate;
 @property (nonatomic, copy) NSString *eventDescription;
 @property (nonatomic, copy) NSString *startTime;
@@ -22,5 +23,17 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *venue;
+@property (nonatomic) BOOL entryExistsForMale;
+@property (nonatomic) BOOL entryExistsForFemale;
+@property (nonatomic) BOOL entryExistsForCouple;
+@property (nonatomic, copy) NSString *terms;
+@property (nonatomic, copy) NSString *genreOfMusic;
+@property (nonatomic, strong) NSArray *sliderImages;
+@property (nonatomic, strong) NSArray *offers;
+@property (nonatomic) int malePrice;
+@property (nonatomic) int femalePrice;
+@property (nonatomic) int couplePrice;
+@property (nonatomic, copy) NSString *discountTitle;
+@property (nonatomic) int discountValue;
 
 @end

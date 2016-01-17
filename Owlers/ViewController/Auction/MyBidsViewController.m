@@ -51,10 +51,6 @@ NSString *UserId;
     
     return cell;
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-}
 
 - (IBAction)backBtnAction:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];

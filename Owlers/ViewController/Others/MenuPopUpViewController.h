@@ -20,5 +20,6 @@
 
 @property (nonatomic, strong) NSArray *menuItems;
 @property (nonatomic, weak) id<MenuDelegate> delegate;
+@property (nonatomic, strong) UIColor *menuSeparatorColor;
 
 @end

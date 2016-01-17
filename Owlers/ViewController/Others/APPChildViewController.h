@@ -13,7 +13,6 @@
 
 @property (assign, nonatomic) NSInteger index;
 @property (strong, nonatomic) SplashChildPageData *data;
-
-- (void)showMessage:(BOOL)show;
+@property (nonatomic) BOOL hideMessage;
 
 @end

@@ -25,10 +25,10 @@
     self.displayLbl.text = self.data.displayTxt;
 }
 
-
-- (void)showMessage:(BOOL)show {
-    [self.imgBottomconstraint setActive:show];
-    self.displayLbl.hidden = !show;
+- (void)viewDidLayoutSubviews {
+    [self.imgBottomconstraint setActive:self.hideMessage];
+    self.displayLbl.hidden = self.hideMessage;
+    [self.view layoutIfNeeded];
 }
 
 @end

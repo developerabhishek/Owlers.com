@@ -143,6 +143,7 @@ int currentIndex = 0;
 
 - (APPChildViewController *)viewControllerAtIndex:(NSUInteger)index {
     APPChildViewController *childViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"APPChildViewController"];
+    childViewController.hideMessage = NO;
     childViewController.index = index;
     childViewController.data = (SplashChildPageData*)[self.pageDatalist objectAtIndex:index];
 

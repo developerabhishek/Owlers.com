@@ -15,6 +15,12 @@
 
 @implementation MenuPopUpViewController
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.view.superview.layer.cornerRadius = 0.0;
+}
+
+
 #pragma marks UITableView Delegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -31,6 +37,9 @@
 {
     MenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseMenuCell"];
     cell.displayName.text = [(MenuItem*)[self.menuItems objectAtIndex:indexPath.row] displayName];
+    if (self.menuSeparatorColor) {
+        cell.separator.backgroundColor = self.menuSeparatorColor;
+    }
     return cell;
 }
 

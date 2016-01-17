@@ -21,6 +21,7 @@
 
 #import "SharedPreferences.h"
 #import "NetworkManager.h"
+#import "PopOverBackgroundView.h"
 
 #define MENU_ITEM_HEIGHT 45
 #define MENU_ITEM_WIDTH 150
@@ -131,14 +132,14 @@ UIRefreshControl *refreshControl;
         SegueMenuItem *item2 = [SegueMenuItem itemWithSegueIdentifier:@"segueSetings"];
         item2.displayName = @"Setings";
         [self.menuItems addObject:item2];
-        SegueMenuItem *item3 = [SegueMenuItem itemWithSegueIdentifier:@"segueMyBids"];
-        item3.displayName = @"My Bids";
+        SegueMenuItem *item3 = [SegueMenuItem itemWithSegueIdentifier:@"segueAuction"];
+        item3.displayName = @"Deal Area";
         [self.menuItems addObject:item3];
-        SegueMenuItem *item4 = [SegueMenuItem itemWithSegueIdentifier:@"segueLogout"];
-        item4.displayName = @"Logout";
+        SegueMenuItem *item4 = [SegueMenuItem itemWithSegueIdentifier:@"segueMyBids"];
+        item4.displayName = @"My Deals";
         [self.menuItems addObject:item4];
-        SegueMenuItem *item5 = [SegueMenuItem itemWithSegueIdentifier:@"segueAuction"];
-        item5.displayName = @"Auction";
+        SegueMenuItem *item5 = [SegueMenuItem itemWithSegueIdentifier:@"segueLogout"];
+        item5.displayName = @"Logout";
         [self.menuItems addObject:item5];
     }else{
         SegueMenuItem *item1 = [SegueMenuItem itemWithSegueIdentifier:@"segueLogin"];
@@ -380,9 +381,10 @@ UIRefreshControl *refreshControl;
         menuPopUp.preferredContentSize = [self sizeForMenuPopUp];
         menuPopUp.presentationController.delegate = self;
         menuPopUp.popoverPresentationController.sourceRect = CGRectMake(0, self.menuBtn.frame.size.height, 0, 0);
+        menuPopUp.popoverPresentationController.popoverBackgroundViewClass = [PopOverBackgroundView class];
     }else if ([segue.identifier isEqualToString:@"segueOwlers"]) {
         OwlersViewController *owlers = [segue destinationViewController];
-        owlers.event_id = self.selectedEvent.ID;
+        owlers.event = self.selectedEvent;
     }
 }
 

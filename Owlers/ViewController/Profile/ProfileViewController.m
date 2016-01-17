@@ -23,19 +23,10 @@
 
 @implementation ProfileViewController
 
-@synthesize tableview;
-
-
 NSURLConnection *connection_, *_connection;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    tableview.delegate=self;
-    tableview.dataSource=self;
-    [[self navigationController] setNavigationBarHidden:YES animated:NO];
-    [self.navigationItem setRightBarButtonItem:nil];
-    self.navigationItem.hidesBackButton = YES;
     
     [NetworkManager getUserProfileFromServerWithComplitionHandler:^(id result, NSError *err) {
         if ([[result objectForKey:@"status"] isEqualToString:@"Y"]) {
@@ -58,6 +49,29 @@ NSURLConnection *connection_, *_connection;
     
 }
 
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    
+    if (connection ==connection_) {
+        serverData = [[NSMutableData alloc]init];
+    }
+    else if (connection ==_connection){
+        serDATA =[[NSMutableData alloc]init];
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    
+    if (connection ==connection_) {
+        [serverData appendData:data];
+    }
+    else if (connection ==_connection)
+    {
+        [serDATA appendData:data];
+    }
+}
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     
@@ -73,32 +87,17 @@ NSURLConnection *connection_, *_connection;
     {
         serDICT =[NSJSONSerialization JSONObjectWithData:serDATA options:NSJSONReadingMutableLeaves error:nil];
         
-        [self.tableview reloadData];
+        [self.profileTbl reloadData];
     }
     
 }
 
 
--(IBAction)bokkingAction:(id)sender{
-    
-    [scrolview setContentOffset:CGPointMake(0, 0)];
-    
-    
-    
+-(IBAction)bookingAction:(id)sender{
 }
 
 -(IBAction)walletAction:(id)sender{
-    
-    
-    [scrolview setContentOffset:CGPointMake(self.view.frame.size.width, 0)];
-    
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-
 
 - (IBAction)actionSheet:(id)sender
 {
@@ -149,9 +148,8 @@ NSURLConnection *connection_, *_connection;
 {
     NSLog(@"info = %@", info);
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.imageView.image = chosenImage;
     
-    [profileImage setImage:chosenImage];
+    [self.profileImage setImage:chosenImage];
     [self dismissViewControllerAnimated:YES completion:^{
         [addImageButton setTitle:@"Change Image" forState:UIControlStateNormal];
     }];
@@ -167,9 +165,6 @@ NSURLConnection *connection_, *_connection;
     [self.navigationController pushViewController:edit animated:YES];
 }
 
-- (IBAction)backBtn:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -238,7 +233,7 @@ NSURLConnection *connection_, *_connection;
         [userdefault setObject:@"250" forKey:@"changecell"];
     }
     
-    [tableview reloadData];
+    [self.profileTbl reloadData];
     
 }
 
