@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9052" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dPD-0a-YuN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dPD-0a-YuN">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -1034,6 +1035,7 @@
                     <connections>
                         <outlet property="auctionBtn" destination="ZV2-QI-4t6" id="euY-SZ-BjR"/>
                         <outlet property="calendarView" destination="P91-N8-2uq" id="hQ3-nB-lh6"/>
+                        <outlet property="calenderButton" destination="HLV-4F-Eiz" id="aiO-Fq-5ef"/>
                         <outlet property="locationBtn" destination="ZmZ-0y-0gY" id="JA0-7Z-b9X"/>
                         <outlet property="locationCollectionView" destination="Qmc-Zn-k5P" id="w7q-22-rFg"/>
                         <outlet property="menuBtn" destination="1Do-tN-iEN" id="K85-an-2PC"/>
@@ -1692,6 +1694,12 @@
                                             <constraint firstAttribute="height" constant="48" id="n3O-gw-h26"/>
                                         </constraints>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="keU-66-WR1" userLabel="Action">
+                                        <rect key="frame" x="295" y="30" width="45" height="48"/>
+                                        <connections>
+                                            <action selector="actionSheet:" destination="pZT-6I-Bo4" eventType="touchUpInside" id="f14-a1-Wg0"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxG-xG-gv5" userLabel="Name">
                                         <rect key="frame" x="10" y="10" width="275" height="30"/>
                                         <constraints>
@@ -1735,16 +1743,26 @@
                                     <constraint firstAttribute="trailing" secondItem="saH-br-82N" secondAttribute="trailing" id="EuD-ow-oDS"/>
                                     <constraint firstItem="ZDw-x7-as5" firstAttribute="leading" secondItem="LxG-xG-gv5" secondAttribute="leading" id="Fs6-3s-Izo"/>
                                     <constraint firstAttribute="height" constant="150" id="GDQ-AZ-ekd"/>
+                                    <constraint firstItem="keU-66-WR1" firstAttribute="top" secondItem="qde-b4-lbx" secondAttribute="top" constant="30" id="Kxo-jp-wMY"/>
                                     <constraint firstItem="saH-br-82N" firstAttribute="leading" secondItem="qde-b4-lbx" secondAttribute="leading" id="LRq-u8-YCd"/>
+                                    <constraint firstItem="keU-66-WR1" firstAttribute="height" secondItem="cjc-bA-ct2" secondAttribute="height" id="R6l-Bz-O9q"/>
                                     <constraint firstItem="nVH-s1-4OW" firstAttribute="trailing" secondItem="LxG-xG-gv5" secondAttribute="trailing" id="a1N-e4-0L4"/>
+                                    <constraint firstItem="keU-66-WR1" firstAttribute="leading" secondItem="LxG-xG-gv5" secondAttribute="leading" id="gr3-sB-LAE"/>
                                     <constraint firstItem="ZDw-x7-as5" firstAttribute="trailing" secondItem="LxG-xG-gv5" secondAttribute="trailing" id="kiV-H8-Ccr"/>
                                     <constraint firstItem="nVH-s1-4OW" firstAttribute="leading" secondItem="LxG-xG-gv5" secondAttribute="leading" id="kyC-VK-Kn7"/>
+                                    <constraint firstItem="keU-66-WR1" firstAttribute="width" secondItem="cjc-bA-ct2" secondAttribute="width" id="m1w-1F-dhU"/>
                                     <constraint firstAttribute="trailing" secondItem="cjc-bA-ct2" secondAttribute="trailing" constant="10" id="qio-31-Zdg"/>
                                     <constraint firstItem="ZDw-x7-as5" firstAttribute="top" secondItem="nVH-s1-4OW" secondAttribute="bottom" constant="10" id="sTe-wD-wlm"/>
+                                    <constraint firstAttribute="trailing" secondItem="keU-66-WR1" secondAttribute="trailing" constant="10" id="ssM-j7-I4c"/>
                                     <constraint firstAttribute="bottom" secondItem="saH-br-82N" secondAttribute="bottom" id="toe-kG-5Jn"/>
                                     <constraint firstItem="LxG-xG-gv5" firstAttribute="leading" secondItem="qde-b4-lbx" secondAttribute="leading" constant="10" id="wBj-MD-0PB"/>
                                     <constraint firstItem="LxG-xG-gv5" firstAttribute="top" secondItem="qde-b4-lbx" secondAttribute="top" constant="10" id="zHt-a3-fkM"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="gr3-sB-LAE"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9yN-Gg-L11">
                                 <rect key="frame" x="0.0" y="220" width="350" height="50"/>
@@ -5231,9 +5249,9 @@
         <image name="zxzzccz.png" width="24" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tNb-Um-tHJ"/>
         <segue reference="BHX-tv-XHf"/>
+        <segue reference="raw-hh-jA5"/>
+        <segue reference="tNb-Um-tHJ"/>
         <segue reference="4Xm-zK-GNa"/>
-        <segue reference="dFM-Yw-7x1"/>
     </inferredMetricsTieBreakers>
 </document>
