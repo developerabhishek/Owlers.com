@@ -54,6 +54,31 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     }
 }
 
++ (void)fetchEventListForSelectedDate:(NSString *)dateString withComplitionHandler:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:[NSString stringWithFormat:@"%@/list_events.php",BaseUrl] parameters:@{@"event_date" : dateString} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            [SVProgressHUD dismiss];
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            completionBlock(dataDict, nil);
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+    }
+}
+
 + (void)loadAcutionsForCity:(NSString *)cityID withComplitionHandler:(CompletionHandler)completionBlock{
 
     if ([SharedPreferences isNetworkAvailable])

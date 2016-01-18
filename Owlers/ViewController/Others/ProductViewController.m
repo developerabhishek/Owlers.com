@@ -91,7 +91,7 @@ UIRefreshControl *refreshControl;
             [self.locationCollectionView reloadData];
         });
     }];
-    [self setDateButtonTitleForDate:[NSDate date]];
+    [self setDateButtonTitleForDate:[NSDate date] withServiceCall:false];
     
     [calendarView setDelegate:self];
     /*********[Table Refresh Control]************/
@@ -110,13 +110,18 @@ UIRefreshControl *refreshControl;
     [self.view layoutIfNeeded];
 }
 
-- (void)setDateButtonTitleForDate:(NSDate *)date{
+- (void)setDateButtonTitleForDate:(NSDate *)date withServiceCall:(BOOL)shouldServiceCall {
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"dd-MMMM-yyyy"];
     NSString *dateStr  = [dateFormatter stringFromDate:date];
     [self.calenderButton setTitle:dateStr forState:UIControlStateNormal];
 
+    if (shouldServiceCall) {
+        [NetworkManager fetchEventListForSelectedDate:dateStr withComplitionHandler:^(id result, NSError *err) {
+            [self reloadTableData:result];
+        }];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -267,7 +272,7 @@ UIRefreshControl *refreshControl;
 - (void)calendarView:(DSLCalendarView*)calendarView didSelectRange:(DSLCalendarRange*)range
 {
     if (range != nil) {
-        [self setDateButtonTitleForDate:range.startDay.date];
+        [self setDateButtonTitleForDate:range.startDay.date withServiceCall:true];
         self.calendarView.hidden = YES;
     }
     else {
