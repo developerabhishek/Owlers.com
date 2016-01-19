@@ -166,13 +166,8 @@ int currentIndex = 0;
     return _pageDatalist;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-//    if([[SharedPreferences sharedInstance] isLogin]) {
-//        [self performSegueWithIdentifier:@"segueProducts" sender:nil];
-//    }
-//    self.blurIMgView.hidden = YES;
-    
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerCalled) userInfo:nil repeats:YES];
+- (void)viewDidAppear:(BOOL)animated {    
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(timerCalled) userInfo:nil repeats:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

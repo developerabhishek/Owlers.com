@@ -29,7 +29,6 @@
     int currenDist;
     
     IBOutlet UIScrollView *scrollview;
-    IBOutlet MKMapView *mapview;
     IBOutlet UIImageView *imageview;
     IBOutlet UIScrollView *scroll1;
     IBOutlet UIScrollView *scroll2;
@@ -42,7 +41,6 @@
     BOOL check_slider;
     
     IBOutlet UIButton *offer_button;
-    IBOutlet UIButton *moreBtn;
     
     IBOutlet UIActivityIndicatorView *activity;
     
@@ -58,7 +56,7 @@
     IBOutlet UIView *offer_view;
 }
 
-@property(strong ,nonatomic)IBOutlet UIActivityIndicatorView *activity;
+@property (strong ,nonatomic) IBOutlet UIActivityIndicatorView *activity;
 @property (strong, nonatomic) IBOutlet UILabel *gettimeDatelabel;
 @property (strong, nonatomic) IBOutlet UILabel *getDetailLabel;
 @property (strong, nonatomic) NSArray *temp_slaiderimages;

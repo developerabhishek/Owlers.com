@@ -47,4 +47,21 @@
 }
 
 
++ (float)heightOfString:(NSString*)str forWidth:(float)width font:(UIFont*)font{
+
+    CGSize constraint = CGSizeMake(width,NSUIntegerMax);
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setLineBreakMode:NSLineBreakByWordWrapping];
+    
+    NSDictionary *attributes = @{NSFontAttributeName: font, NSParagraphStyleAttributeName: style};
+    
+    CGRect myStringSize = [str boundingRectWithSize:constraint
+                                                      options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                                   attributes:attributes
+                                                      context:nil];
+    myStringSize.size = CGSizeMake(ceil(myStringSize.size.width), ceil(myStringSize.size.height)) ;
+    return ceil(myStringSize.size.height);
+}
+
+
 @end

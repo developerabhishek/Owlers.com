@@ -14,6 +14,7 @@
 #import "APPChildViewController.h"
 #import "SplashChildPageData.h"
 #import "TesteventViewController.h"
+#import "Utility.h"
 
 @interface OwlersViewController ()
 -(id) imageWithName:(NSArray *)arr;
@@ -21,6 +22,9 @@
 @property (strong, nonatomic) UIPageViewController *pageController;
 @property (strong, nonatomic) NSMutableArray *pageDatalist;
 @property (strong, nonatomic) NSTimer *timer;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *detailLblHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewChildContainerHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIButton *moreBtn;
 
 @end
 
@@ -193,11 +197,7 @@ int currentPageIndex = 0;
     self.activity.hidden =YES;
     
     [super viewDidLoad];
-    
-//    APPChildViewController *initialViewController = [self viewControllerAtIndex:0];
-//    NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
-//    [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-//
+
 //    locationmanager = [[CLLocationManager alloc] init];
 //    self.mapview.delegate = self;
 //    locationmanager.delegate = self;
@@ -304,9 +304,6 @@ int currentPageIndex = 0;
             }}];
         [scroll1 addSubview:temp_btn];
     }
-    
-//    currentPageIndex = 0;
-//    self.timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerCalled) userInfo:nil repeats:YES];
 }
 
 
@@ -421,7 +418,7 @@ int currentPageIndex = 0;
     MKMapRect mRect = self.mapview.visibleMapRect;
     MKMapPoint eastMapPoint = MKMapPointMake(MKMapRectGetMinX(mRect), MKMapRectGetMidY(mRect));
     MKMapPoint westMapPoint = MKMapPointMake(MKMapRectGetMaxX(mRect), MKMapRectGetMidY(mRect));
-    self.annotation.coordinate = mapview.centerCoordinate;
+    self.annotation.coordinate = self.mapview.centerCoordinate;
 
     //Set your current distance instance variable.
     currenDist = MKMetersBetweenMapPoints(eastMapPoint, westMapPoint);
@@ -432,9 +429,9 @@ int currentPageIndex = 0;
 
 -(void)plotPositions:(NSArray *)data {
     // 1 - Remove any existing custom annotations but not the user location blue dot.
-    for (id<MKAnnotation> annotation in mapview.annotations) {
+    for (id<MKAnnotation> annotation in self.mapview.annotations) {
         if ([annotation isKindOfClass:[MapPoint class]]) {
-            [mapview removeAnnotation:annotation];
+            [self.mapview removeAnnotation:annotation];
         }
     }
     // 2 - Loop through the array of places returned from the Google API.
@@ -458,7 +455,7 @@ int currentPageIndex = 0;
         placeCoord.longitude=[[loc objectForKey:@"lng"] doubleValue];
         // 5 - Create a new annotation.
         MapPoint *placeObject = [[MapPoint alloc] initWithName:name address:vicinity coordinate:placeCoord];
-        [mapview addAnnotation:placeObject];
+        [self.mapview addAnnotation:placeObject];
     }
 }
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
@@ -481,37 +478,14 @@ int currentPageIndex = 0;
 }
 
 -(void)viewtrans2Hidden:(UITapGestureRecognizer*)tapgesture{
-    
-    
-    
     view_trans2.hidden = YES;
-    
     offer_view.hidden = YES;
-    
-    
-}
--(void)viewTransparentHidden:(UITapGestureRecognizer*)tapgesture{
-    
-    view_transparent.hidden = YES;
-//    
-//        view_rsvp.hidden = YES;
 }
 
--(void)timer{
-    
-    if (check_slider) {
-        [ scroll1 setContentOffset:CGPointMake(scroll1.contentOffset.x-self.view.frame.size.width, 0)];
-        if (scroll1.contentOffset.x ==0) {
-            check_slider=NO;
-        }
-    }
-    else{
-        [ scroll1 setContentOffset:CGPointMake(scroll1.contentOffset.x+self.view.frame.size.width, 0)];
-        if (scroll1.contentOffset.x == self.view.frame.size.width*(self.event.sliderImages.count-1)) {
-            check_slider=YES;
-        }
-    }
+-(void)viewTransparentHidden:(UITapGestureRecognizer*)tapgesture{
+    view_transparent.hidden = YES;
 }
+
 
 -(void)viewDidLayoutSubviews{
     viewwidth  = self.view.frame.size.width;
@@ -712,9 +686,9 @@ int currentPageIndex = 0;
             annotation.coordinate = Coordinate;
         
         
-        mapview.centerCoordinate = annotation.coordinate; //focusing on marker
+        self.mapview.centerCoordinate = annotation.coordinate; //focusing on marker
         
-            [mapview addAnnotation:annotation];
+            [self.mapview addAnnotation:annotation];
             
             
             MKCoordinateSpan span;
@@ -722,7 +696,7 @@ int currentPageIndex = 0;
             span.longitudeDelta=0.3;
             MKCoordinateRegion region;
             
-        mapview.delegate = self;
+        self.mapview.delegate = self;
         
                 CLLocationCoordinate2D Coordinate1 = CLLocationCoordinate2DMake(str_temp_lat,str_temp_long);
                 
@@ -827,17 +801,23 @@ int currentPageIndex = 0;
     
     }
 }
+
 - (IBAction)moreBtnAction:(id)sender {
+    if ([self.moreBtn.titleLabel.text isEqualToString:@"MORE"]) {
+        float height = [Utility heightOfString:_getDetailLabel.text forWidth:_getDetailLabel.bounds.size.width font:_getDetailLabel.font];
+        self.detailLblHeightConstraint.constant = height;
+        [self.moreBtn setTitle:@"LESS" forState:UIControlStateNormal];
+        self.scrollViewChildContainerHeightConstraint.constant = 700 - 35 + height;
+    }else {
+        self.detailLblHeightConstraint.constant = 35;
+        [self.moreBtn setTitle:@"MORE" forState:UIControlStateNormal];
+        self.scrollViewChildContainerHeightConstraint.constant = 700;
+    }
     
-    _getDetailLabel.numberOfLines = 0;
-    CGSize maxSize = CGSizeMake(_getDetailLabel.bounds.size.width, CGFLOAT_MAX);
-    CGSize textSize = [_getDetailLabel.text sizeWithFont:_getDetailLabel.font constrainedToSize:maxSize];
+    [self.view layoutIfNeeded];
     
-    _getDetailLabel.frame = CGRectMake(10, 10, textSize.width, textSize.height);
-    [moreBtn setTitle:[NSString stringWithFormat:@"Less"] forState:nil];
-    
-    NSLog(@"label expanded");
 }
+
 - (IBAction)callBtnAction:(id)sender {
     
     UIDevice *device = [UIDevice currentDevice];
@@ -855,9 +835,7 @@ int currentPageIndex = 0;
         [[UIApplication sharedApplication] openURL:phoneURL];
         
     } else {
-        UIAlertView *notPermitted=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Your device doesn't support this feature." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [notPermitted show];
-       // [notPermitted release];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Your device doesn't support this feature." withObject:self];
     }
 }
 
@@ -874,6 +852,7 @@ int currentPageIndex = 0;
     [self mapurl:self.event.address];
     
 }
+
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
 {
     MKOverlayView* overlayView = nil;
@@ -901,7 +880,7 @@ int currentPageIndex = 0;
 
 - (void)viewDidAppear:(BOOL)animated {
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerCalled) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(timerCalled) userInfo:nil repeats:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
