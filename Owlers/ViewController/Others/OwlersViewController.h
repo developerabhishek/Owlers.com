@@ -76,5 +76,4 @@
 - (IBAction)rsvpbtnAction:(id)sender;
 - (IBAction)offer_button:(id)sender;
 
-
 @end

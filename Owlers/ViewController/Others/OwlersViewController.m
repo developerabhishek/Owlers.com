@@ -14,17 +14,21 @@
 #import "APPChildViewController.h"
 #import "SplashChildPageData.h"
 #import "TesteventViewController.h"
+#import "SliderFullViewController.h"
 #import "Utility.h"
 
 @interface OwlersViewController ()
 -(id) imageWithName:(NSArray *)arr;
 @property (strong,nonatomic) IBOutlet UIView *subview;
+@property (strong,nonatomic) IBOutlet UIView *sliderImageContainer;
 @property (strong, nonatomic) UIPageViewController *pageController;
 @property (strong, nonatomic) NSMutableArray *pageDatalist;
 @property (strong, nonatomic) NSTimer *timer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *detailLblHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewChildContainerHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *moreBtn;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
+@property (weak, nonatomic) IBOutlet UIImageView *eventDetailOverlay;
 
 @end
 
@@ -140,6 +144,9 @@ int currentPageIndex = 0;
     if ([segue.identifier isEqualToString:@"segueOwelrsPageContainer"]) {
         self.pageController = (UIPageViewController*)segue.destinationViewController;
         self.pageController.dataSource = self;
+    }else if ([segue.identifier isEqualToString:@"segueSliderFullPage"]) {
+        SliderFullViewController *controller = (SliderFullViewController*)segue.destinationViewController;
+        controller.pageDatalist = self.pageDatalist;
     }else if ([segue.identifier isEqualToString:@"seguePayment"]) {
         TesteventViewController *controller = (TesteventViewController*)segue.destinationViewController;
         controller.event = self.event;
@@ -208,7 +215,7 @@ int currentPageIndex = 0;
 //    
 //    array_offers = [[NSMutableArray alloc]init];
 //    
-//    /*****[TAP RECOGNIZER GESTURE]****/
+    /*****[TAP RECOGNIZER GESTURE]****/
 //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewTransparentHidden:)];
 //     UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewtrans2Hidden:)];
 //    [view_trans2 addGestureRecognizer:tapping];
@@ -247,7 +254,8 @@ int currentPageIndex = 0;
 //    serverdata =[[NSMutableData alloc]init];
 //    
 //    
-//    
+//
+    
     NSString *urlstring =[NSString stringWithFormat:@"%@/event_details.php?event_id=%@",BaseUrl,self.event.ID];
     NSURL *url=[[NSURL alloc]initWithString:urlstring];
     NSURLRequest *request=[[NSURLRequest alloc]initWithURL:url];
@@ -281,6 +289,7 @@ int currentPageIndex = 0;
    }
 
 - (void)downloadEventImages {
+    [self.pageDatalist removeAllObjects];
     if (self.event.sliderImages.count==0) {
         return;
     }
@@ -288,7 +297,6 @@ int currentPageIndex = 0;
 //    [_timer invalidate];
 //    _timer = nil;
     
-    [self.pageDatalist removeAllObjects];
     for (int i=0; i < self.event.sliderImages.count; i++) {
         UIImageView *temp_btn = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*i, 0, self.view.frame.size.width, scroll1.frame.size.height)];
         [temp_btn setBackgroundColor:[UIColor blackColor]];
@@ -793,17 +801,6 @@ int currentPageIndex = 0;
     }
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == [alertView cancelButtonIndex]){
-        //cancel clicked ...do your action
-    }else{
-
-        LoginViewController*login=[[LoginViewController alloc]init];
-        [self.navigationController pushViewController:login animated:YES];
-    
-    }
-}
-
 - (IBAction)moreBtnAction:(id)sender {
     if ([self.moreBtn.titleLabel.text isEqualToString:@"MORE"]) {
         float height = [Utility heightOfString:_getDetailLabel.text forWidth:_getDetailLabel.bounds.size.width font:_getDetailLabel.font];
@@ -873,6 +870,12 @@ int currentPageIndex = 0;
     view_trans2.hidden=NO;
 }
 
+- (void)sliderImageTapped:(UITapGestureRecognizer*)gesture {
+    if (self.pageDatalist.count) {
+        [self performSegueWithIdentifier:@"segueSliderFullPage" sender:nil];
+    }
+}
+
 - (NSMutableArray*)pageDatalist {
     if (!_pageDatalist) {
         _pageDatalist = [[NSMutableArray alloc] init];
@@ -883,11 +886,17 @@ int currentPageIndex = 0;
 - (void)viewDidAppear:(BOOL)animated {
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(timerCalled) userInfo:nil repeats:YES];
+    
+    self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderImageTapped:)];
+    self.tapGesture.numberOfTapsRequired = 1;
+    [self.sliderImageContainer addGestureRecognizer:self.tapGesture];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [_timer invalidate];
     _timer = nil;
+    [_sliderImageContainer removeGestureRecognizer:_tapGesture];
+    _tapGesture = nil;
 }
 
 @end

@@ -209,6 +209,7 @@
 		5BE896A51BE881D90035EB3C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE896A41BE881D90035EB3C /* CoreMotion.framework */; };
 		5BE896A71BE881F50035EB3C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE896A61BE881F50035EB3C /* StoreKit.framework */; };
 		5BE896A91BE881FE0035EB3C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE896A81BE881FE0035EB3C /* Social.framework */; };
+		CB17E6FA1C4EA01C00EDA093 /* SliderFullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB17E6F91C4EA01C00EDA093 /* SliderFullViewController.m */; };
 		CB608E681C43952000B1F4B9 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = CB608E671C43952000B1F4B9 /* Location.m */; };
 		CB904B7F1C43763F00121A05 /* LocationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB904B7E1C43763F00121A05 /* LocationCollectionViewCell.m */; };
 		CB9A4FC91C419B20003BA5AE /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = CB9A4FC81C419B20003BA5AE /* Utility.m */; };
@@ -517,6 +518,8 @@
 		5BE896A41BE881D90035EB3C /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		5BE896A61BE881F50035EB3C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5BE896A81BE881FE0035EB3C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		CB17E6F81C4EA01C00EDA093 /* SliderFullViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderFullViewController.h; sourceTree = "<group>"; };
+		CB17E6F91C4EA01C00EDA093 /* SliderFullViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderFullViewController.m; sourceTree = "<group>"; };
 		CB608E661C43952000B1F4B9 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		CB608E671C43952000B1F4B9 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		CB904B7D1C43763F00121A05 /* LocationCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationCollectionViewCell.h; sourceTree = "<group>"; };
@@ -902,6 +905,8 @@
 				46F211E71C3B904D00AB6AFE /* TesteventViewController.m */,
 				CBB9AE091C43EB9100D77D34 /* MenuPopUpViewController.h */,
 				CBB9AE0A1C43EB9100D77D34 /* MenuPopUpViewController.m */,
+				CB17E6F81C4EA01C00EDA093 /* SliderFullViewController.h */,
+				CB17E6F91C4EA01C00EDA093 /* SliderFullViewController.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -1377,6 +1382,7 @@
 				CB904B7F1C43763F00121A05 /* LocationCollectionViewCell.m in Sources */,
 				CBE9B07D1C4A5CDF0073A504 /* Auction.m in Sources */,
 				46F211B71C3B904300AB6AFE /* MapPoint.m in Sources */,
+				CB17E6FA1C4EA01C00EDA093 /* SliderFullViewController.m in Sources */,
 				CB9A4FD91C419B68003BA5AE /* SplashChildPageData.m in Sources */,
 				46581A951C3D9D1B00CDF50C /* UIImage+GIF.m in Sources */,
 				5B458F4F1BB3D30500EEADD7 /* AppDelegate.m in Sources */,
