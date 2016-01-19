@@ -14,10 +14,12 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import "CalendarView.h"
 #import "MenuPopUpViewController.h"
+#import "Location.h"
 
 @interface ProductViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIAlertViewDelegate , UIAdaptivePresentationControllerDelegate, MenuDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *loaderOwlersImage;
+@property (strong, nonatomic) Location *selectedLocation;
 
 - (IBAction)selectLocationAction:(UIButton*)sender;
 - (IBAction)displayCalendarAction:(UIButton*)sender;

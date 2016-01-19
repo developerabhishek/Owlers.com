@@ -83,7 +83,8 @@ UIRefreshControl *refreshControl;
             }
         }
         if ([self.locationItems count]) {
-            [self fetchEventsForLocation:[self.locationItems firstObject]];
+            self.selectedLocation = [self.locationItems firstObject];
+            [self fetchEventsForLocation:self.selectedLocation];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -116,9 +117,13 @@ UIRefreshControl *refreshControl;
     [self.calenderButton setTitle:dateStr forState:UIControlStateNormal];
 
     if (shouldServiceCall) {
-        [NetworkManager fetchEventListForSelectedDate:dateStr withComplitionHandler:^(id result, NSError *err) {
-            [self reloadTableData:result];
-        }];
+        if (self.selectedLocation) {
+            [NetworkManager fetchEventListForSelectedDate:dateStr forLocation:self.selectedLocation.ID withComplitionHandler:^(id result, NSError *err) {
+                if (![[result objectForKey:@"total_result"] isKindOfClass:[NSNull class]] && [[result objectForKey:@"total_result"] integerValue]>0) {
+                    [self reloadTableData:result];
+                }
+            }];
+        }
     }
 }
 
@@ -221,15 +226,19 @@ UIRefreshControl *refreshControl;
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    Location *location = (Location*)[self.locationItems objectAtIndex:indexPath.row];
-    [self.locationBtn setTitle:location.name forState:UIControlStateNormal];
-    [self fetchEventsForLocation:location];
+    self.selectedLocation = (Location*)[self.locationItems objectAtIndex:indexPath.row];
+    [self setDateButtonTitleForDate:[NSDate date] withServiceCall:false];
+    [self.locationBtn setTitle:self.selectedLocation.name forState:UIControlStateNormal];
+    [self fetchEventsForLocation:self.selectedLocation];
+    
 }
 
 -(void)fetchEventsForLocation:(Location*)location{
     
     [NetworkManager fetchEventListForLocation:location.ID withComplitionHandler:^(id result, NSError *err) {
-        [self reloadTableData:result];
+        if (![[result objectForKey:@"total_result"] isKindOfClass:[NSNull class]] && [[result objectForKey:@"total_result"] integerValue]>0) {
+            [self reloadTableData:result];
+        }
     }];
 }
 

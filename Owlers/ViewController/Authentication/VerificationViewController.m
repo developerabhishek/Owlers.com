@@ -56,8 +56,21 @@ NSDictionary *parsedObject;
             {
                 NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
                 [user setObject:[result objectForKey:@"user_id"] forKey:@"userID"];
-                [self.navigationController popToRootViewControllerAnimated:YES];
                 
+                NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
+                
+                if ([defauls objectForKey:@"picture"]) {
+                    
+                    NSString *imageURLStr = [defauls objectForKey:@"picture"];
+                    NSURL *imageURL = [[NSURL alloc] initWithString:imageURLStr];
+                    if (imageURL) {
+                        NSData *imageData = [NSData dataWithContentsOfURL:imageURL options:NSDataReadingMapped error:nil];
+                        NSString *base64String = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                        [NetworkManager uploadUserProfilePicture:base64String withComplitionHandler:^(id result, NSError *err) {
+                            [self.navigationController popToRootViewControllerAnimated:YES];
+                        }];
+                    }
+                }
             }else{
                 [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[result valueForKey:@"message"] withObject:self];
             }

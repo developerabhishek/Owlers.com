@@ -17,7 +17,7 @@
 #import "SharedPreferences.h"
 #import "Booking.h"
 #import "BookingsTableViewCell.h"
-
+#import "UIImageView+WebCache.h"
 
 @interface ProfileViewController ()
 
@@ -40,35 +40,46 @@
             _nameLabel.text=[result  objectForKey:@"name"];
             _emaillabel.text=[result objectForKey:@"email"];
             _mobileNoLabel.text=[result objectForKey:@"phone"];
+            if ([[result objectForKey:@"image_path"] length] > 2 ) {
+                NSURL *url = [[NSURL alloc] initWithString:[result objectForKey:@"image_path"]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.profileImage sd_setImageWithURL:url
+                                    placeholderImage:[UIImage imageNamed:@"new_background_ullu.png"]];
+                });                
+            }
         }
     }];
     
     [NetworkManager getAllBooking:^(id result, NSError *err) {
-        NSArray *items = [(NSDictionary *) result objectForKey:@"history"];
-        for (NSDictionary *eventDict in items) {
-            Booking *booking = [[Booking alloc] init];
-            Event *event = [[Event alloc] init];
-            booking.event = event;
-            
-            booking.noOfCouple = [[eventDict objectForKey:@"no_of_couples"] intValue];
-            booking.noOfFemale = [[eventDict objectForKey:@"no_of_females"] intValue];
-            booking.noOfMale = [[eventDict objectForKey:@"no_of_males"] intValue];
-            booking.bookingDate = [eventDict objectForKey:@"booking_date"];
-            booking.bookingNumber = [eventDict objectForKey:@"booking_number"];
-            booking.totalAmount = [[eventDict objectForKey:@"total_amount"] intValue];
-            booking.paymentMethod = [eventDict objectForKey:@"payment_method"];
-            event.eventDate = [eventDict objectForKey:@"event_date"];
-            event.eventDescription = [eventDict objectForKey:@"event_description"];
-            event.name = [eventDict objectForKey:@"event_name"];
-            event.terms = [eventDict objectForKey:@"event_terms"];
-            event.venue = [eventDict objectForKey:@"event_venue"];
-            
-            [self.bookings addObject:booking];
-        }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.bookingsTbl reloadData];
-        });
+        if ([[result objectForKey:@"history"] isKindOfClass:[NSArray class]]) {
+            NSArray *items =  (NSArray *) [result objectForKey:@"history"];
+            
+            for (NSDictionary *eventDict in items) {
+                Booking *booking = [[Booking alloc] init];
+                Event *event = [[Event alloc] init];
+                booking.event = event;
+                
+                booking.noOfCouple = [[eventDict objectForKey:@"no_of_couples"] intValue];
+                booking.noOfFemale = [[eventDict objectForKey:@"no_of_females"] intValue];
+                booking.noOfMale = [[eventDict objectForKey:@"no_of_males"] intValue];
+                booking.bookingDate = [eventDict objectForKey:@"booking_date"];
+                booking.bookingNumber = [eventDict objectForKey:@"booking_number"];
+                booking.totalAmount = [[eventDict objectForKey:@"total_amount"] intValue];
+                booking.paymentMethod = [eventDict objectForKey:@"payment_method"];
+                event.eventDate = [eventDict objectForKey:@"event_date"];
+                event.eventDescription = [eventDict objectForKey:@"event_description"];
+                event.name = [eventDict objectForKey:@"event_name"];
+                event.terms = [eventDict objectForKey:@"event_terms"];
+                event.venue = [eventDict objectForKey:@"event_venue"];
+                
+                [self.bookings addObject:booking];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.bookingsTbl reloadData];
+            });
+        }
     }];
 }
 
@@ -131,10 +142,10 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    NSLog(@"info = %@", info);
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    
     [self.profileImage setImage:chosenImage];
+    
+    
     [self dismissViewControllerAnimated:YES completion:^{
         [addImageButton setTitle:@"Change Image" forState:UIControlStateNormal];
     }];

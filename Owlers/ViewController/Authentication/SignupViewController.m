@@ -17,7 +17,7 @@
 #import "NetworkManager.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <GooglePlus/GooglePlus.h>
-
+#import "VerificationViewController.h"
 
 
 @interface SignupViewController () <GPPSignInDelegate>
@@ -137,14 +137,14 @@
 -(void)fetchUserInfo
 {
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
-    [parameters setValue:@"id, name, email, picture" forKey:@"fields"];
+    [parameters setValue:@"id, name, email, picture.width(100).height(100)" forKey:@"fields"];
 
     [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
-             NSString *pictureURL = [NSString stringWithFormat:@"%@",[result objectForKey:@"picture"]];
-             [self saveUserData:@{@"user_id" : [result valueForKey:@"id"], @"user_email" : [result valueForKey:@"email"],@"name": [result valueForKey:@"name"], @"picture": pictureURL}];
-             [self signUpSuccess];
+             NSString *pictureURL = [NSString stringWithFormat:@"%@",[[[result valueForKey:@"picture"] valueForKey:@"data"] valueForKey:@"url"]];
+             
+             [self pushToVerificationControllerWith:@{@"user_email" : [result valueForKey:@"email"],@"name": [result valueForKey:@"name"], @"picture": pictureURL}];
          }else{
              
              [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[error localizedDescription] withObject:self];
@@ -199,7 +199,7 @@
                                     NSError *error) {
                     if (!error) {
 
-                        [self saveUserData:@{@"user_id" : person.identifier, @"user_email" : [GPPSignIn sharedInstance].authentication.userEmail ,@"name": person.displayName}];
+                        [self pushToVerificationControllerWith:@{@"user_email" : [GPPSignIn sharedInstance].authentication.userEmail ,@"name": person.displayName}];
                     }
                 }];
     }
@@ -278,31 +278,35 @@
 
 - (void)signUpSuccess {
     // If SignUp screen is came from Product screen then pop it from stack else create the product view controller and set it on top of stack without signup screen
-    NSArray *arr = [self.navigationController viewControllers];
-    for (UIViewController *controller in arr) {
-        if ([controller isMemberOfClass:[ProductViewController class]]) {
-            [self.navigationController popToViewController:controller animated:YES];
-            return;
-        }
-    }
-    ProductViewController *productCon = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-    NSMutableArray *marr = [NSMutableArray arrayWithArray:arr];
-    [marr addObject:productCon];
-    [self.navigationController setViewControllers:marr animated:NO];
+//    NSArray *arr = [self.navigationController viewControllers];
+//    for (UIViewController *controller in arr) {
+//        if ([controller isMemberOfClass:[ProductViewController class]]) {
+//            [self.navigationController popToViewController:controller animated:YES];
+//            return;
+//        }
+//    }
+//    ProductViewController *productCon = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
+//    NSMutableArray *marr = [NSMutableArray arrayWithArray:arr];
+//    [marr addObject:productCon];
+//    [self.navigationController setViewControllers:marr animated:NO];
 }
 
 
-- (void)saveUserData:(NSDictionary *)data{
+- (void)pushToVerificationControllerWith:(NSDictionary *)data{
+    
     NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
     [defauls setObject:[data objectForKey:@"user_email"] forKey:@"userEmail"];
     [defauls setObject:[data objectForKey:@"name"] forKey:@"name"];
-    [defauls setObject:[data objectForKey:@"user_id"] forKey:@"userID"];
+//    [defauls setObject:[data objectForKey:@"user_id"] forKey:@"userID"];
     if ([data objectForKey:@"picture"]) {
         [defauls setObject:[data objectForKey:@"picture"] forKey:@"picture"];
     }
-
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                         bundle:nil];
+    VerificationViewController *yourViewController = (VerificationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"segueVerification"];
+    [self.navigationController pushViewController:yourViewController animated:YES];
 }
-
 
 @end

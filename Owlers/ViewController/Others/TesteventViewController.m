@@ -8,6 +8,8 @@
 
 #import "TesteventViewController.h"
 #import "OwlersViewController.h"
+#import "SharedPreferences.h"
+
 @interface TesteventViewController ()
 {
     int _maleCount, _femaleCount, _coupleCount;
@@ -87,6 +89,7 @@
 
 - (IBAction)payNowAction:(id)sender {
 
+    [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Need to integrate payment page" withObject:self];
 }
 
 - (void)update {
@@ -106,8 +109,15 @@
     
     if (self.event) {
         self.calculatedMalePriceLbl.text = [NSString stringWithFormat:@"%d",(_maleCount - _coupleCount)*self.event.malePrice];
-        self.calculatedFemalePriceLbl.text = [NSString stringWithFormat:@"%d",(_femaleCount - _coupleCount)*self.event.malePrice];
+        self.calculatedFemalePriceLbl.text = [NSString stringWithFormat:@"%d",(_femaleCount - _coupleCount)*self.event.femalePrice];
         self.calculatedCouplePriceLbl.text = [NSString stringWithFormat:@"%d", _coupleCount*self.event.couplePrice];
+        
+        NSInteger totalPrice = ((_maleCount - _coupleCount)*self.event.malePrice )+ ((_femaleCount - _coupleCount)*self.event.femalePrice) + (_coupleCount*self.event.couplePrice);
+        self.totalPriceLbl.text = [NSString stringWithFormat:@"%ld", (long)totalPrice];
+
+        self.withoutPaymentPriceLbl.text = [NSString stringWithFormat:@"%ld", (long)totalPrice];
+        NSInteger discountedPrice  = totalPrice - ((totalPrice * self.event.discountValue)/100);
+        self.payNowPriceLbl.text = [NSString stringWithFormat:@"%ld", (long)discountedPrice];
     }
 }
 

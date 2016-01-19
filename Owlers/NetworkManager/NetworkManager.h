@@ -23,8 +23,7 @@ typedef void (^CompletionHandler)(id result, NSError *err);
 + (void)getMyBidsWithComplitionHandler:(CompletionHandler)completionBlock;
 + (void)searchEventForString:(NSString *)searchString withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)getAllBooking:(CompletionHandler)completionBlock;
-+ (void)fetchEventListForSelectedDate:(NSString *)dateString withComplitionHandler:(CompletionHandler)completionBlock;
-
++ (void)fetchEventListForSelectedDate:(NSString *)dateString forLocation:(NSString *)locationID withComplitionHandler:(CompletionHandler)completionBlock;
 
 // Login
 + (void)signUpWithEmail:(NSString *)email andPassword:(NSString *)password andMobile:(NSString *)mobile andName:(NSString *)name withComplitionHandler:(CompletionHandler)completionBlock;
@@ -34,6 +33,7 @@ typedef void (^CompletionHandler)(id result, NSError *err);
 + (void)getUserProfileFromServerWithComplitionHandler:(CompletionHandler)completionBlock;
 + (void)editUserProfile:(NSString *)name andMobileNumber:(NSString *)mobile withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)forgetPasswordForEmail:(NSString *)email withComplitionHandler:(CompletionHandler)completionBlock;
++ (void)uploadUserProfilePicture:(NSString *)profilePic withComplitionHandler:(CompletionHandler)completionBlock;
 
 
 @end

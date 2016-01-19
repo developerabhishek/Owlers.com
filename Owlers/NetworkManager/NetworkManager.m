@@ -54,7 +54,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     }
 }
 
-+ (void)fetchEventListForSelectedDate:(NSString *)dateString withComplitionHandler:(CompletionHandler)completionBlock{
++ (void)fetchEventListForSelectedDate:(NSString *)dateString forLocation:(NSString *)locationID withComplitionHandler:(CompletionHandler)completionBlock{
     
     if ([SharedPreferences isNetworkAvailable])
     {
@@ -63,7 +63,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         
-        [manager GET:[NSString stringWithFormat:@"%@/list_events.php",BaseUrl] parameters:@{@"event_date" : dateString} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager GET:[NSString stringWithFormat:@"%@/list_events.php",BaseUrl] parameters:@{@"location_id" : locationID, @"date" : dateString} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             [SVProgressHUD dismiss];
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
@@ -447,6 +447,28 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     }
 }
 
++ (void)uploadUserProfilePicture:(NSString *)profilePic withComplitionHandler:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:[NSString stringWithFormat:@"%@/update_profile.php",BaseUrl] parameters:@{@"user_id" :[[SharedPreferences sharedInstance] getUserID], @"profile_pic" : profilePic} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            [SVProgressHUD dismiss];
+            completionBlock(dataDict, nil);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+    }
+}
 
 
 

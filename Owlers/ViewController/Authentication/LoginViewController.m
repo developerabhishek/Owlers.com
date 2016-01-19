@@ -159,8 +159,7 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
          if (!error) {
             
              NSString *pictureURL = [NSString stringWithFormat:@"%@",[result objectForKey:@"picture"]];
-             [self pushToVerificationControllerWith:@{@"user_id" : [result valueForKey:@"id"], @"user_email" : [result valueForKey:@"email"],@"name": [result valueForKey:@"name"], @"picture": pictureURL}];
-             
+             [self pushToVerificationControllerWith:@{@"user_email" : [result valueForKey:@"email"],@"name": [result valueForKey:@"name"], @"picture": pictureURL}];
          }else{
 
              [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Could not connect to server" withObject:self];
@@ -214,7 +213,7 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
                                     NSError *error) {
                     if (!error) {
                         
-                        [self pushToVerificationControllerWith:@{@"user_id" : person.identifier, @"user_email" : [GPPSignIn sharedInstance].authentication.userEmail ,@"name": person.displayName}];
+                        [self pushToVerificationControllerWith:@{@"user_email" : [GPPSignIn sharedInstance].authentication.userEmail ,@"name": person.displayName}];
                     }
                 }];
     }
@@ -224,8 +223,10 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
     NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
     [defauls setObject:[data objectForKey:@"user_email"] forKey:@"userEmail"];
     [defauls setObject:[data objectForKey:@"name"] forKey:@"name"];
-    [defauls setObject:[data objectForKey:@"user_id"] forKey:@"userID"];
-    [defauls setObject:[data objectForKey:@"picture"] forKey:@"picture"];
+    if ([data objectForKey:@"picture"]) {
+        [defauls setObject:[data objectForKey:@"picture"] forKey:@"picture"];
+    }
+
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self performSegueWithIdentifier:@"segueVerification" sender:nil];
 }
