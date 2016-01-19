@@ -50,24 +50,6 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
     UITapGestureRecognizer *tapGestureRecognizer1 = [[UITapGestureRecognizer alloc]initWithTarget:self
                                                                                            action:@selector(keyBoardHidden)];
     [self.view addGestureRecognizer:tapGestureRecognizer1];
-    
-    /**************[GOOGLE SIGNIN START]*********/
-//    
-//    GPPSignIn *signIn = [GPPSignIn sharedInstance];
-//    signIn.shouldFetchGooglePlusUser = YES;
-//    //signIn.shouldFetchGoogleUserEmail = YES;  // Uncomment to get the user's email
-//    
-//    // You previously set kClientId in the "Initialize the Google+ client" step
-//    signIn.clientID = kClientID;
-//    
-//    // Uncomment one of these two statements for the scope you chose in the previous step
-//    signIn.scopes = @[ kGTLAuthScopePlusLogin ];  // "https://www.googleapis.com/auth/plus.login" scope
-//    //signIn.scopes = @[ @"profile" ];            // "profile" scope
-//    
-//    // Optional: declare signIn.actions, see "app activities"
-//    signIn.delegate = self;
-    
-    /************[GOOGLE SIGNIN END]**********/
 }
 
 - (IBAction)backbtnaction:(id)sender {
@@ -75,8 +57,6 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
 }
 
 - (IBAction)loginbtnaction:(id)sender {
-    
-    
     NSString *message = @"";
     
     if (self.emailtxtfld.text.length <= 0)
@@ -137,7 +117,7 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
 
 - (IBAction)fbloginaction:(id)sender
 {
-    self.fbloginaction.readPermissions = @[@"public_profile"];
+    //self.fbloginaction.readPermissions = @[@"public_profile"];
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
     
     [login
@@ -172,19 +152,20 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
 -(void)fetchUserInfo
 {
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
-    [parameters setValue:@"id, name, email" forKey:@"fields"];
+    [parameters setValue:@"id, name, email,picture" forKey:@"fields"];
 
     [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
-             [self pushToVerificationControllerWith:@{@"user_id" : [result valueForKey:@"id"], @"user_email" : [result valueForKey:@"email"],@"name": [result valueForKey:@"name"]}];
+            
+             NSString *pictureURL = [NSString stringWithFormat:@"%@",[result objectForKey:@"picture"]];
+             [self pushToVerificationControllerWith:@{@"user_id" : [result valueForKey:@"id"], @"user_email" : [result valueForKey:@"email"],@"name": [result valueForKey:@"name"], @"picture": pictureURL}];
              
          }else{
 
              [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Could not connect to server" withObject:self];
          }
      }];
-    
 }
 
 - (IBAction)googleloginaction:(id)sender;
@@ -244,6 +225,7 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
     [defauls setObject:[data objectForKey:@"user_email"] forKey:@"userEmail"];
     [defauls setObject:[data objectForKey:@"name"] forKey:@"name"];
     [defauls setObject:[data objectForKey:@"user_id"] forKey:@"userID"];
+    [defauls setObject:[data objectForKey:@"picture"] forKey:@"picture"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self performSegueWithIdentifier:@"segueVerification" sender:nil];
 }
@@ -274,7 +256,6 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
             return;
         }
     }
-
     ProductViewController *productCon = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
     NSMutableArray *marr = [NSMutableArray arrayWithArray:arr];
     [marr addObject:productCon];

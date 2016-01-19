@@ -15,9 +15,12 @@
 #import "SVProgressHUD.h"
 #import "SharedPreferences.h"
 #import "NetworkManager.h"
+#import <GoogleOpenSource/GoogleOpenSource.h>
+#import <GooglePlus/GooglePlus.h>
 
 
-@interface SignupViewController ()
+
+@interface SignupViewController () <GPPSignInDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *continueBtn;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) UIView *currentResponderContainer;
@@ -101,10 +104,10 @@
 - (IBAction)fbbtnaction:(id)sender {
 
     [self hideKeyBoard];
-    
+
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
     [login
-     logInWithReadPermissions: @[@"public_profile"]
+     logInWithReadPermissions: @[@"public_profile", @"email", @"user_friends"]
      fromViewController:self
      handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
          if (error) {
@@ -117,8 +120,6 @@
          }
      }];
 }
-
-
 
 #pragma mark Notification method changed
 
@@ -135,9 +136,14 @@
 
 -(void)fetchUserInfo
 {
-    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+    NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
+    [parameters setValue:@"id, name, email, picture" forKey:@"fields"];
+
+    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
+             NSString *pictureURL = [NSString stringWithFormat:@"%@",[result objectForKey:@"picture"]];
+             [self saveUserData:@{@"user_id" : [result valueForKey:@"id"], @"user_email" : [result valueForKey:@"email"],@"name": [result valueForKey:@"name"], @"picture": pictureURL}];
              [self signUpSuccess];
          }else{
              
@@ -146,11 +152,59 @@
      }];
 }
 
-- (IBAction)googlebtnaction:(id)sender {
-    [self hideKeyBoard];
 
-
+- (IBAction)googlebtnaction:(id)sender
+{
+    GPPSignIn *signIn = [GPPSignIn sharedInstance];
+    signIn.delegate = self;
+    signIn.shouldFetchGooglePlusUser = YES;
+    signIn.shouldFetchGoogleUserEmail = YES;
+    
+    signIn.clientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4oka.apps.googleusercontent.com";
+    signIn.scopes = [NSArray arrayWithObjects:kGTLAuthScopePlusLogin,nil];
+    
+    signIn.actions = [NSArray arrayWithObjects:@"https://www.googleapis.com/auth/userinfo.profile",nil];
+    [[GPPSignIn sharedInstance] authenticate];
 }
+
+
+-(void)finishedWithAuth:(GTMOAuth2Authentication *)auth error:(NSError *)error{
+    
+    NSLog(@"Received Error %@  and auth object==%@",error,auth);
+    
+    if (error) {
+        // Do some error handling here.
+    } else {
+        //  [self refreshInterfaceBasedOnSignIn];
+        
+        NSLog(@"email %@ ",[NSString stringWithFormat:@"Email: %@",[GPPSignIn sharedInstance].authentication.userEmail]);
+        NSLog(@"Received error %@ and auth object %@",error, auth);
+        
+        // 1. Create a |GTLServicePlus| instance to send a request to Google+.
+        GTLServicePlus* plusService = [[GTLServicePlus alloc] init] ;
+        plusService.retryEnabled = YES;
+        
+        // 2. Set a valid |GTMOAuth2Authentication| object as the authorizer.
+        [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
+        
+        
+        GTLQueryPlus *query = [GTLQueryPlus queryForPeopleGetWithUserId:@"me"];
+        
+        // *4. Use the "v1" version of the Google+ API.*
+        plusService.apiVersion = @"v1";
+        
+        [plusService executeQuery:query
+                completionHandler:^(GTLServiceTicket *ticket,
+                                    GTLPlusPerson *person,
+                                    NSError *error) {
+                    if (!error) {
+
+                        [self saveUserData:@{@"user_id" : person.identifier, @"user_email" : [GPPSignIn sharedInstance].authentication.userEmail ,@"name": person.displayName}];
+                    }
+                }];
+    }
+}
+
 -(BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     NSInteger nextTag = textField.tag + 1;
@@ -235,6 +289,19 @@
     NSMutableArray *marr = [NSMutableArray arrayWithArray:arr];
     [marr addObject:productCon];
     [self.navigationController setViewControllers:marr animated:NO];
+}
+
+
+- (void)saveUserData:(NSDictionary *)data{
+    NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
+    [defauls setObject:[data objectForKey:@"user_email"] forKey:@"userEmail"];
+    [defauls setObject:[data objectForKey:@"name"] forKey:@"name"];
+    [defauls setObject:[data objectForKey:@"user_id"] forKey:@"userID"];
+    if ([data objectForKey:@"picture"]) {
+        [defauls setObject:[data objectForKey:@"picture"] forKey:@"picture"];
+    }
+
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
