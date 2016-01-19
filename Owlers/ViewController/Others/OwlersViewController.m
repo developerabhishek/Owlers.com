@@ -309,6 +309,12 @@ int currentPageIndex = 0;
                 temp_btn.image = image;
                 SplashChildPageData *data = [SplashChildPageData dataWithImage:image displayText:@""];
                 [self.pageDatalist addObject:data];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    APPChildViewController *initialViewController = [self viewControllerAtIndex:0];
+                    [self.pageController setViewControllers:@[initialViewController]
+                                                      direction:UIPageViewControllerNavigationDirectionForward
+                                                       animated:NO completion:nil];
+                });
             }}];
         [scroll1 addSubview:temp_btn];
     }

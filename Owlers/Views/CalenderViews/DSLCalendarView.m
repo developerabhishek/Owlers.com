@@ -94,6 +94,9 @@
     _showDayCalloutView = YES;
     
     self.monthSelectorView = [[[self class] monthSelectorViewClass] view];
+    CGRect rect = self.monthSelectorView.frame;
+    rect.size = CGSizeMake(self.bounds.size.width, 50);
+    self.monthSelectorView.frame = rect;
     self.monthSelectorView.backgroundColor = [UIColor clearColor];
     self.monthSelectorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     [self addSubview:self.monthSelectorView];
