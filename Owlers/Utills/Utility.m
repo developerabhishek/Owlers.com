@@ -3,7 +3,7 @@
 
 @implementation Utility
 
-+ (void)showAlertWithTitle:(NSString*)title message:(NSString*)message okAction:(BOOL)okAction okBlock:(void (^)(void))okBlock cancelAction:(BOOL)cancelAction cancelBlock:(void (^)(void))cancelBlock presenter:(UIViewController *)presenter
++ (void)showAlertWithTitle:(NSString*)title message:(NSString*)message okAction:(BOOL)okAction okTitle:(NSString*)okTitle okBlock:(void (^)(void))okBlock cancelAction:(BOOL)cancelAction cancelBlock:(void (^)(void))cancelBlock presenter:(UIViewController *)presenter
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -29,8 +29,12 @@
         
         if (okAction || !cancelAction)
         {
+            NSString *ok = @"Ok";
+            if (okTitle.length) {
+                ok = okTitle;
+            }
             UIAlertAction *okAlertAction = [UIAlertAction
-                                            actionWithTitle:@"Ok"
+                                            actionWithTitle:ok
                                             style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction *action)
                                             {

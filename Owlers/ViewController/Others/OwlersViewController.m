@@ -788,6 +788,8 @@ int currentPageIndex = 0;
 - (IBAction)rsvpbtnAction:(id)sender {
     if ([[SharedPreferences sharedInstance] isLogin]) {
         [self performSegueWithIdentifier:@"seguePayment" sender:nil];
+    }else {
+        [Utility showAlertWithTitle:@"JNT" message:@"Unable to book event without login" okAction:YES okTitle:@"Login" okBlock:^{[self performSegueWithIdentifier:@"segueRSVPLogin" sender:nil];} cancelAction:YES cancelBlock:nil presenter:[[[[UIApplication sharedApplication] delegate] window] rootViewController]];
     }
 }
 

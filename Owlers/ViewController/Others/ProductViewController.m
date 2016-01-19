@@ -310,6 +310,10 @@ UIRefreshControl *refreshControl;
 }
 - (void)calendarView:(DSLCalendarView *)calendarView willChangeToVisibleMonth:(NSDateComponents *)month duration:(NSTimeInterval)duration {
     NSLog(@"Will show %@ in %.3f seconds", month, duration);
+    if (!self.calendarContainerView.hidden && self.locationCollectionView.hidden) {
+        self.secondaryViewHeightConstraint.constant = calendarView.bounds.size.height;
+        [self.view layoutIfNeeded];
+    }
 }
 
 - (void)calendarView:(DSLCalendarView *)calendarView didChangeToVisibleMonth:(NSDateComponents *)month {
@@ -373,24 +377,25 @@ UIRefreshControl *refreshControl;
 }
 
 - (IBAction)displayCalendarAction:(UIButton*)sender {
+    
+    if (!self.calendarView) {
+        CGRect rect  = self.calendarContainerView.bounds;
+        rect.size.height = self.view.bounds.size.height/2;
+        self.calendarView = [[DSLCalendarView alloc] initWithFrame:rect];
+        [self.calendarView setDelegate:self];
+        [self.calendarContainerView addSubview:self.calendarView];
+        
+        NSLog(@"\n\n### calendar added ###\n\n");
+    }
+    
     self.locationCollectionView.hidden = YES;
     self.calendarContainerView.hidden = !self.calendarContainerView.hidden;
     if (self.calendarContainerView.hidden && self.locationCollectionView.hidden) {
         self.secondaryViewHeightConstraint.constant = 0;
         [self.view layoutIfNeeded];
     }else{
-    self.secondaryViewHeightConstraint.constant = self.view.bounds.size.height/2;
-    [self.view layoutIfNeeded];
-    }
-    
-    
-    if (!self.calendarView) {
-        CGRect rect  = self.calendarContainerView.bounds;
-        rect.size.height = self.view.bounds.size.height/2;
-        self.calendarView = [[DSLCalendarView alloc] initWithFrame:rect];
-        [self.calendarContainerView addSubview:self.calendarView];
-        [self.calendarView setDelegate:self];
-        NSLog(@"\n\n### calendar added ###\n\n");
+        self.secondaryViewHeightConstraint.constant = self.calendarView.bounds.size.height;
+        [self.view layoutIfNeeded];
     }
 }
 

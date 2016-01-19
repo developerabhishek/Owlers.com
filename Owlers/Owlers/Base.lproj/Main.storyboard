@@ -2709,6 +2709,7 @@
                         <outlet property="scrollViewChildContainerHeightConstraint" destination="iyv-Od-Rg2" id="r1x-Sa-9WS"/>
                         <outlet property="scrollview" destination="E4C-N0-bHn" id="Hzj-I5-NfO"/>
                         <segue destination="UQU-vJ-DR4" kind="show" identifier="seguePayment" id="unI-8N-BKd"/>
+                        <segue destination="moN-EO-zgd" kind="show" identifier="segueRSVPLogin" id="aBo-NO-HdI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qv6-ZL-gFI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5244,7 +5245,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="raw-hh-jA5"/>
         <segue reference="tNb-Um-tHJ"/>
-        <segue reference="BHX-tv-XHf"/>
+        <segue reference="aBo-NO-HdI"/>
         <segue reference="4Xm-zK-GNa"/>
     </inferredMetricsTieBreakers>
 </document>
