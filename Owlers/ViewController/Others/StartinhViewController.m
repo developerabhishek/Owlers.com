@@ -145,6 +145,7 @@ int currentIndex = 0;
     APPChildViewController *childViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"APPChildViewController"];
     childViewController.hideMessage = NO;
     childViewController.index = index;
+    childViewController.mode = UIViewContentModeScaleAspectFit;
     childViewController.data = (SplashChildPageData*)[self.pageDatalist objectAtIndex:index];
 
     return childViewController;

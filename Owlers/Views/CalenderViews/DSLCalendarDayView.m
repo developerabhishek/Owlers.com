@@ -39,6 +39,8 @@
 
 @end
 
+#define DAY_SELECTED_COLOR [UIColor colorWithRed:251.0f/255 green:156.0f/255 blue:21.0f/255 alpha:1]
+#define DAY_BORDER_COLOR [UIColor colorWithRed:251.0f/255 green:156.0f/255 blue:21.0f/255 alpha:0.5]
 
 @implementation DSLCalendarDayView {
     __strong NSCalendar *_calendar;
@@ -100,7 +102,8 @@
     if ([self isMemberOfClass:[DSLCalendarDayView class]]) {
         // If this isn't a subclass of DSLCalendarDayView, use the default drawing
         //[self drawBackground];
-        //[self drawBorders];
+        
+        [self drawBorders];
         [self drawDayNumber];
         
     }
@@ -112,7 +115,7 @@
 - (void)drawBackground {
     if (self.selectionState == DSLCalendarDayViewNotSelected) {
         
-        NSUInteger flags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+        NSUInteger flags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
         NSCalendar *calendar = [NSCalendar currentCalendar];
         
         NSDateComponents *components = [calendar components:flags fromDate:[self.day date]];
@@ -170,29 +173,15 @@
 
 - (void)drawBorders {
     CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(context, 0.3);
+    CGContextSetStrokeColorWithColor(context, DAY_BORDER_COLOR.CGColor);
+    CGContextMoveToPoint(context, 0.0, 0.3);
+    CGContextAddLineToPoint(context, self.bounds.size.width - 0.3, 0.3);
+    CGContextAddLineToPoint(context, self.bounds.size.width - 0.3, self.bounds.size.height - 0.3);
+    CGContextAddLineToPoint(context, 0.0, self.bounds.size.height - 0.3);
+    CGContextAddLineToPoint(context, 0.0, 0.0);
     
-    CGContextSetLineWidth(context, 1.0);
-    
-    CGContextSaveGState(context);
-    CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:255.0/255.0 alpha:1.0].CGColor);
-    CGContextMoveToPoint(context, 0.5, self.bounds.size.height - 0.5);
-    CGContextAddLineToPoint(context, 0.5, 0.5);
-    CGContextAddLineToPoint(context, self.bounds.size.width - 0.5, 0.5);
     CGContextStrokePath(context);
-    CGContextRestoreGState(context);
-    
-    CGContextSaveGState(context);
-    if (self.isInCurrentMonth) {
-        CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-    }
-    else {
-        CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-    }
-    CGContextMoveToPoint(context, self.bounds.size.width - 0.5, 0.0);
-    CGContextAddLineToPoint(context, self.bounds.size.width - 0.5, self.bounds.size.height - 0.5);
-    CGContextAddLineToPoint(context, 0.0, self.bounds.size.height - 0.5);
-    CGContextStrokePath(context);
-    CGContextRestoreGState(context);
 }
 
 - (void)drawDayNumber {
@@ -200,23 +189,14 @@
         [[UIColor whiteColor] set];
     }
     else {
-        
         /*****[SELECTED DAY]*****/
-        [[UIColor blueColor] setFill];
+        [DAY_SELECTED_COLOR setFill];
     }
     
     UIFont *textFont = [UIFont boldSystemFontOfSize:14.0];
     CGSize textSize = [_labelText sizeWithFont:textFont];
     CGRect textRect = CGRectMake(ceilf(CGRectGetMidX(self.bounds) - (textSize.width / 2.0)), ceilf(CGRectGetMidY(self.bounds) - (textSize.height / 2.0)), textSize.width, textSize.height);
-   // [[UIColor redColor] setFill];
-    
-//    backgroundView = [[UIView alloc] initWithFrame:textRect];
-//    [backgroundView setBackgroundColor:[[UIColor alloc] initWithRed:204./255 green:213./255 blue:216./255 alpha:0.5]];
-//    [self.view addSubview:backgroundView];
-//    
-//    _labelText = [[UIView alloc] initWithFrame:textRect];
-    
     [_labelText drawInRect:textRect withFont:textFont];
-    
 }
+
 @end

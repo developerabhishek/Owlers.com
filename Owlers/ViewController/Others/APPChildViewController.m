@@ -28,6 +28,7 @@
 - (void)viewDidLayoutSubviews {
     [self.imgBottomconstraint setActive:self.hideMessage];
     self.displayLbl.hidden = self.hideMessage;
+    self.imgView.contentMode = self.mode;
     [self.view layoutIfNeeded];
 }
 

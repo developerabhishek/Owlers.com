@@ -31,27 +31,26 @@
     
     NSURLConnection *connection_json;
 }
-@property (nonatomic, weak) IBOutlet DSLCalendarView *calendarView;
+@property (nonatomic, weak) IBOutlet UIView *calendarContainerView;
 @property (nonatomic, weak) IBOutlet UITableView *productsTbl;
 @property (nonatomic, weak) IBOutlet UIView *searchBarContainer;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *secondaryViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet UICollectionView *locationCollectionView;
 @property (nonatomic, weak) IBOutlet UIButton *auctionBtn;
 @property (nonatomic, weak) IBOutlet UIButton *locationBtn;
+@property (nonatomic, weak) IBOutlet UIButton *menuBtn;
+@property (nonatomic, weak) IBOutlet UITextField *searchTxtField;
+@property (nonatomic, weak) IBOutlet UIButton *calenderButton;
+@property (nonatomic, strong) DSLCalendarView *calendarView;
+@property (nonatomic, strong) Event *selectedEvent;
 @property (nonatomic, strong) NSDate * selectedDate;
 @property (nonatomic, strong) NSMutableArray *locationItems;
 @property (nonatomic, strong) NSMutableArray *eventItems;
 @property (nonatomic, strong) NSMutableArray *menuItems;
-@property (weak, nonatomic) IBOutlet UIButton *menuBtn;
-@property (weak, nonatomic) IBOutlet UITextField *searchTxtField;
-
-@property (strong, nonatomic) Event *selectedEvent;
-@property (weak, nonatomic) IBOutlet UIButton *calenderButton;
 
 @end
 
 @implementation ProductViewController
-@synthesize calendarView;
 
 UIRefreshControl *refreshControl;
 
@@ -93,7 +92,6 @@ UIRefreshControl *refreshControl;
     }];
     [self setDateButtonTitleForDate:[NSDate date] withServiceCall:false];
     
-    [calendarView setDelegate:self];
     /*********[Table Refresh Control]************/
     
     refreshControl = [[UIRefreshControl alloc] init];
@@ -273,7 +271,9 @@ UIRefreshControl *refreshControl;
 {
     if (range != nil) {
         [self setDateButtonTitleForDate:range.startDay.date withServiceCall:true];
-        self.calendarView.hidden = YES;
+        self.calendarContainerView.hidden = YES;
+        self.secondaryViewHeightConstraint.constant = 0;
+        [self.view layoutIfNeeded];
     }
     else {
         NSLog( @"No selection" );
@@ -361,26 +361,36 @@ UIRefreshControl *refreshControl;
 #pragma -mark public Properties/Methods
 - (IBAction)selectLocationAction:(UIButton*)sender {
     
-    self.calendarView.hidden = YES;
+    self.calendarContainerView.hidden = YES;
     self.locationCollectionView.hidden = !self.locationCollectionView.hidden;
-    if (self.calendarView.hidden && self.locationCollectionView.hidden) {
+    if (self.calendarContainerView.hidden && self.locationCollectionView.hidden) {
         self.secondaryViewHeightConstraint.constant = 0;
         [self.view layoutIfNeeded];
     }else{
-        self.secondaryViewHeightConstraint.constant = 40;
+        self.secondaryViewHeightConstraint.constant = 32;
         [self.view layoutIfNeeded];
     }
 }
 
 - (IBAction)displayCalendarAction:(UIButton*)sender {
     self.locationCollectionView.hidden = YES;
-    self.calendarView.hidden = !self.calendarView.hidden;
-    if (self.calendarView.hidden && self.locationCollectionView.hidden) {
+    self.calendarContainerView.hidden = !self.calendarContainerView.hidden;
+    if (self.calendarContainerView.hidden && self.locationCollectionView.hidden) {
         self.secondaryViewHeightConstraint.constant = 0;
         [self.view layoutIfNeeded];
     }else{
     self.secondaryViewHeightConstraint.constant = self.view.bounds.size.height/2;
     [self.view layoutIfNeeded];
+    }
+    
+    
+    if (!self.calendarView) {
+        CGRect rect  = self.calendarContainerView.bounds;
+        rect.size.height = self.view.bounds.size.height/2;
+        self.calendarView = [[DSLCalendarView alloc] initWithFrame:rect];
+        [self.calendarContainerView addSubview:self.calendarView];
+        [self.calendarView setDelegate:self];
+        NSLog(@"\n\n### calendar added ###\n\n");
     }
 }
 

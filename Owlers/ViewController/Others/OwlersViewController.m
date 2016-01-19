@@ -181,6 +181,7 @@ int currentPageIndex = 0;
 - (APPChildViewController *)viewControllerAtIndex:(NSUInteger)index {
     APPChildViewController *childViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"APPChildViewController"];
     childViewController.hideMessage = YES;
+    childViewController.mode = UIViewContentModeScaleAspectFill;
     childViewController.index = index;
     childViewController.data = (SplashChildPageData*)[self.pageDatalist objectAtIndex:index];
     

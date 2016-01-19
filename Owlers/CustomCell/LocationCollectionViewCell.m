@@ -12,9 +12,9 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.location.layer.borderWidth = 1.0f;
-    self.location.layer.cornerRadius = 2.0f;
-    self.location.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.location.layer.borderWidth = 0.5f;
+    self.location.layer.cornerRadius = 1.0f;
+    self.location.layer.borderColor = [UIColor grayColor].CGColor;
 }
 
 @end

@@ -38,6 +38,7 @@
 
 @end
 
+#define BORDER_COLOR [UIColor colorWithRed:251.0f/255 green:156.0f/255 blue:21.0f/255 alpha:0.5]
 
 @implementation DSLCalendarMonthSelectorView
 
@@ -62,7 +63,6 @@
             return object;
         }
     }
-    
     return nil;
 }
 
@@ -80,24 +80,24 @@
     [super awakeFromNib];
 
     // Get a dictionary of localised day names
-    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSCalendarCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit fromDate:[NSDate date]];
+    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitCalendar | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday fromDate:[NSDate date]];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"E";
     NSMutableDictionary *dayNames = [[NSMutableDictionary alloc] init];
     
     for (NSInteger index = 0; index < 7; index++) {
-        NSInteger weekday =dateComponents.weekday - [dateComponents.calendar firstWeekday];
+        NSInteger weekday = dateComponents.weekday - [dateComponents.calendar firstWeekday];
         if (weekday < 0) weekday += 7;
         if (weekday < 0) weekday += 7;
         [dayNames setObject:[formatter stringFromDate:dateComponents.date] forKey:@(weekday)];
         
         dateComponents.day = dateComponents.day + 1;
-        dateComponents = [dateComponents.calendar components:NSCalendarCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit fromDate:dateComponents.date];
+        dateComponents = [dateComponents.calendar components:NSCalendarUnitCalendar | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday fromDate:dateComponents.date];
     }
    
     // Set the day name label texts to localised day names
     for (UILabel *label in self.dayLabels) {
-        label.text = [[dayNames objectForKey:@(label.tag)] uppercaseString];
+        label.text = [[dayNames objectForKey:@(label.tag)] capitalizedString];
     }
 }
 
@@ -111,10 +111,10 @@
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSaveGState(context);
         
-        CGContextSetLineWidth(context, 1.0);
-        CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:205.0/255.0 alpha:1.0].CGColor);
-        CGContextMoveToPoint(context, 0.0, self.bounds.size.height - 0.5);
-        CGContextAddLineToPoint(context, self.bounds.size.width - 0.5, self.bounds.size.height - 0.5);
+        CGContextSetLineWidth(context, 0.3);
+        CGContextSetStrokeColorWithColor(context, BORDER_COLOR.CGColor);
+        CGContextMoveToPoint(context, 0.0, self.bounds.size.height - 0.6);
+        CGContextAddLineToPoint(context, self.bounds.size.width - 0.3, self.bounds.size.height - 0.6);
         CGContextStrokePath(context);
         
         CGContextRestoreGState(context);

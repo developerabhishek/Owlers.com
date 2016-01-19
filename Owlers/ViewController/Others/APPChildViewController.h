@@ -14,5 +14,6 @@
 @property (assign, nonatomic) NSInteger index;
 @property (strong, nonatomic) SplashChildPageData *data;
 @property (nonatomic) BOOL hideMessage;
+@property (nonatomic, assign) UIViewContentMode mode;
 
 @end
