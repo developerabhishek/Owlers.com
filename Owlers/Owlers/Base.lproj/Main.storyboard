@@ -5693,9 +5693,9 @@
         <image name="woman_one.png" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="szT-g1-nGL"/>
         <segue reference="0sS-F9-FBs"/>
-        <segue reference="aBo-NO-HdI"/>
-        <segue reference="4Xm-zK-GNa"/>
+        <segue reference="RAR-IG-B43"/>
         <segue reference="dFM-Yw-7x1"/>
     </inferredMetricsTieBreakers>
 </document>

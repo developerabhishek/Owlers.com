@@ -51,9 +51,9 @@
 - (void)setDetailsOfAution:(Auction *)auction{
     self.descLabel.text= auction.auctionDescription;
     self.nameLabel.text= [auction.name uppercaseString];
-    [self.buyNowBtn setTitle:[NSString stringWithFormat:@"Buy Now For Rs. | %@",auction.buyPrice] forState:UIControlStateNormal];
+    [self.buyNowBtn setTitle:[NSString stringWithFormat:@"Buy Now For Rs. %@",auction.buyPrice] forState:UIControlStateNormal];
     self.totalBidLabel.text = auction.totalBids;
-    self.maxbidLabel.text = auction.openingPrice;
+    self.maxbidLabel.text = [NSString stringWithFormat:@"Rs. %@",auction.openingPrice];
     
     NSString *imageURL = [NSString stringWithFormat:@"http://owlers.com/auction_images/%@",auction.imgURL];
     

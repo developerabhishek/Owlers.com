@@ -219,6 +219,7 @@ NSURLConnection *conne_ction ,*connection_;
 }
 
 - (void)enableTimer{
+    [self disableTimer];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(update) userInfo:nil repeats:YES];
 }
 - (void)disableTimer{
@@ -229,6 +230,11 @@ NSURLConnection *conne_ction ,*connection_;
 - (void)viewWillDisappear:(BOOL)animated {
     [self disableTimer];
     [super viewDidDisappear:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
+    [self enableTimer];
 }
 
 @end
