@@ -54,7 +54,7 @@ int currentPageIndex = 0;
 
 -(void)mapurl:(NSString*)address
 {
-    NSLog(@"11  11111");
+    //NSLog(@"11  11111");
     Class mapItemClass = [MKMapItem class];
     if (mapItemClass && [mapItemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)])
     {
@@ -83,9 +83,9 @@ int currentPageIndex = 0;
     //iOS 4/5:
     else
     {
-        NSLog(@"33   3333333");
+       // NSLog(@"33   3333333");
         NSString *mapsURL = [NSString stringWithFormat:@"http://maps.google.com/maps?q=%@", [address stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        NSLog(@"my url =%@",mapsURL);
+       // NSLog(@"my url =%@",mapsURL);
     }
 }
 //-(void)offermethodcall{
@@ -341,7 +341,7 @@ int currentPageIndex = 0;
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"didFailWithError: %@", error);
+    //NSLog(@"didFailWithError: %@", error);
     UIAlertView *errorAlert = [[UIAlertView alloc]
                                initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [errorAlert show];
@@ -350,7 +350,7 @@ int currentPageIndex = 0;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    NSLog(@"didUpdateToLocation: %@", newLocation);
+    //NSLog(@"didUpdateToLocation: %@", newLocation);
     CLLocation *currentLocation = newLocation;
    
 
@@ -360,9 +360,9 @@ int currentPageIndex = 0;
     }
     
     // Reverse Geocoding
-    NSLog(@"Resolving the Address");
+    //NSLog(@"Resolving the Address");
     [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        NSLog(@"Found placemarks: %@, error: %@", placemarks, error);
+        //NSLog(@"Found placemarks: %@, error: %@", placemarks, error);
         if (error == nil && [placemarks count] > 0) {
             placemark = [placemarks lastObject];
             locationmanager = [NSString stringWithFormat:@"%@ %@\n%@ %@\n%@\n%@",
@@ -371,7 +371,7 @@ int currentPageIndex = 0;
                                  placemark.administrativeArea,
                                  placemark.country];
         } else {
-            NSLog(@"%@", error.debugDescription);
+            //NSLog(@"%@", error.debugDescription);
         }
     } ];
 
@@ -440,7 +440,7 @@ int currentPageIndex = 0;
     NSArray* places = [json objectForKey:@"results"];
     
     //Write out the data to the console.
-    NSLog(@"Google Data: %@", places);
+    //NSLog(@"Google Data: %@", places);
     [self plotPositions:places];
 
 }
@@ -642,7 +642,7 @@ int currentPageIndex = 0;
 //    self.activity.hidden =YES;
     [self.activity stopAnimating];
     NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:serverdata options:NSJSONReadingMutableLeaves error:nil];
-    NSLog(@"serverData =%@",jsonData);
+    //NSLog(@"serverData =%@",jsonData);
     
     NSDictionary *eventDict = [[jsonData objectForKey:@"events"] objectAtIndex:0];
     self.event.malePrice = [[eventDict objectForKey:@"ev_price_male"] intValue];
@@ -730,8 +730,8 @@ int currentPageIndex = 0;
             NSString *latDest1 = [NSString stringWithFormat:@"%.4f",aPlacemark.location.coordinate.latitude];
             
             NSString *lngDest1 = [NSString stringWithFormat:@"%.4f",aPlacemark.location.coordinate.longitude];
-            NSLog(@"latitude %@",latDest1);
-            NSLog(@"longitude %@",lngDest1);
+            //NSLog(@"latitude %@",latDest1);
+            //NSLog(@"longitude %@",lngDest1);
             str_temp_lat=[latDest1 floatValue];
             str_temp_long=[lngDest1 floatValue];
         }
@@ -825,12 +825,12 @@ int currentPageIndex = 0;
     showLocation = [locations objectAtIndex:0];
     [locationmanager stopUpdatingLocation];
 
-      NSLog(@"Detected Location : %f, %f", showLocation.coordinate.latitude, showLocation.coordinate.longitude);
+      //NSLog(@"Detected Location : %f, %f", showLocation.coordinate.latitude, showLocation.coordinate.longitude);
     CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
     [geocoder reverseGeocodeLocation:showLocation
                    completionHandler:^(NSArray *placemarks, NSError *error) {
                        if (error){
-                           NSLog(@"Geocode failed with error: %@", error);
+                           //NSLog(@"Geocode failed with error: %@", error);
                            return;
                        }
                        CLPlacemark *placemark = [placemarks objectAtIndex:0];
@@ -974,7 +974,6 @@ int currentPageIndex = 0;
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     Offer *offer = [self.event.offers objectAtIndex:indexPath.row];
     if (offer.isValid) {
-        NSLog(@"valid offer");
         self.offerDescLbl.text = offer.offerDescription;
         self.offerTermsLbl.text = offer.terms;
         self.offerPopUpContainer.hidden = NO;

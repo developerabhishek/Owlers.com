@@ -285,7 +285,7 @@ UIRefreshControl *refreshControl;
         [self.view layoutIfNeeded];
     }
     else {
-        NSLog( @"No selection" );
+       // NSLog( @"No selection" );
     }
     
 }
@@ -318,7 +318,7 @@ UIRefreshControl *refreshControl;
     return range;
 }
 - (void)calendarView:(DSLCalendarView *)calendarView willChangeToVisibleMonth:(NSDateComponents *)month duration:(NSTimeInterval)duration {
-    NSLog(@"Will show %@ in %.3f seconds", month, duration);
+    //NSLog(@"Will show %@ in %.3f seconds", month, duration);
     if (!self.calendarContainerView.hidden && self.locationCollectionView.hidden) {
         self.secondaryViewHeightConstraint.constant = calendarView.bounds.size.height;
         [self.view layoutIfNeeded];
@@ -326,7 +326,7 @@ UIRefreshControl *refreshControl;
 }
 
 - (void)calendarView:(DSLCalendarView *)calendarView didChangeToVisibleMonth:(NSDateComponents *)month {
-    NSLog(@"Now showing %@", month);
+    //NSLog(@"Now showing %@", month);
 }
 
 - (BOOL)day:(NSDateComponents*)day1 isBeforeDay:(NSDateComponents*)day2 {
@@ -393,8 +393,6 @@ UIRefreshControl *refreshControl;
         self.calendarView = [[DSLCalendarView alloc] initWithFrame:rect];
         [self.calendarView setDelegate:self];
         [self.calendarContainerView addSubview:self.calendarView];
-        
-        NSLog(@"\n\n### calendar added ###\n\n");
     }
     
     self.locationCollectionView.hidden = YES;

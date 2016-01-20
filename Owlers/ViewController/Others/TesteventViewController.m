@@ -48,6 +48,7 @@
     _femaleCount = 0;
     _coupleCount = 0;
     
+    self.screenTitle.text = self.event.name;
     self.malePriceLbl.text = [NSString stringWithFormat:@"%d",self.event.malePrice];
     self.femalePriceLbl.text = [NSString stringWithFormat:@"%d",self.event.femalePrice];
     self.couplePriceLbl.text = [NSString stringWithFormat:@"%d",self.event.couplePrice];

@@ -94,8 +94,7 @@ NSURLConnection *conne_ction ,*connection_;
 {
     Auction *auction = [self.auctionItems objectAtIndex:indexPath.row];
     AuctionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseActionTblCell"];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    cell.auctionName.text = auction.name;
+    cell.auctionName.text = [auction.name uppercaseString];
 //    cell.timeLeft.text = auction.timeElapsed;
     cell.venue.text = auction.venue;
     cell.totalBids.text = auction.totalBids;

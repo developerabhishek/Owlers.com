@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileViewController : UIViewController<UINavigationBarDelegate,UIImagePickerControllerDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate,UINavigationControllerDelegate,UIAlertViewDelegate,UIActionSheetDelegate,UIActionSheetDelegate>
+@interface ProfileViewController : UIViewController<UINavigationBarDelegate,UIImagePickerControllerDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate,UINavigationControllerDelegate,UIAlertViewDelegate,UIActionSheetDelegate,UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource>
 
 {
     NSMutableDictionary *serverDictionary;

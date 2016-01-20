@@ -125,11 +125,11 @@ static NSString * const kClientID = @"535074141806-q9b5s9g5u52q4omhope3am42eu1hk
      fromViewController:self
      handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
          if (error) {
-             NSLog(@"Process error");
+             //NSLog(@"Process error");
          } else if (result.isCancelled) {
-             NSLog(@"Cancelled");
+             //NSLog(@"Cancelled");
          } else {
-             NSLog(@"Logged in");
+             //NSLog(@"Logged in");
              [self fetchUserInfo];
          }
      }];
@@ -184,15 +184,15 @@ static NSString * const kClientID = @"535074141806-q9b5s9g5u52q4omhope3am42eu1hk
 
 -(void)finishedWithAuth:(GTMOAuth2Authentication *)auth error:(NSError *)error{
     
-    NSLog(@"Received Error %@  and auth object==%@",error,auth);
+    //NSLog(@"Received Error %@  and auth object==%@",error,auth);
     
     if (error) {
         // Do some error handling here.
     } else {
       //  [self refreshInterfaceBasedOnSignIn];
         
-        NSLog(@"email %@ ",[NSString stringWithFormat:@"Email: %@",[GPPSignIn sharedInstance].authentication.userEmail]);
-        NSLog(@"Received error %@ and auth object %@",error, auth);
+        //NSLog(@"email %@ ",[NSString stringWithFormat:@"Email: %@",[GPPSignIn sharedInstance].authentication.userEmail]);
+        //NSLog(@"Received error %@ and auth object %@",error, auth);
         
         // 1. Create a |GTLServicePlus| instance to send a request to Google+.
         GTLServicePlus* plusService = [[GTLServicePlus alloc] init] ;

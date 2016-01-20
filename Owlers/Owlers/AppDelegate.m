@@ -75,7 +75,7 @@
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"DEVICETOKEN"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    NSLog(@"My token is: %@", token);
+    //NSLog(@"My token is: %@", token);
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
@@ -226,11 +226,11 @@
                  if (data.length > 0)
                  {
                      NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-                     NSLog(@"parsedObject =%@",parsedObject);
+                     //NSLog(@"parsedObject =%@",parsedObject);
                                       }
                  else
                  {
-                     NSLog(@"Image is not uploaded due to some issue");
+                     //NSLog(@"Image is not uploaded due to some issue");
                  }
              });
          }];

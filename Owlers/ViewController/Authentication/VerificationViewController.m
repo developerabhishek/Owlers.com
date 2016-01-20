@@ -65,9 +65,8 @@ NSDictionary *parsedObject;
                     if (imageURL) {
                         NSData *imageData = [NSData dataWithContentsOfURL:imageURL options:NSDataReadingMapped error:nil];
                         NSString *base64String = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-                        [NetworkManager uploadUserProfilePicture:base64String withComplitionHandler:^(id result, NSError *err) {
+                        [NetworkManager uploadUserProfilePicture:base64String withComplitionHandler:^(id result, NSError *err){
                             [self signUpSuccess];
-                            //[self.navigationController popViewControllerAnimated:YES];
                         }];
                     }else{
                         [self signUpSuccess];

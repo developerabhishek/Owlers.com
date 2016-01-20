@@ -26,7 +26,6 @@
 }
 
 - (IBAction)sharebtnAction:(id)sender {
-    NSLog(@"shareButton pressed");
     
     NSURL *url = [NSURL URLWithString:@"jfkdljfkjf"];
     NSArray *objectsToShare = @[url];
@@ -91,7 +90,6 @@
     if (segueIdentifier && ![segueIdentifier isEqualToString:@""]) {
         [self performSegueWithIdentifier:segueIdentifier sender:nil];
     }
-    NSLog(@" %@", indexPath);
 }
 
 

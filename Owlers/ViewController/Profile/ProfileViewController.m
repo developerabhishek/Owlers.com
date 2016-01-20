@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *bookingSeparator;
 @property (weak, nonatomic) IBOutlet UIImageView *walletSeparator;
 @property (weak, nonatomic) IBOutlet UIView *walletView;
+@property (strong, nonatomic) NSIndexPath *selectedIndex;
 
 @end
 
@@ -167,13 +168,33 @@
     Booking *booking = [self.bookings objectAtIndex:indexPath.row];
     cell.eventName.text = booking.event.name;
     cell.eventVenue.text = booking.event.venue;
-    
+    cell.eventDesc.text = booking.event.eventDescription;
+    cell.eventTerms.text = booking.event.terms;
+    NSArray *arr = [booking.bookingDate componentsSeparatedByString:@" "];
+    if (arr.count == 2) {
+        cell.bookingDate.text = [arr objectAtIndex:0];
+        cell.bookingTime.text = [arr objectAtIndex:1];
+    }
+    cell.bookingPrice.text = [NSString stringWithFormat:@"%d",booking.totalAmount];
     return cell;
 }
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.selectedIndex && (self.selectedIndex.row == indexPath.row)) {
+        self.selectedIndex = nil;
+    }else{
+        self.selectedIndex = indexPath;
+    }
     
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.selectedIndex && (self.selectedIndex.row == indexPath.row)) {
+        return 275;
+    }
+    return 98;
 }
 
 - (IBAction)backBtnAction:(id)sender {

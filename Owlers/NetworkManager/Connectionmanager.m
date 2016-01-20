@@ -38,7 +38,7 @@ static ConnectionManager * sharedInstance = Nil;
     }
     else
     {
-        NSLog(@"True");
+        //NSLog(@"True");
         return TRUE;
     }
 }
