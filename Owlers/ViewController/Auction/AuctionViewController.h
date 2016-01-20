@@ -17,7 +17,6 @@
     
     NSMutableData *serDATA;
     NSMutableDictionary *serDICT;
-    NSArray *arr;
   
 }
 

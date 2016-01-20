@@ -26,18 +26,20 @@
     [self setDetailsOfAution:self.auction];
     
     [NetworkManager loadAuctionDetailsForAuction:self.auction.ID withComplitionHandler:^(id result, NSError *err) {
-        NSDictionary *dict = [[result objectForKey:@"items"] firstObject];
-        if (dict) {
-            self.auction.ID = [dict objectForKey:@"auction_id"];
-            self.auction.name = [dict objectForKey:@"auction_name"];
-            self.auction.timeElapsed = [dict objectForKey:@"time_elapsed"];
-            self.auction.venue = [dict objectForKey:@"venue"];
-            self.auction.totalBids = [dict objectForKey:@"total_bids"];
-            self.auction.auctionDescription = [dict objectForKey:@"auction_desc"];
-            self.auction.buyPrice = [dict objectForKey:@"buy_now_price"];
-            self.auction.openingPrice = [dict objectForKey:@"opening_price"];
-            self.auction.imgURL = [dict objectForKey:@"auction_image"];
-            [self setDetailsOfAution:self.auction];
+        NSArray *arr = [result objectForKey:@"items"];
+        for (NSDictionary *dict in arr) {
+            if ([[dict objectForKey:@"auction_id"] isEqualToString:self.auction.ID]) {
+                self.auction.ID = [dict objectForKey:@"auction_id"];
+                self.auction.name = [dict objectForKey:@"auction_name"];
+                self.auction.timeElapsed = [dict objectForKey:@"time_elapsed"];
+                self.auction.venue = [dict objectForKey:@"venue"];
+                self.auction.totalBids = [dict objectForKey:@"total_bids"];
+                self.auction.auctionDescription = [dict objectForKey:@"auction_desc"];
+                self.auction.buyPrice = [dict objectForKey:@"buy_now_price"];
+                self.auction.openingPrice = [dict objectForKey:@"opening_price"];
+                self.auction.imgURL = [dict objectForKey:@"auction_image"];
+                [self setDetailsOfAution:self.auction];
+            }
         }
     }];
     
@@ -48,7 +50,7 @@
 
 - (void)setDetailsOfAution:(Auction *)auction{
     self.descLabel.text= auction.auctionDescription;
-    self.nameLabel.text= auction.name;
+    self.nameLabel.text= [auction.name uppercaseString];
     [self.buyNowBtn setTitle:[NSString stringWithFormat:@"Buy Now For Rs. | %@",auction.buyPrice] forState:UIControlStateNormal];
     self.totalBidLabel.text = auction.totalBids;
     self.maxbidLabel.text = auction.openingPrice;

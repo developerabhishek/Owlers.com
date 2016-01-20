@@ -30,6 +30,7 @@
 @property (nonatomic, strong) Auction *auction;
 @property (nonatomic, strong) NSMutableArray *locationItems;
 @property (nonatomic, strong) NSMutableArray *auctionItems;
+@property (strong, nonatomic) NSTimer *timer;
 
 @end
 
@@ -85,7 +86,7 @@ NSURLConnection *conne_ction ,*connection_;
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  [[serverDict objectForKey:@"items"] count];
+    return  [self.auctionItems count];
 }
 
 
@@ -94,9 +95,10 @@ NSURLConnection *conne_ction ,*connection_;
     Auction *auction = [self.auctionItems objectAtIndex:indexPath.row];
     AuctionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseActionTblCell"];
     cell.auctionName.text = auction.name;
-    cell.timeLeft.text = auction.timeElapsed;
+//    cell.timeLeft.text = auction.timeElapsed;
     cell.venue.text = auction.venue;
     cell.totalBids.text = auction.totalBids;
+    [cell updateViewWithData:auction];
     
     return cell;
 }
@@ -108,6 +110,8 @@ NSURLConnection *conne_ction ,*connection_;
 }
 
 - (void)loadAuctionsForLocation:(Location *)location{
+    [self disableTimer];
+    [self.auctionItems removeAllObjects];
     [NetworkManager loadAcutionsForCity:location.ID withComplitionHandler:^(id result, NSError *err) {
         serverDict = result;
         NSArray *items = [serverDict objectForKey:@"items"];
@@ -123,9 +127,27 @@ NSURLConnection *conne_ction ,*connection_;
             auction.openingPrice = [dict objectForKey:@"opening_price"];
             auction.imgURL = [dict objectForKey:@"auction_image"];
             
+            NSArray *arr = [auction.timeElapsed componentsSeparatedByString:@":"];
+            if (arr.count > 0) {
+                auction.daysLeft = [[arr objectAtIndex:0] integerValue];
+            }
+            if (arr.count > 1) {
+                auction.hoursLeft = [[arr objectAtIndex:1] integerValue];
+            }
+            if (arr.count > 2) {
+                auction.minutesLeft = [[arr objectAtIndex:2] integerValue];
+            }
+            if (arr.count > 3) {
+                auction.secondsLeft = [[arr objectAtIndex:3] integerValue];
+            }
+            
             [self.auctionItems addObject:auction];
         }
-        [self.auctionTbl reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.auctionTbl reloadData];
+            [self enableTimer];
+        });
+        
     }];
 }
 
@@ -166,6 +188,47 @@ NSURLConnection *conne_ction ,*connection_;
         [self.locationBtn setTitle:location.name forState:UIControlStateNormal];
         [self loadAuctionsForLocation:location];
     });
+}
+
+
+- (void)updateData {
+
+    for (Auction *auction in self.auctionItems) {
+        
+        long totalSecondsLeft = auction.daysLeft*24*60*60 + auction.hoursLeft*60*60 + auction.minutesLeft*60 + auction.secondsLeft - 1;
+        if (totalSecondsLeft > 0) {
+            auction.daysLeft = totalSecondsLeft/(24*60*60);
+            totalSecondsLeft = totalSecondsLeft % (24*60*60);
+            auction.hoursLeft = totalSecondsLeft/(60*60);
+            totalSecondsLeft = totalSecondsLeft % (60*60);
+            auction.minutesLeft = totalSecondsLeft/60;
+            auction.secondsLeft = totalSecondsLeft % 60;
+        }
+    }
+}
+
+- (void)update{
+
+    [self updateData];
+    NSArray *visibleCells = [self.auctionTbl visibleCells];
+    self.view.userInteractionEnabled = NO;
+    for (AuctionTableViewCell *cell in visibleCells) {
+        [cell updateViewWithData:[self.auctionItems objectAtIndex:[[self.auctionTbl indexPathForCell:cell] row]]];
+    }
+    self.view.userInteractionEnabled = YES;
+}
+
+- (void)enableTimer{
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(update) userInfo:nil repeats:YES];
+}
+- (void)disableTimer{
+    [_timer invalidate];
+    _timer = nil;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self disableTimer];
+    [super viewDidDisappear:YES];
 }
 
 @end

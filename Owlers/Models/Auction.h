@@ -19,5 +19,9 @@
 @property (nonatomic, copy) NSString *buyPrice;
 @property (nonatomic, copy) NSString *openingPrice;
 @property (nonatomic, copy) NSString *imgURL;
+@property (nonatomic, assign) NSInteger daysLeft;
+@property (nonatomic, assign) NSInteger hoursLeft;
+@property (nonatomic, assign) NSInteger minutesLeft;
+@property (nonatomic, assign) NSInteger secondsLeft;
 
 @end
