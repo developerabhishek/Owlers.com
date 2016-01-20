@@ -155,7 +155,7 @@ UIRefreshControl *refreshControl;
         item1.displayName = @"Login";
         [self.menuItems addObject:item1];
         SegueMenuItem *item2 = [SegueMenuItem itemWithSegueIdentifier:@"segueSignup"];
-        item2.displayName = @"Signup";
+        item2.displayName = @"Sign Up";
         [self.menuItems addObject:item2];
     }
 }
@@ -199,7 +199,7 @@ UIRefreshControl *refreshControl;
 {
     ProductTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseProductCell"];
     Event *event = [self.eventItems objectAtIndex:indexPath.row];
-    cell.eventLbl.text = event.name;
+    cell.eventLbl.text = [event.name uppercaseString];
     cell.venueLbl.text = event.venue;
     cell.locationLbl.text = event.locationCode;
     NSString *temp_img = @"http://owlers.com/event_images/";

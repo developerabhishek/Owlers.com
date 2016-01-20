@@ -86,7 +86,7 @@
 }
 
 - (void)commonInit {
-    _dayViewHeight = 30;
+    _dayViewHeight = self.bounds.size.width/7;
     
     _visibleMonth = [[NSCalendar currentCalendar] components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitCalendar fromDate:[NSDate date]];
     _visibleMonth.day = 1;
@@ -95,7 +95,7 @@
     
     self.monthSelectorView = [[[self class] monthSelectorViewClass] view];
     CGRect rect = self.monthSelectorView.frame;
-    rect.size = CGSizeMake(self.bounds.size.width, 50);
+    rect.size = CGSizeMake(self.bounds.size.width, 60);
     self.monthSelectorView.frame = rect;
     self.monthSelectorView.backgroundColor = [UIColor clearColor];
     self.monthSelectorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;

@@ -193,7 +193,7 @@
         [DAY_SELECTED_COLOR setFill];
     }
     
-    UIFont *textFont = [UIFont boldSystemFontOfSize:14.0];
+    UIFont *textFont = [UIFont boldSystemFontOfSize:16.0];
     CGSize textSize = [_labelText sizeWithFont:textFont];
     CGRect textRect = CGRectMake(ceilf(CGRectGetMidX(self.bounds) - (textSize.width / 2.0)), ceilf(CGRectGetMidY(self.bounds) - (textSize.height / 2.0)), textSize.width, textSize.height);
     [_labelText drawInRect:textRect withFont:textFont];

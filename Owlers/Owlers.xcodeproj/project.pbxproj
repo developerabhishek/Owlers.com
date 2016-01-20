@@ -210,6 +210,9 @@
 		5BE896A71BE881F50035EB3C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE896A61BE881F50035EB3C /* StoreKit.framework */; };
 		5BE896A91BE881FE0035EB3C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE896A81BE881FE0035EB3C /* Social.framework */; };
 		CB17E6FA1C4EA01C00EDA093 /* SliderFullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB17E6F91C4EA01C00EDA093 /* SliderFullViewController.m */; };
+		CB17E6FC1C4ECC7A00EDA093 /* helve_unbold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB17E6FB1C4ECC7A00EDA093 /* helve_unbold.ttf */; };
+		CB357DA11C4FC38000C14EA0 /* OffersCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB357DA01C4FC38000C14EA0 /* OffersCollectionViewCell.m */; };
+		CB357DA41C4FCA3A00C14EA0 /* Offer.m in Sources */ = {isa = PBXBuildFile; fileRef = CB357DA31C4FCA3A00C14EA0 /* Offer.m */; };
 		CB608E681C43952000B1F4B9 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = CB608E671C43952000B1F4B9 /* Location.m */; };
 		CB904B7F1C43763F00121A05 /* LocationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB904B7E1C43763F00121A05 /* LocationCollectionViewCell.m */; };
 		CB9A4FC91C419B20003BA5AE /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = CB9A4FC81C419B20003BA5AE /* Utility.m */; };
@@ -520,6 +523,11 @@
 		5BE896A81BE881FE0035EB3C /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		CB17E6F81C4EA01C00EDA093 /* SliderFullViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderFullViewController.h; sourceTree = "<group>"; };
 		CB17E6F91C4EA01C00EDA093 /* SliderFullViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderFullViewController.m; sourceTree = "<group>"; };
+		CB17E6FB1C4ECC7A00EDA093 /* helve_unbold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = helve_unbold.ttf; sourceTree = "<group>"; };
+		CB357D9F1C4FC38000C14EA0 /* OffersCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OffersCollectionViewCell.h; sourceTree = "<group>"; };
+		CB357DA01C4FC38000C14EA0 /* OffersCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OffersCollectionViewCell.m; sourceTree = "<group>"; };
+		CB357DA21C4FCA3A00C14EA0 /* Offer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Offer.h; sourceTree = "<group>"; };
+		CB357DA31C4FCA3A00C14EA0 /* Offer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Offer.m; sourceTree = "<group>"; };
 		CB608E661C43952000B1F4B9 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		CB608E671C43952000B1F4B9 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		CB904B7D1C43763F00121A05 /* LocationCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationCollectionViewCell.h; sourceTree = "<group>"; };
@@ -675,6 +683,8 @@
 				CBE9B0791C4A41770073A504 /* AuctionTableViewCell.m */,
 				CBE9B08D1C4BFF500073A504 /* BookingsTableViewCell.h */,
 				CBE9B08E1C4BFF500073A504 /* BookingsTableViewCell.m */,
+				CB357D9F1C4FC38000C14EA0 /* OffersCollectionViewCell.h */,
+				CB357DA01C4FC38000C14EA0 /* OffersCollectionViewCell.m */,
 			);
 			path = CustomCell;
 			sourceTree = "<group>";
@@ -983,6 +993,7 @@
 				CBE9B0901C4C325F0073A504 /* GothamBook-1.otf */,
 				CBE9B0911C4C325F0073A504 /* GothamHTF-Book.ttf */,
 				CBE9B0921C4C325F0073A504 /* GothamMedium.otf */,
+				CB17E6FB1C4ECC7A00EDA093 /* helve_unbold.ttf */,
 				4690B06E1C3AEAD7003A719C /* Images */,
 				CB9A4FD21C419B68003BA5AE /* Models */,
 				46F2121D1C3B906700AB6AFE /* NetworkManager */,
@@ -1148,6 +1159,8 @@
 				CBE9B07C1C4A5CDF0073A504 /* Auction.m */,
 				CBE9B08A1C4BFAB10073A504 /* Booking.h */,
 				CBE9B08B1C4BFAB10073A504 /* Booking.m */,
+				CB357DA21C4FCA3A00C14EA0 /* Offer.h */,
+				CB357DA31C4FCA3A00C14EA0 /* Offer.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1222,6 +1235,7 @@
 				4690B11C1C3AEAD7003A719C /* overlay.png in Resources */,
 				4690B0F41C3AEAD7003A719C /* fb_login_dummy.png in Resources */,
 				4690B1211C3AEAD7003A719C /* rupee_sign.png in Resources */,
+				CB17E6FC1C4ECC7A00EDA093 /* helve_unbold.ttf in Resources */,
 				4690B1031C3AEAD7003A719C /* icon_plus.png in Resources */,
 				4690B1071C3AEAD7003A719C /* infooooo.png in Resources */,
 				4690B0E31C3AEAD7003A719C /* congggggg.png in Resources */,
@@ -1345,6 +1359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB608E681C43952000B1F4B9 /* Location.m in Sources */,
+				CB357DA11C4FC38000C14EA0 /* OffersCollectionViewCell.m in Sources */,
 				5B6EFD641BE49DA300D97003 /* UIImageView+AFNetworking.m in Sources */,
 				5B6EFD451BE49CE600D97003 /* AFHTTPRequestOperation.m in Sources */,
 				5B6EFD4B1BE49CE600D97003 /* AFURLRequestSerialization.m in Sources */,
@@ -1383,6 +1398,7 @@
 				CBE9B07D1C4A5CDF0073A504 /* Auction.m in Sources */,
 				46F211B71C3B904300AB6AFE /* MapPoint.m in Sources */,
 				CB17E6FA1C4EA01C00EDA093 /* SliderFullViewController.m in Sources */,
+				CB357DA41C4FCA3A00C14EA0 /* Offer.m in Sources */,
 				CB9A4FD91C419B68003BA5AE /* SplashChildPageData.m in Sources */,
 				46581A951C3D9D1B00CDF50C /* UIImage+GIF.m in Sources */,
 				5B458F4F1BB3D30500EEADD7 /* AppDelegate.m in Sources */,
@@ -1552,7 +1568,7 @@
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = owers;
 				INFOPLIST_FILE = Owlers/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1582,7 +1598,7 @@
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = owers;
 				INFOPLIST_FILE = Owlers/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

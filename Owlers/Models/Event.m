@@ -10,4 +10,11 @@
 
 @implementation Event
 
+- (NSMutableArray*)offers {
+    if (!_offers) {
+        _offers = [[NSMutableArray alloc] init];
+    }
+    return _offers;
+}
+
 @end

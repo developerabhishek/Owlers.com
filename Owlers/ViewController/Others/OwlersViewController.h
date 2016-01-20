@@ -16,7 +16,7 @@
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
-@interface OwlersViewController : UIViewController<UIScrollViewDelegate,CLLocationManagerDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate,MKMapViewDelegate, UIPageViewControllerDataSource>
+@interface OwlersViewController : UIViewController<UIScrollViewDelegate,CLLocationManagerDelegate,NSURLConnectionDataDelegate,NSURLConnectionDelegate,MKMapViewDelegate, UIPageViewControllerDataSource, UICollectionViewDataSource, UICollectionViewDelegate>
 
 {
     CLGeocoder *geocoder;

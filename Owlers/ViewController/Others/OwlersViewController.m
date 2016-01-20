@@ -16,6 +16,8 @@
 #import "TesteventViewController.h"
 #import "SliderFullViewController.h"
 #import "Utility.h"
+#import "Offer.h"
+#import "OffersCollectionViewCell.h"
 
 @interface OwlersViewController ()
 -(id) imageWithName:(NSArray *)arr;
@@ -28,7 +30,19 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewChildContainerHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *moreBtn;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
-@property (weak, nonatomic) IBOutlet UIImageView *eventDetailOverlay;
+@property (weak, nonatomic) IBOutlet UICollectionView *offersCollectionView;
+@property (weak, nonatomic) IBOutlet UILabel *offerDescLbl;
+@property (weak, nonatomic) IBOutlet UILabel *offerTermsLbl;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *offerAgreementContainerHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *offerDescLblHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *offerTermsLblHeightConstraint;
+- (IBAction)offerDescMoreBtnAction:(UIButton *)sender;
+- (IBAction)offerTermsMoreBtnAction:(UIButton *)sender;
+- (IBAction)offerAgreeBtnAction:(id)sender;
+- (IBAction)offerDisagreeBtnAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *offerPopUpContainer;
+- (IBAction)hideOfferPopUpContainer:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *offerPopUp;
 
 @end
 
@@ -200,10 +214,12 @@ int currentPageIndex = 0;
 }
 
 - (void)viewDidLoad {
-    
-    self.activity.hidden =YES;
-    
     [super viewDidLoad];
+    
+    [self.event.offers removeAllObjects];
+    self.activity.hidden =YES;
+    self.offerPopUp.layer.borderWidth = 1.0f;
+    self.offerPopUp.layer.borderColor = [UIColor colorWithRed:251.0f/255 green:156.0f/255 blue:21.0f/255 alpha:1].CGColor;
 
 //    locationmanager = [[CLLocationManager alloc] init];
 //    self.mapview.delegate = self;
@@ -502,87 +518,87 @@ int currentPageIndex = 0;
 
 
 -(void)viewDidLayoutSubviews{
-    viewwidth  = self.view.frame.size.width;
-    
-    /*****[TOP IMAGE HORIZONTAL SLIDER]*****/
-    scroll1.scrollEnabled=YES;
-    [scroll1 setContentSize:CGSizeMake(self.view.frame.size.width*self.event.sliderImages.count, 0)];
-//    if (self.event.sliderImages.count==0) {
+//    viewwidth  = self.view.frame.size.width;
+//    
+//    /*****[TOP IMAGE HORIZONTAL SLIDER]*****/
+//    scroll1.scrollEnabled=YES;
+//    [scroll1 setContentSize:CGSizeMake(self.view.frame.size.width*self.event.sliderImages.count, 0)];
+////    if (self.event.sliderImages.count==0) {
+////        return;
+////    }
+////    
+////    [self.pageDatalist removeAllObjects];
+////    for (int i=0; i < self.event.sliderImages.count; i++) {
+////        UIImageView *temp_btn = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*i, 0, self.view.frame.size.width, scroll1.frame.size.height)];
+////        [temp_btn setBackgroundColor:[UIColor blackColor]];
+////        
+////        temp_btn.clipsToBounds = YES;
+////        NSString *temp_img = @"http://owlers.com/event_images/";
+////        temp_img = [temp_img stringByAppendingString:[self.event.sliderImages objectAtIndex:i ]];
+////        [self downloadImageWithURL:[NSURL URLWithString:temp_img] completionBlock:^(BOOL succeeded, UIImage *image) {
+////            if (succeeded) {
+////                temp_btn.image = image;
+////                SplashChildPageData *data = [SplashChildPageData dataWithImage:image displayText:@""];
+////                [self.pageDatalist addObject:data];
+////            }}];
+////        [scroll1 addSubview:temp_btn];
+////    }
+//    
+//    
+//    /*****[OWLERS MENU HORIZONTAL SLIDER]*****/
+//    scroll_offer.scrollEnabled=YES;
+//    [scroll_offer setContentSize:CGSizeMake(self.view.frame.size.width*self.event.offers.count, 0)];
+//    
+//    
+////    scroll_offer.backgroundColor = [UIColor yellowColor];
+////    scroll_offer.frame = CGRectMake(10, scroll_offer.frame.origin.y, 320*6, 50);
+////    scroll_offer.scrollEnabled = YES;
+////    scroll_offer.pagingEnabled=NO;
+//    //scroll_offer.contentSize = CGSizeMake(420*3, 0);
+//    
+//    if (self.event.offers.count==0) {
 //        return;
 //    }
-//    
-//    [self.pageDatalist removeAllObjects];
-//    for (int i=0; i < self.event.sliderImages.count; i++) {
-//        UIImageView *temp_btn = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*i, 0, self.view.frame.size.width, scroll1.frame.size.height)];
-//        [temp_btn setBackgroundColor:[UIColor blackColor]];
+//    for (int i=0; i<self.event.offers.count; i++) {
+//
+//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
+//        UIButton *btn_call = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 30, 15)];
 //        
-//        temp_btn.clipsToBounds = YES;
-//        NSString *temp_img = @"http://owlers.com/event_images/";
-//        temp_img = [temp_img stringByAppendingString:[self.event.sliderImages objectAtIndex:i ]];
-//        [self downloadImageWithURL:[NSURL URLWithString:temp_img] completionBlock:^(BOOL succeeded, UIImage *image) {
-//            if (succeeded) {
-//                temp_btn.image = image;
-//                SplashChildPageData *data = [SplashChildPageData dataWithImage:image displayText:@""];
-//                [self.pageDatalist addObject:data];
-//            }}];
-//        [scroll1 addSubview:temp_btn];
+//        [btn_call setImage:[UIImage imageNamed:@"call_icons"] forState:UIControlStateNormal];
+//        
+//        UIView *viewInside = [[UIView alloc] initWithFrame:CGRectMake(i*self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
+//        UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, 30, 15)];
+//        
+//        
+//        NSLog(@"offer Label :%@",[[self.event.offers objectAtIndex:i]objectForKey:@"title"]);
+//        
+//        
+//        
+//        
+////        NSLog([NSString stringWithFormat:@"value of i :%d",0]);
+//        
+//      //  _offerLabel.text =[NSString stringWithFormat:@"%@",[array_offers objectAtIndex:i]objectForKey:@"title"];
+//      // _offerLabel.text = [[array_offers objectAtIndex:i] objectForKey:@"title"];
+////        
+////          _offerLabel.text =[NSString stringWithFormat:@"%@",[[[[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"offers"]objectAtIndex:0]objectForKey:@"title"]];
+////        
+//        
+//        UILabel *label = [[ UILabel alloc] initWithFrame:CGRectMake(15, 5, self.view.frame.size.width, 20)];
+//        
+//        label.text = [[self.event.offers objectAtIndex:i] objectForKey:@"title"];
+//        
+//        label.textColor = [UIColor blackColor];
+//        label.font = [UIFont systemFontOfSize:15];
+//        
+//        [viewInside addSubview:image];
+//        [viewInside addSubview:label];
+//        [view addSubview:btn_call];
+//        [view addSubview:viewInside];
+//        [scroll_offer addSubview:view];
+//        
+//      //  [self.view addSubview:scroll_offer];
+//      
 //    }
-    
-    
-    /*****[OWLERS MENU HORIZONTAL SLIDER]*****/
-    scroll_offer.scrollEnabled=YES;
-    [scroll_offer setContentSize:CGSizeMake(self.view.frame.size.width*self.event.offers.count, 0)];
-    
-    
-//    scroll_offer.backgroundColor = [UIColor yellowColor];
-//    scroll_offer.frame = CGRectMake(10, scroll_offer.frame.origin.y, 320*6, 50);
-//    scroll_offer.scrollEnabled = YES;
-//    scroll_offer.pagingEnabled=NO;
-    //scroll_offer.contentSize = CGSizeMake(420*3, 0);
-    
-    if (self.event.offers.count==0) {
-        return;
-    }
-    for (int i=0; i<self.event.offers.count; i++) {
-
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
-        UIButton *btn_call = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 30, 15)];
-        
-        [btn_call setImage:[UIImage imageNamed:@"call_icons"] forState:UIControlStateNormal];
-        
-        UIView *viewInside = [[UIView alloc] initWithFrame:CGRectMake(i*self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
-        UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, 30, 15)];
-        
-        
-        NSLog(@"offer Label :%@",[[self.event.offers objectAtIndex:i]objectForKey:@"title"]);
-        
-        
-        
-        
-//        NSLog([NSString stringWithFormat:@"value of i :%d",0]);
-        
-      //  _offerLabel.text =[NSString stringWithFormat:@"%@",[array_offers objectAtIndex:i]objectForKey:@"title"];
-      // _offerLabel.text = [[array_offers objectAtIndex:i] objectForKey:@"title"];
-//        
-//          _offerLabel.text =[NSString stringWithFormat:@"%@",[[[[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"offers"]objectAtIndex:0]objectForKey:@"title"]];
-//        
-        
-        UILabel *label = [[ UILabel alloc] initWithFrame:CGRectMake(15, 5, self.view.frame.size.width, 20)];
-        
-        label.text = [[self.event.offers objectAtIndex:i] objectForKey:@"title"];
-        
-        label.textColor = [UIColor blackColor];
-        label.font = [UIFont systemFontOfSize:15];
-        
-        [viewInside addSubview:image];
-        [viewInside addSubview:label];
-        [view addSubview:btn_call];
-        [view addSubview:viewInside];
-        [scroll_offer addSubview:view];
-        
-      //  [self.view addSubview:scroll_offer];
-      
-    }
     
 }
 
@@ -639,8 +655,36 @@ int currentPageIndex = 0;
     self.event.atmosphere = [eventDict objectForKey:@"atmosphere"];
     self.event.genreOfMusic = [eventDict objectForKey:@"genre_of_music"];
     self.event.sliderImages = [eventDict objectForKey:@"slider_images"];
-    self.event.offers = [eventDict objectForKey:@"offers"];
-
+    
+    [self.event.offers removeAllObjects];
+    NSArray *arr = [eventDict objectForKey:@"offers"];
+    if (arr.count) {
+        for (NSDictionary *dict in arr) {
+            Offer *offer = [[Offer alloc] init];
+            
+            offer.offerDescription = [dict objectForKey:@"offer_description"];
+            offer.ID = [dict objectForKey:@"offer_id"];
+            offer.terms = [dict objectForKey:@"offer_terms"];
+            offer.offerTitle = [dict objectForKey:@"title"];
+            offer.value = [[dict objectForKey:@"value"] integerValue];
+            
+            [self.event.offers addObject:offer];
+        }
+    }else {
+        Offer *offer = [[Offer alloc] init];
+        
+        offer.offerDescription = @"offer_description";
+        offer.ID = @"offer_id";
+        offer.terms = @"offer_terms";
+        offer.offerTitle = @"No Offers Are Available";
+        offer.value = 0;
+        offer.isValid = NO;
+        
+        [self.event.offers addObject:offer];
+    }
+    
+    [self.offersCollectionView reloadData];
+    
     [self viewDidLayoutSubviews];
     [self downloadEventImages];
    // [self offermethodcall];
@@ -672,7 +716,7 @@ int currentPageIndex = 0;
     self.getLocationLabel.text = self.event.address;
     self.atmospherelLabel.text = self.event.atmosphere;
     self.musicLabel.text = self.event.genreOfMusic;
-    self.eventName.text = self.event.name;
+    self.eventName.text = [self.event.name uppercaseString];
     self.eventVenue.text = self.event.venue;
     
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
@@ -812,11 +856,11 @@ int currentPageIndex = 0;
         float height = [Utility heightOfString:_getDetailLabel.text forWidth:_getDetailLabel.bounds.size.width font:_getDetailLabel.font];
         self.detailLblHeightConstraint.constant = height;
         [self.moreBtn setTitle:@"LESS" forState:UIControlStateNormal];
-        self.scrollViewChildContainerHeightConstraint.constant = 700 - 35 + height;
+        self.scrollViewChildContainerHeightConstraint.constant = 650 - 35 + height;
     }else {
         self.detailLblHeightConstraint.constant = 35;
         [self.moreBtn setTitle:@"MORE" forState:UIControlStateNormal];
-        self.scrollViewChildContainerHeightConstraint.constant = 700;
+        self.scrollViewChildContainerHeightConstraint.constant = 650;
     }
     
     [self.view layoutIfNeeded];
@@ -905,4 +949,76 @@ int currentPageIndex = 0;
     _tapGesture = nil;
 }
 
+
+
+#pragma marks UICollection View Delegate
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return self.event.offers.count;
+}
+
+-(UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    OffersCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"reuseOffersCollectionCell" forIndexPath:indexPath];
+    
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)collectionView.collectionViewLayout;
+    layout.itemSize = CGSizeMake(collectionView.bounds.size.width, collectionView.bounds.size.height);
+    
+    Offer *offer = [self.event.offers objectAtIndex:indexPath.row];
+    cell.offerLbl.text = offer.offerTitle;
+    
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    Offer *offer = [self.event.offers objectAtIndex:indexPath.row];
+    if (offer.isValid) {
+        NSLog(@"valid offer");
+        self.offerDescLbl.text = offer.offerDescription;
+        self.offerTermsLbl.text = offer.terms;
+        self.offerPopUpContainer.hidden = NO;
+        [self.view bringSubviewToFront:self.offerPopUpContainer];
+    }
+}
+
+- (IBAction)offerDescMoreBtnAction:(UIButton *)sender {
+    if ([sender.titleLabel.text isEqualToString:@"MORE"]) {
+        float height = [Utility heightOfString:self.offerDescLbl.text forWidth:self.offerDescLbl.bounds.size.width font:self.offerDescLbl.font];
+        self.offerDescLblHeightConstraint.constant = height;
+        [sender setTitle:@"LESS" forState:UIControlStateNormal];
+        self.offerAgreementContainerHeightConstraint.constant = 310 - 34 + height;
+    }else {
+        self.detailLblHeightConstraint.constant = 34;
+        [sender setTitle:@"MORE" forState:UIControlStateNormal];
+        self.offerAgreementContainerHeightConstraint.constant = 310;
+    }
+    
+    [self.view layoutIfNeeded];
+}
+
+- (IBAction)offerTermsMoreBtnAction:(UIButton *)sender {
+    if ([sender.titleLabel.text isEqualToString:@"MORE"]) {
+        float height = [Utility heightOfString:self.offerTermsLbl.text forWidth:self.offerTermsLbl.bounds.size.width font:self.offerTermsLbl.font];
+        self.offerTermsLblHeightConstraint.constant = height;
+        [sender setTitle:@"LESS" forState:UIControlStateNormal];
+        self.offerAgreementContainerHeightConstraint.constant = 310 - 34 + height;
+    }else {
+        self.offerTermsLblHeightConstraint.constant = 34;
+        [sender setTitle:@"MORE" forState:UIControlStateNormal];
+        self.offerAgreementContainerHeightConstraint.constant = 310;
+    }
+    
+    [self.view layoutIfNeeded];
+}
+
+- (IBAction)offerAgreeBtnAction:(id)sender {
+    [self hideOfferPopUpContainer:nil];
+}
+
+- (IBAction)offerDisagreeBtnAction:(id)sender {
+    [self hideOfferPopUpContainer:nil];
+}
+- (IBAction)hideOfferPopUpContainer:(id)sender {
+    self.offerPopUpContainer.hidden = YES;
+}
 @end

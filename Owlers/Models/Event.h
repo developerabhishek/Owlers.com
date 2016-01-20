@@ -29,7 +29,7 @@
 @property (nonatomic, copy) NSString *terms;
 @property (nonatomic, copy) NSString *genreOfMusic;
 @property (nonatomic, strong) NSArray *sliderImages;
-@property (nonatomic, strong) NSArray *offers;
+@property (nonatomic, strong) NSMutableArray *offers;
 @property (nonatomic) int malePrice;
 @property (nonatomic) int femalePrice;
 @property (nonatomic) int couplePrice;
