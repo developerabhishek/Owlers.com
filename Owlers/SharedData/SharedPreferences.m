@@ -67,5 +67,10 @@ static SharedPreferences *sharedInstance;
     return [defauls objectForKey:@"userID"];
 }
 
+- (NSString *)getUserEmail{
+    NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
+    return [defauls objectForKey:@"userEmail"];
+}
+
 
 @end

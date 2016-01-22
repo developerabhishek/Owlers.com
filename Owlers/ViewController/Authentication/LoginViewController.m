@@ -21,8 +21,8 @@
 #import "SharedPreferences.h"
 #import "NetworkManager.h"
 
-static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4oka.apps.googleusercontent.com";
-
+//static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4oka.apps.googleusercontent.com";
+static NSString * const kClientID = @"535074141806-q9b5s9g5u52q4omhope3am42eu1hk0gh.apps.googleusercontent.com";
 @interface LoginViewController () <UIAlertViewDelegate, GPPSignInDelegate>
 
 @end
@@ -152,13 +152,13 @@ static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4
 -(void)fetchUserInfo
 {
     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
-    [parameters setValue:@"id, name, email,picture" forKey:@"fields"];
+    [parameters setValue:@"id, name, email,picture.width(100).height(100)" forKey:@"fields"];
 
     [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters]
      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
          if (!error) {
             
-             NSString *pictureURL = [NSString stringWithFormat:@"%@",[result objectForKey:@"picture"]];
+             NSString *pictureURL = [NSString stringWithFormat:@"%@",[[[result valueForKey:@"picture"] valueForKey:@"data"] valueForKey:@"url"]];
              [self pushToVerificationControllerWith:@{@"user_email" : [result valueForKey:@"email"],@"name": [result valueForKey:@"name"], @"picture": pictureURL}];
          }else{
 

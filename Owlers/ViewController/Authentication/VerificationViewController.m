@@ -15,7 +15,6 @@
 
 @interface VerificationViewController ()
 
-// 509181039153-i4mnrf976n999ornrh2eafeeg1cf4oka.apps.googleusercontent.com
 
 @end
 
@@ -67,9 +66,16 @@ NSDictionary *parsedObject;
                         NSData *imageData = [NSData dataWithContentsOfURL:imageURL options:NSDataReadingMapped error:nil];
                         NSString *base64String = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                         [NetworkManager uploadUserProfilePicture:base64String withComplitionHandler:^(id result, NSError *err) {
-                            [self.navigationController popToRootViewControllerAnimated:YES];
+                            [self signUpSuccess];
+                            //[self.navigationController popViewControllerAnimated:YES];
                         }];
+                    }else{
+                        [self signUpSuccess];
+                        //[self.navigationController popViewControllerAnimated:YES];
                     }
+                }else{
+                    [self signUpSuccess];
+//                    [self.navigationController popViewControllerAnimated:YES];
                 }
             }else{
                 [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[result valueForKey:@"message"] withObject:self];
@@ -97,6 +103,20 @@ NSDictionary *parsedObject;
     }
     
     return true;
+}
+- (void)signUpSuccess {
+    // If SignUp screen is came from Product screen then pop it from stack else create the product view controller and set it on top of stack without signup screen
+        NSArray *arr = [self.navigationController viewControllers];
+        for (UIViewController *controller in arr) {
+            if ([controller isMemberOfClass:[ProductViewController class]]) {
+                [self.navigationController popToViewController:controller animated:YES];
+                return;
+            }
+        }
+        ProductViewController *productCon = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
+        NSMutableArray *marr = [NSMutableArray arrayWithArray:arr];
+        [marr addObject:productCon];
+        [self.navigationController setViewControllers:marr animated:NO];
 }
 
 

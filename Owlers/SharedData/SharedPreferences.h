@@ -17,5 +17,7 @@
 - (BOOL)isLogin;
 - (void)logoutUser;
 - (NSString *)getUserID;
+- (NSString *)getUserEmail;
+
 
 @end

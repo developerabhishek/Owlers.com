@@ -16,6 +16,9 @@
 #import <GooglePlus/GooglePlus.h>
 #import <FBSDKLoginKit/FBSDKLoginManager.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "PGMerchantConfiguration.h"
+
+
 @interface AppDelegate ()
 
 @end
@@ -32,6 +35,7 @@
 //    
 //    [self setRootViewController];
     
+    [self initializePaytmSDK];
     
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
     {
@@ -63,10 +67,6 @@
     
     self.window.rootViewController=navigationController;
     [self.window makeKeyAndVisible];
-    
-//    UINavigationController *nav=(UINavigationController *)[self.window rootViewController];
-//    ViewController *rootController=(ViewController *)[nav.viewControllers objectAtIndex:0];
-
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -291,6 +291,23 @@
     }
     
     return md;
+}
+
+- (void)initializePaytmSDK{
+    //You will get default PGMerchantConfiguration object. By setting the below properties of object you can make a fully configured merchant object.
+    PGMerchantConfiguration *merchant = [PGMerchantConfiguration defaultConfiguration];
+    
+    // Set the client SSL certificate path. Certificate.p12 is the certificate which you received from Paytm during the registration process. Set the password if the certificate is protected by a password.
+//    merchant.clientSSLCertPath = [[NSBundle mainBundle]pathForResource:@"Certificate" ofType:@"p12"];
+//    merchant.clientSSLCertPassword = @"password";
+    
+    //NOTE: If the client SSL certificate is not configured then set the clientSSLCertPath and clientSSLCertPassword to NULL.
+    
+    //configure the PGMerchantConfiguration object specific to your requirements
+    merchant.merchantID = @"xacICLAJjCJyvm2f";
+    merchant.website = @"Icedreamwap";
+    merchant.industryID = @"Retail";
+    merchant.channelID = @"WEB & WAP"; //provided by PG
 }
 
 //- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation

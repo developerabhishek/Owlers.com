@@ -208,8 +208,9 @@ int currentPageIndex = 0;
     childViewController.hideMessage = YES;
     childViewController.mode = UIViewContentModeScaleAspectFill;
     childViewController.index = index;
-    childViewController.data = (SplashChildPageData*)[self.pageDatalist objectAtIndex:index];
-    
+    if (index < [self.pageDatalist count]) {
+        childViewController.data = (SplashChildPageData*)[self.pageDatalist objectAtIndex:index];
+    }
     return childViewController;
 }
 

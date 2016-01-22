@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>509181039153-i4mnrf976n999ornrh2eafeeg1cf4oka.apps.googleusercontent.com</string>
+	<string>535074141806-q9b5s9g5u52q4omhope3am42eu1hk0gh.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.276852274297-36f1dkg08pi45cg4grr1mhdq6ob36lef</string>
+	<string>com.googleusercontent.apps.535074141806-q9b5s9g5u52q4omhope3am42eu1hk0gh</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.google.owlers.SignInExample</string>
+	<string>com.owlers.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -21,6 +21,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:276852274297:ios:6fbd6c0efa1b97a8</string>
+	<string>1:535074141806:ios:c1fd0c848583273e</string>
 </dict>
 </plist>

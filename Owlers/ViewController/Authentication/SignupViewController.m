@@ -160,7 +160,7 @@
     signIn.shouldFetchGooglePlusUser = YES;
     signIn.shouldFetchGoogleUserEmail = YES;
     
-    signIn.clientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4oka.apps.googleusercontent.com";
+    signIn.clientID = @"535074141806-q9b5s9g5u52q4omhope3am42eu1hk0gh.apps.googleusercontent.com";
     signIn.scopes = [NSArray arrayWithObjects:kGTLAuthScopePlusLogin,nil];
     
     signIn.actions = [NSArray arrayWithObjects:@"https://www.googleapis.com/auth/userinfo.profile",nil];
@@ -276,28 +276,11 @@
     [self.mobileNoTxtFld resignFirstResponder];
 }
 
-- (void)signUpSuccess {
-    // If SignUp screen is came from Product screen then pop it from stack else create the product view controller and set it on top of stack without signup screen
-//    NSArray *arr = [self.navigationController viewControllers];
-//    for (UIViewController *controller in arr) {
-//        if ([controller isMemberOfClass:[ProductViewController class]]) {
-//            [self.navigationController popToViewController:controller animated:YES];
-//            return;
-//        }
-//    }
-//    ProductViewController *productCon = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-//    NSMutableArray *marr = [NSMutableArray arrayWithArray:arr];
-//    [marr addObject:productCon];
-//    [self.navigationController setViewControllers:marr animated:NO];
-}
-
-
 - (void)pushToVerificationControllerWith:(NSDictionary *)data{
     
     NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
     [defauls setObject:[data objectForKey:@"user_email"] forKey:@"userEmail"];
     [defauls setObject:[data objectForKey:@"name"] forKey:@"name"];
-//    [defauls setObject:[data objectForKey:@"user_id"] forKey:@"userID"];
     if ([data objectForKey:@"picture"]) {
         [defauls setObject:[data objectForKey:@"picture"] forKey:@"picture"];
     }

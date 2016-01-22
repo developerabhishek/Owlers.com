@@ -25,8 +25,8 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.276852274297-36f1dkg08pi45cg4grr1mhdq6ob36lef</string>
-				<string>com.jonarentech.owlers</string>
+				<string>com.googleusercontent.apps.535074141806-q9b5s9g5u52q4omhope3am42eu1hk0gh</string>
+				<string>com.owlers.com</string>
 			</array>
 		</dict>
 		<dict>
@@ -41,10 +41,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.jntechno.owlers</string>
+			<string>com.owlers.com</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.jntechno.owlers</string>
+				<string>com.owlers.com</string>
 			</array>
 		</dict>
 	</array>

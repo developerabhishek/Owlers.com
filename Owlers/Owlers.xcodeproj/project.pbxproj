@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		297310911C500EE20005C73A /* libPaymentsSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 297310901C500EE20005C73A /* libPaymentsSDK.a */; };
 		46581A8B1C3D9D1B00CDF50C /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 46581A6B1C3D9D1B00CDF50C /* MKAnnotationView+WebCache.m */; };
 		46581A8C1C3D9D1B00CDF50C /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 46581A6D1C3D9D1B00CDF50C /* NSData+ImageContentType.m */; };
 		46581A8D1C3D9D1B00CDF50C /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 46581A6F1C3D9D1B00CDF50C /* SDImageCache.m */; };
@@ -160,7 +161,6 @@
 		46F2121B1C3B904D00AB6AFE /* TermsUseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F211F51C3B904D00AB6AFE /* TermsUseViewController.m */; };
 		46F212241C3B906700AB6AFE /* Connectionmanager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F2121F1C3B906700AB6AFE /* Connectionmanager.m */; };
 		46F212251C3B906700AB6AFE /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F212211C3B906700AB6AFE /* NetworkManager.m */; };
-		46F212261C3B906700AB6AFE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F212231C3B906700AB6AFE /* Reachability.m */; };
 		46F2122E1C3B907A00AB6AFE /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F212291C3B907A00AB6AFE /* AsyncImageView.m */; };
 		46F2122F1C3B907A00AB6AFE /* KIImagePager.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F2122B1C3B907A00AB6AFE /* KIImagePager.m */; };
 		46F212301C3B907A00AB6AFE /* NSDate+DSLCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F2122D1C3B907A00AB6AFE /* NSDate+DSLCalendarView.m */; };
@@ -239,6 +239,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2973108B1C500EE20005C73A /* PaymentsSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentsSDK.h; sourceTree = "<group>"; };
+		2973108C1C500EE20005C73A /* PGMerchantConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGMerchantConfiguration.h; sourceTree = "<group>"; };
+		2973108D1C500EE20005C73A /* PGOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGOrder.h; sourceTree = "<group>"; };
+		2973108E1C500EE20005C73A /* PGServerEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGServerEnvironment.h; sourceTree = "<group>"; };
+		2973108F1C500EE20005C73A /* PGTransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGTransactionViewController.h; sourceTree = "<group>"; };
+		297310901C500EE20005C73A /* libPaymentsSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPaymentsSDK.a; sourceTree = "<group>"; };
 		46581A6A1C3D9D1B00CDF50C /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		46581A6B1C3D9D1B00CDF50C /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		46581A6C1C3D9D1B00CDF50C /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -441,8 +447,6 @@
 		46F2121F1C3B906700AB6AFE /* Connectionmanager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connectionmanager.m; sourceTree = "<group>"; };
 		46F212201C3B906700AB6AFE /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		46F212211C3B906700AB6AFE /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
-		46F212221C3B906700AB6AFE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		46F212231C3B906700AB6AFE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		46F212281C3B907A00AB6AFE /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		46F212291C3B907A00AB6AFE /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		46F2122A1C3B907A00AB6AFE /* KIImagePager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KIImagePager.h; sourceTree = "<group>"; };
@@ -587,6 +591,7 @@
 				5BE896A11BE8819F0035EB3C /* MediaPlayer.framework in Frameworks */,
 				5BE8969F1BE881750035EB3C /* CoreMedia.framework in Frameworks */,
 				4690B0471C3AEAA5003A719C /* FBSDKLoginKit.framework in Frameworks */,
+				297310911C500EE20005C73A /* libPaymentsSDK.a in Frameworks */,
 				4690B0481C3AEAA5003A719C /* GoogleOpenSource.framework in Frameworks */,
 				5BE8969D1BE881620035EB3C /* AddressBook.framework in Frameworks */,
 				5BE8969B1BE8814F0035EB3C /* AVFoundation.framework in Frameworks */,
@@ -603,6 +608,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		297310891C500EE20005C73A /* PaymentsSDK */ = {
+			isa = PBXGroup;
+			children = (
+				2973108A1C500EE20005C73A /* include */,
+				297310901C500EE20005C73A /* libPaymentsSDK.a */,
+			);
+			path = PaymentsSDK;
+			sourceTree = "<group>";
+		};
+		2973108A1C500EE20005C73A /* include */ = {
+			isa = PBXGroup;
+			children = (
+				2973108B1C500EE20005C73A /* PaymentsSDK.h */,
+				2973108C1C500EE20005C73A /* PGMerchantConfiguration.h */,
+				2973108D1C500EE20005C73A /* PGOrder.h */,
+				2973108E1C500EE20005C73A /* PGServerEnvironment.h */,
+				2973108F1C500EE20005C73A /* PGTransactionViewController.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
 		46581A691C3D9D1B00CDF50C /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -950,8 +976,6 @@
 				46F2121F1C3B906700AB6AFE /* Connectionmanager.m */,
 				46F212201C3B906700AB6AFE /* NetworkManager.h */,
 				46F212211C3B906700AB6AFE /* NetworkManager.m */,
-				46F212221C3B906700AB6AFE /* Reachability.h */,
-				46F212231C3B906700AB6AFE /* Reachability.m */,
 			);
 			path = NetworkManager;
 			sourceTree = "<group>";
@@ -984,6 +1008,7 @@
 		5B458F3D1BB3D30500EEADD7 = {
 			isa = PBXGroup;
 			children = (
+				297310891C500EE20005C73A /* PaymentsSDK */,
 				5B6EFD4E1BE49CF300D97003 /* AFNetworking */,
 				5B6EFD781BE49F3500D97003 /* Custom  loading */,
 				4690B04F1C3AEACB003A719C /* CustomCell */,
@@ -1372,7 +1397,6 @@
 				46581A931C3D9D1B00CDF50C /* SDWebImagePrefetcher.m in Sources */,
 				CBB9AE081C43E9C500D77D34 /* SegueMenuItem.m in Sources */,
 				CBE9B0861C4A7E070073A504 /* PopOverBackgroundView.m in Sources */,
-				46F212261C3B906700AB6AFE /* Reachability.m in Sources */,
 				5B6EFD471BE49CE600D97003 /* AFHTTPSessionManager.m in Sources */,
 				5B6EFD661BE49DA300D97003 /* UIRefreshControl+AFNetworking.m in Sources */,
 				CBE9B08F1C4BFF500073A504 /* BookingsTableViewCell.m in Sources */,
@@ -1574,6 +1598,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/Pods/Google/Libraries",
+					"$(PROJECT_DIR)/PaymentsSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.owlers.com;
@@ -1604,6 +1629,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(PROJECT_DIR)/Pods/Google/Libraries",
+					"$(PROJECT_DIR)/PaymentsSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.owlers.com;
