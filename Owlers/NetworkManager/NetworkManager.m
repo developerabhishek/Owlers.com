@@ -33,19 +33,19 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     
     if ([SharedPreferences isNetworkAvailable])
     {
-        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        [[SharedPreferences sharedInstance] showCustomeLoading];
         
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         
         [manager GET:[NSString stringWithFormat:@"%@/list_events.php",BaseUrl] parameters:@{@"location_id" : locationID} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            [SVProgressHUD dismiss];
+            [[SharedPreferences sharedInstance] removeCustomeLoading];
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             completionBlock(dataDict, nil);
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [SVProgressHUD dismiss];
+            [[SharedPreferences sharedInstance] removeCustomeLoading];
             completionBlock(nil, error);
         }];
         
@@ -58,19 +58,20 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     
     if ([SharedPreferences isNetworkAvailable])
     {
-        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
-        
+        //[SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        [[SharedPreferences sharedInstance] showCustomeLoading];
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         
         [manager GET:[NSString stringWithFormat:@"%@/list_events.php",BaseUrl] parameters:@{@"location_id" : locationID, @"date" : dateString} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            [SVProgressHUD dismiss];
+            [[SharedPreferences sharedInstance] removeCustomeLoading];
+            //[SVProgressHUD dismiss];
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             completionBlock(dataDict, nil);
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [SVProgressHUD dismiss];
+            [[SharedPreferences sharedInstance] removeCustomeLoading];
             completionBlock(nil, error);
         }];
         
@@ -83,8 +84,8 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
 
     if ([SharedPreferences isNetworkAvailable])
     {
-        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
-        
+        //[SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        [[SharedPreferences sharedInstance] showCustomeLoading];
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
@@ -95,12 +96,12 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         
         [manager GET:[NSString stringWithFormat:@"%@/auctions.php",BaseUrl] parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            [SVProgressHUD dismiss];
+            [[SharedPreferences sharedInstance] removeCustomeLoading];
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             completionBlock(dataDict, nil);
 
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [SVProgressHUD dismiss];
+            [[SharedPreferences sharedInstance] removeCustomeLoading];
             completionBlock(nil, error);
         }];
         
@@ -114,17 +115,19 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
 
     if ([SharedPreferences isNetworkAvailable])
     {
-        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        //[SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        [[SharedPreferences sharedInstance] showCustomeLoading];
         
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         
         [manager GET:[NSString stringWithFormat:@"%@/get_locations.php",BaseUrl] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-            [SVProgressHUD dismiss];
+            [[SharedPreferences sharedInstance] removeCustomeLoading];
+            //[SVProgressHUD dismiss];
             completionBlock(dataDict, nil);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [SVProgressHUD dismiss];
+            //[SVProgressHUD dismiss];
             completionBlock(nil, error);
         }];
         
@@ -137,19 +140,22 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     
     if ([SharedPreferences isNetworkAvailable])
     {
-        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        //[SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        [[SharedPreferences sharedInstance] showCustomeLoading];
         
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
         
         [manager GET:[NSString stringWithFormat:@"%@/search_events.php",BaseUrl] parameters:@{@"search_box" : searchString} success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            [SVProgressHUD dismiss];
+            [[SharedPreferences sharedInstance] removeCustomeLoading];
+            //[SVProgressHUD dismiss];
             NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             completionBlock(dataDict, nil);
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [SVProgressHUD dismiss];
+            [[SharedPreferences sharedInstance] removeCustomeLoading];
+            //[SVProgressHUD dismiss];
             completionBlock(nil, error);
         }];
         
@@ -210,8 +216,6 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     
     if ([SharedPreferences isNetworkAvailable])
     {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
         [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
         
         NSString *serviceName = @"save_bid.php";
@@ -283,7 +287,78 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
     }
 }
 
+#pragma mark
+#pragma mark Event-Booking
+#pragma mark
 
++ (void)getEventDetails:(NSString *)eventID withComplitionBlock:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:[NSString stringWithFormat:@"%@/event_details.php",BaseUrl] parameters:@{@"event_id" : eventID} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            [SVProgressHUD dismiss];
+            completionBlock(dataDict, nil);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+    }
+}
+
++ (void)bookEvent:(NSDictionary *)dict withComplitionBlock:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:[NSString stringWithFormat:@"%@/book_event.php",BaseUrl] parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            [SVProgressHUD dismiss];
+            completionBlock(dataDict, nil);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+    }
+}
+
++ (void)bookOffer:(NSDictionary *)dict withComplitionBlock:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:[NSString stringWithFormat:@"%@/book_offer.php",BaseUrl] parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            [SVProgressHUD dismiss];
+            completionBlock(dataDict, nil);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+    }
+}
 
 #pragma mark
 #pragma mark Login/Signup/Passowrdchange

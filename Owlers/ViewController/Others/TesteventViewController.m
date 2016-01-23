@@ -11,6 +11,8 @@
 #import "SharedPreferences.h"
 #import "PGTransactionViewController.h"
 #import "PGOrder.h"
+#import "NetworkManager.h"
+#import "SharedPreferences.h"
 @interface TesteventViewController () <PGTransactionDelegate>
 {
     int _maleCount, _femaleCount, _coupleCount;
@@ -87,6 +89,41 @@
 
 - (IBAction)continueWithoutPayAction:(id)sender {
 
+    if (_maleCount + _femaleCount + _coupleCount) {
+        NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithCapacity:0];
+        [paramDict setObject:[[SharedPreferences sharedInstance] getUserID] forKey:@"user_id"];
+        [paramDict setObject:self.event.ID forKey:@"event_id"];
+        [paramDict setObject:[NSString stringWithFormat:@"%d",_maleCount] forKey:@"no_of_males"];
+        [paramDict setObject:[NSString stringWithFormat:@"%d",_femaleCount] forKey:@"no_of_females"];
+        [paramDict setObject:[NSString stringWithFormat:@"%d",_coupleCount] forKey:@"no_of_couples"];
+        
+        NSInteger totalPrice = ((_maleCount - _coupleCount)*self.event.malePrice )+ ((_femaleCount - _coupleCount)*self.event.femalePrice) + (_coupleCount*self.event.couplePrice);
+        
+        [paramDict setObject:[NSString stringWithFormat:@"%ld",(long)totalPrice] forKey:@"total_amount"];
+        [paramDict setObject:@"Cash" forKey:@"payment_method"];
+        [paramDict setObject:[NSString stringWithFormat:@"%ld",(long)totalPrice] forKey:@"sub_total"];
+        
+        [paramDict setObject:@"0" forKey:@"discount_percent"];
+        [paramDict setObject:@"4545.7765.767" forKey:@"mac_addr"];
+        [paramDict setObject:self.event.eventDescription forKey:@"event_description"];
+        [paramDict setObject:self.event.terms ? self.event.terms : @"" forKey:@"event_terms"];
+        
+        
+        [NetworkManager bookEvent:paramDict withComplitionBlock:^(id result, NSError *err) {
+            NSLog(@"%@",result);
+            NSString *message = nil;
+            if (result && [[result objectForKey:@"status"] isEqualToString:@"Success"]) {
+                message = [NSString stringWithFormat:@"%@.\nYour offer booking number is %@",[result objectForKey:@"message"],[result objectForKey:@"booking_number"]];
+                [[SharedPreferences sharedInstance] showCommonAlertWithMessage:message withObject:self];
+            }else{
+                message = [NSString stringWithFormat:@"%@.",[result objectForKey:@"message"]];
+            }
+            [[SharedPreferences sharedInstance] showCommonAlertWithMessage:message withObject:self];
+            
+        }];
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please add some people for event" withObject:self];
+    }
 }
 
 - (IBAction)payNowAction:(id)sender {

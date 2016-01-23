@@ -72,5 +72,39 @@ static SharedPreferences *sharedInstance;
     return [defauls objectForKey:@"userEmail"];
 }
 
+- (void)showCustomeLoading{
+    
+    NSEnumerator *frontToBackWindows = [[[UIApplication sharedApplication]windows]reverseObjectEnumerator];
+    UIImageView *loadingImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"global_icon_left_logo.png"]];
+    [loadingImage setTag:123321];
+    
+    for (UIWindow *window in frontToBackWindows){
+        if (window.windowLevel == UIWindowLevelNormal) {
+            loadingImage.center = window.center;
+            [window addSubview:loadingImage];
+            break;
+        }
+    }
+    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    animation.toValue = [NSNumber numberWithDouble:M_PI_2];
+    animation.duration = 0.4f;
+    animation.cumulative = YES;
+    animation.repeatCount = HUGE_VALF;
+    [loadingImage.layer addAnimation:animation forKey:@"activityIndicatorAnimation"];
+    
+}
+
+- (void)removeCustomeLoading{
+    
+    NSEnumerator *frontToBackWindows = [[[UIApplication sharedApplication]windows]reverseObjectEnumerator];
+    for (UIWindow *window in frontToBackWindows){
+        if (window.windowLevel == UIWindowLevelNormal) {
+            UIImageView *imgeView = (UIImageView *)[window viewWithTag:123321];
+            [imgeView removeFromSuperview];
+            break;
+        }
+    }
+}
 
 @end

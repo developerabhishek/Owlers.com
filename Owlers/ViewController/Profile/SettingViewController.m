@@ -25,29 +25,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)sharebtnAction:(id)sender {
-    
-    NSURL *url = [NSURL URLWithString:@"jfkdljfkjf"];
-    NSArray *objectsToShare = @[url];
-    //
-    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-    //
-    //    // Exclude all activities except AirDrop.
-    //    NSArray *excludedActivities = @[UIActivityTypePostToTwitter, UIActivityTypePostToFacebook,
-    //                                    UIActivityTypePostToWeibo,
-    //                                    UIActivityTypeMessage, UIActivityTypeMail,
-    //                                    UIActivityTypePrint, UIActivityTypeCopyToPasteboard,
-    //                                    UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll,
-    //                                    UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
-    //                                    UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo];
-    //    controller.excludedActivityTypes = excludedActivities;
-    //
-    //    // Present the controller
-    [self presentViewController:controller animated:YES completion:nil];
-    //
-    
-}
-
 //- (NSURL *) fileToURL:(NSString*)filename
 //{
 //    NSArray *fileComponents = [filename componentsSeparatedByString:@"."];
@@ -83,6 +60,10 @@
         case eSettingsActionTermsAndCondition:
             segueIdentifier = @"segueTermsAndConditions";
             break;
+        case eSettingsActionShare:
+            [self shareAction];
+            break;
+
         default:
             break;
     }
@@ -90,6 +71,13 @@
     if (segueIdentifier && ![segueIdentifier isEqualToString:@""]) {
         [self performSegueWithIdentifier:segueIdentifier sender:nil];
     }
+}
+
+- (void)shareAction{
+    NSURL *url = [NSURL URLWithString:@"jfkdljfkjf"];
+    NSArray *objectsToShare = @[url];
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 

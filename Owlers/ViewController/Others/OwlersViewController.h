@@ -34,16 +34,13 @@
     IBOutlet UIScrollView *scroll2;
     CLLocationManager *locationmanager;
     CLLocation *showLocation;
-    NSMutableData *serverdata;
     NSArray *array;
     UIView *subview;
     BOOL uiview_check;
     BOOL check_slider;
     
     IBOutlet UIButton *offer_button;
-    
-    IBOutlet UIActivityIndicatorView *activity;
-    
+        
     float str_temp_lat;
     float str_temp_long;
     
@@ -54,6 +51,7 @@
     int viewwidth;
     
     IBOutlet UIView *offer_view;
+        
 }
 
 @property (strong ,nonatomic) IBOutlet UIActivityIndicatorView *activity;

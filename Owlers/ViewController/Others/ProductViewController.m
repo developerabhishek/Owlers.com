@@ -60,16 +60,6 @@ UIRefreshControl *refreshControl;
     
     [self refreshMenuList];
     
-    /**********[OWLERS LOADER WORK START]***********/
-    self.loaderOwlersImage.hidden = NO;
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    animation.toValue = [NSNumber numberWithDouble:M_PI_2];
-    animation.duration = 0.4f;
-    animation.cumulative = YES;
-    animation.repeatCount = HUGE_VALF;
-    [self.loaderOwlersImage.layer addAnimation:animation forKey:@"activityIndicatorAnimation"];
-    /**********[OWLERS LOADER WORK END]***********/
-    
     [NetworkManager loadLocationWithComplitionHandler:^(id result, NSError *err) {
         
         NSArray *temparr = [result objectForKey:@"Locations"];

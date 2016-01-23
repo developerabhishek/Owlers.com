@@ -25,21 +25,12 @@
     
     [self setDetailsOfAution:self.auction];
     
-    [NetworkManager loadAuctionDetailsForAuction:self.auction.ID withComplitionHandler:^(id result, NSError *err) {
-        NSArray *arr = [result objectForKey:@"items"];
-        for (NSDictionary *dict in arr) {
-            if ([[dict objectForKey:@"auction_id"] isEqualToString:self.auction.ID]) {
-                self.auction.ID = [dict objectForKey:@"auction_id"];
-                self.auction.name = [dict objectForKey:@"auction_name"];
-                self.auction.timeElapsed = [dict objectForKey:@"time_elapsed"];
-                self.auction.venue = [dict objectForKey:@"venue"];
-                self.auction.totalBids = [dict objectForKey:@"total_bids"];
-                self.auction.auctionDescription = [dict objectForKey:@"auction_desc"];
-                self.auction.buyPrice = [dict objectForKey:@"buy_now_price"];
-                self.auction.openingPrice = [dict objectForKey:@"opening_price"];
-                self.auction.imgURL = [dict objectForKey:@"auction_image"];
-                [self setDetailsOfAution:self.auction];
-            }
+    
+//    checkAuctionBidForAuction
+    
+    [NetworkManager checkAuctionBidForAuction:self.auction.ID withComplitionHandler:^(id result, NSError *err) {
+        if ([[result objectForKey:@"status"] isEqualToString:@"Success"]) {
+            [self updateAuctionPrice:result];
         }
     }];
     
@@ -52,15 +43,18 @@
     self.descLabel.text= auction.auctionDescription;
     self.nameLabel.text= [auction.name uppercaseString];
     [self.buyNowBtn setTitle:[NSString stringWithFormat:@"Buy Now For Rs. %@",auction.buyPrice] forState:UIControlStateNormal];
-    self.totalBidLabel.text = auction.totalBids;
-    self.maxbidLabel.text = [NSString stringWithFormat:@"Rs. %@",auction.openingPrice];
-    
     NSString *imageURL = [NSString stringWithFormat:@"http://owlers.com/auction_images/%@",auction.imgURL];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.imageoo sd_setImageWithURL:[NSURL URLWithString:imageURL]
                         placeholderImage:[UIImage imageNamed:@"new_background_ullu.png"]];
     });
+}
+
+- (void)updateAuctionPrice:(NSDictionary *)dict{
+    self.totalBidLabel.text = [NSString stringWithFormat:@"%@",[dict objectForKey:@"total_bids"]];
+    self.maxbidLabel.text = [NSString stringWithFormat:@"Rs. %@",[dict objectForKey:@"max_bidAmount"]];
+
 }
 
 - (IBAction)backBtnAction:(id)sender {

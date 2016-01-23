@@ -18,9 +18,11 @@
 #import "Utility.h"
 #import "Offer.h"
 #import "OffersCollectionViewCell.h"
+#import "NetworkManager.h"
+#import "SharedPreferences.h"
 
 @interface OwlersViewController ()
--(id) imageWithName:(NSArray *)arr;
+
 @property (strong,nonatomic) IBOutlet UIView *subview;
 @property (strong,nonatomic) IBOutlet UIView *sliderImageContainer;
 @property (strong, nonatomic) UIPageViewController *pageController;
@@ -36,6 +38,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *offerAgreementContainerHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *offerDescLblHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *offerTermsLblHeightConstraint;
+@property (strong, nonatomic) Offer *selectedOffer;
+
 - (IBAction)offerDescMoreBtnAction:(UIButton *)sender;
 - (IBAction)offerTermsMoreBtnAction:(UIButton *)sender;
 - (IBAction)offerAgreeBtnAction:(id)sender;
@@ -221,88 +225,10 @@ int currentPageIndex = 0;
     self.activity.hidden =YES;
     self.offerPopUp.layer.borderWidth = 1.0f;
     self.offerPopUp.layer.borderColor = [UIColor colorWithRed:251.0f/255 green:156.0f/255 blue:21.0f/255 alpha:1].CGColor;
-
-//    locationmanager = [[CLLocationManager alloc] init];
-//    self.mapview.delegate = self;
-//    locationmanager.delegate = self;
-//    locationmanager.desiredAccuracy = kCLLocationAccuracyBest;
-//    [locationmanager startUpdatingLocation];
-//    geocoder = [[CLGeocoder alloc] init];
-//    
-//    
-//    array_offers = [[NSMutableArray alloc]init];
-//    
-    /*****[TAP RECOGNIZER GESTURE]****/
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewTransparentHidden:)];
-//     UITapGestureRecognizer *tapping = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewtrans2Hidden:)];
-//    [view_trans2 addGestureRecognizer:tapping];
-//    [view_transparent addGestureRecognizer:tap];
-//  
-//    
-//    view_rsvp.layer.borderColor = [UIColor colorWithRed:252.0f/255 green:180.0f/255 blue:0.0f/255 alpha:1].CGColor;
-//    offer_view.layer.borderColor =[UIColor colorWithRed:252.0f/255 green:180.0f/255 blue:0.0f/255 alpha:1].CGColor;
-//    offer_view.layer.borderWidth =1.0f;
-//    view_rsvp.layer.borderWidth = 1.0f;
-//    txt_female.layer.borderColor = [UIColor colorWithRed:252.0f/255 green:180.0f/255 blue:0.0f/255 alpha:1].CGColor;
-//    txt_male.layer.borderColor = [UIColor colorWithRed:252.0f/255 green:180.0f/255 blue:0.0f/255 alpha:1].CGColor;
-//    txt_male.layer.borderWidth = 1.0f;
-//    txt_female.layer.borderWidth = 1.0f;
-//    txt_female.backgroundColor = [UIColor whiteColor];
-//    txt_male.backgroundColor = [UIColor whiteColor];
-//    
-//    
-//   mapview.delegate = self;  
-//    varcouple =0;
-//    varfemale = 0;
-//    varmale = 0;
-//    vartotal = 0;
-//    
-//    
-//    view_rsvp.hidden =YES;
-//    offer_view.hidden=YES;
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    UserId= [defaults objectForKey:@"userID"];
-//       
-//    scrollview.delegate=self;
-//    [scrollview setScrollEnabled:YES];
-//    [scrollview setContentSize:CGSizeMake(320,690)];
-//    
-//    array_slider = [[NSArray alloc]init];
-//    serverdata =[[NSMutableData alloc]init];
-//    
-//    
-//
     
-    NSString *urlstring =[NSString stringWithFormat:@"%@/event_details.php?event_id=%@",BaseUrl,self.event.ID];
-    NSURL *url=[[NSURL alloc]initWithString:urlstring];
-    NSURLRequest *request=[[NSURLRequest alloc]initWithURL:url];
-    NSURLConnection *connection=[[NSURLConnection alloc]initWithRequest:request delegate:self];
-    [connection start];
-
-//    /*******[ACTIVITY INDICATOR]********/
-//    CGRect frame = CGRectMake (120.0, 200.0, 100, 100);
-//    self.activity = [[UIActivityIndicatorView alloc] initWithFrame:frame];
-//    activity.layer.cornerRadius = 05;
-//    activity.opaque = NO;
-//    activity.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.6f];
-//    activity.center = self.view.center;
-//    activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-//    [activity setColor:[UIColor colorWithRed:0.6 green:0.8 blue:1.0 alpha:1.0]];
-//    
-//    /*********[GOOGLE MAP VIEW]**********/
-////    mapview = [[MKMapView alloc] initWithFrame:self.view.frame];
-////    [self.view addSubview:mapview];
-//    
-//    
-//    
-//    
-//    
-//    [self.view addSubview:self.activity];
-//    
-//    [self.activity startAnimating];
-//    
-//    
-//    
+    [NetworkManager getEventDetails:self.event.ID withComplitionBlock:^(id result, NSError *err) {
+        [self createUIForController:result];
+    }];
    }
 
 - (void)downloadEventImages {
@@ -310,9 +236,6 @@ int currentPageIndex = 0;
     if (self.event.sliderImages.count==0) {
         return;
     }
-    
-//    [_timer invalidate];
-//    _timer = nil;
     
     for (int i=0; i < self.event.sliderImages.count; i++) {
         UIImageView *temp_btn = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*i, 0, self.view.frame.size.width, scroll1.frame.size.height)];
@@ -519,87 +442,6 @@ int currentPageIndex = 0;
 
 
 -(void)viewDidLayoutSubviews{
-//    viewwidth  = self.view.frame.size.width;
-//    
-//    /*****[TOP IMAGE HORIZONTAL SLIDER]*****/
-//    scroll1.scrollEnabled=YES;
-//    [scroll1 setContentSize:CGSizeMake(self.view.frame.size.width*self.event.sliderImages.count, 0)];
-////    if (self.event.sliderImages.count==0) {
-////        return;
-////    }
-////    
-////    [self.pageDatalist removeAllObjects];
-////    for (int i=0; i < self.event.sliderImages.count; i++) {
-////        UIImageView *temp_btn = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width*i, 0, self.view.frame.size.width, scroll1.frame.size.height)];
-////        [temp_btn setBackgroundColor:[UIColor blackColor]];
-////        
-////        temp_btn.clipsToBounds = YES;
-////        NSString *temp_img = @"http://owlers.com/event_images/";
-////        temp_img = [temp_img stringByAppendingString:[self.event.sliderImages objectAtIndex:i ]];
-////        [self downloadImageWithURL:[NSURL URLWithString:temp_img] completionBlock:^(BOOL succeeded, UIImage *image) {
-////            if (succeeded) {
-////                temp_btn.image = image;
-////                SplashChildPageData *data = [SplashChildPageData dataWithImage:image displayText:@""];
-////                [self.pageDatalist addObject:data];
-////            }}];
-////        [scroll1 addSubview:temp_btn];
-////    }
-//    
-//    
-//    /*****[OWLERS MENU HORIZONTAL SLIDER]*****/
-//    scroll_offer.scrollEnabled=YES;
-//    [scroll_offer setContentSize:CGSizeMake(self.view.frame.size.width*self.event.offers.count, 0)];
-//    
-//    
-////    scroll_offer.backgroundColor = [UIColor yellowColor];
-////    scroll_offer.frame = CGRectMake(10, scroll_offer.frame.origin.y, 320*6, 50);
-////    scroll_offer.scrollEnabled = YES;
-////    scroll_offer.pagingEnabled=NO;
-//    //scroll_offer.contentSize = CGSizeMake(420*3, 0);
-//    
-//    if (self.event.offers.count==0) {
-//        return;
-//    }
-//    for (int i=0; i<self.event.offers.count; i++) {
-//
-//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
-//        UIButton *btn_call = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 30, 15)];
-//        
-//        [btn_call setImage:[UIImage imageNamed:@"call_icons"] forState:UIControlStateNormal];
-//        
-//        UIView *viewInside = [[UIView alloc] initWithFrame:CGRectMake(i*self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
-//        UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, 30, 15)];
-//        
-//        
-//        NSLog(@"offer Label :%@",[[self.event.offers objectAtIndex:i]objectForKey:@"title"]);
-//        
-//        
-//        
-//        
-////        NSLog([NSString stringWithFormat:@"value of i :%d",0]);
-//        
-//      //  _offerLabel.text =[NSString stringWithFormat:@"%@",[array_offers objectAtIndex:i]objectForKey:@"title"];
-//      // _offerLabel.text = [[array_offers objectAtIndex:i] objectForKey:@"title"];
-////        
-////          _offerLabel.text =[NSString stringWithFormat:@"%@",[[[[[serverdict objectForKey:@"events"] objectAtIndex:0]objectForKey:@"offers"]objectAtIndex:0]objectForKey:@"title"]];
-////        
-//        
-//        UILabel *label = [[ UILabel alloc] initWithFrame:CGRectMake(15, 5, self.view.frame.size.width, 20)];
-//        
-//        label.text = [[self.event.offers objectAtIndex:i] objectForKey:@"title"];
-//        
-//        label.textColor = [UIColor blackColor];
-//        label.font = [UIFont systemFontOfSize:15];
-//        
-//        [viewInside addSubview:image];
-//        [viewInside addSubview:label];
-//        [view addSubview:btn_call];
-//        [view addSubview:viewInside];
-//        [scroll_offer addSubview:view];
-//        
-//      //  [self.view addSubview:scroll_offer];
-//      
-//    }
     
 }
 
@@ -620,30 +462,8 @@ int currentPageIndex = 0;
                            }];
 }
 
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+- (void)createUIForController:(NSDictionary *)jsonData
 {
-    NSLog(@"Error = %@", [error localizedDescription]);
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    serverdata = [[NSMutableData alloc]init];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [serverdata appendData:data];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    
-//    self.activity.hidden =YES;
-    [self.activity stopAnimating];
-    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:serverdata options:NSJSONReadingMutableLeaves error:nil];
-    //NSLog(@"serverData =%@",jsonData);
-    
     NSDictionary *eventDict = [[jsonData objectForKey:@"events"] objectAtIndex:0];
     self.event.malePrice = [[eventDict objectForKey:@"ev_price_male"] intValue];
     self.event.femalePrice = [[eventDict objectForKey:@"ev_price_female"] intValue];
@@ -688,7 +508,6 @@ int currentPageIndex = 0;
     
     [self viewDidLayoutSubviews];
     [self downloadEventImages];
-   // [self offermethodcall];
 
     if([eventDict objectForKey:@"discounts"]) {
         NSArray *local_array = [eventDict objectForKey:@"discounts"];
@@ -720,8 +539,8 @@ int currentPageIndex = 0;
     self.eventName.text = [self.event.name uppercaseString];
     self.eventVenue.text = self.event.venue;
     
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:self.event.address completionHandler:^(NSArray* placemarks, NSError* error){
+    CLGeocoder *geocoders = [[CLGeocoder alloc] init];
+    [geocoders geocodeAddressString:self.event.address completionHandler:^(NSArray* placemarks, NSError* error){
         
         
         for (CLPlacemark* aPlacemark in placemarks)
@@ -735,7 +554,7 @@ int currentPageIndex = 0;
             str_temp_lat=[latDest1 floatValue];
             str_temp_long=[lngDest1 floatValue];
         }
-        NSString *temp_address =@"http://maps.google.com/maps/api/geocode/json?address=%22+";
+//        NSString *temp_address =@"http://maps.google.com/maps/api/geocode/json?address=%22+";
 
             MKPointAnnotation *annotation= [[MKPointAnnotation alloc]init];
         
@@ -826,8 +645,8 @@ int currentPageIndex = 0;
     [locationmanager stopUpdatingLocation];
 
       //NSLog(@"Detected Location : %f, %f", showLocation.coordinate.latitude, showLocation.coordinate.longitude);
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
-    [geocoder reverseGeocodeLocation:showLocation
+    CLGeocoder *geocoders = [[CLGeocoder alloc] init] ;
+    [geocoders reverseGeocodeLocation:showLocation
                    completionHandler:^(NSArray *placemarks, NSError *error) {
                        if (error){
                            //NSLog(@"Geocode failed with error: %@", error);
@@ -972,10 +791,10 @@ int currentPageIndex = 0;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    Offer *offer = [self.event.offers objectAtIndex:indexPath.row];
-    if (offer.isValid) {
-        self.offerDescLbl.text = offer.offerDescription;
-        self.offerTermsLbl.text = offer.terms;
+    _selectedOffer = [self.event.offers objectAtIndex:indexPath.row];
+    if (_selectedOffer.isValid) {
+        self.offerDescLbl.text = _selectedOffer.offerDescription;
+        self.offerTermsLbl.text = _selectedOffer.terms;
         self.offerPopUpContainer.hidden = NO;
         [self.view bringSubviewToFront:self.offerPopUpContainer];
     }
@@ -1012,7 +831,32 @@ int currentPageIndex = 0;
 }
 
 - (IBAction)offerAgreeBtnAction:(id)sender {
-    [self hideOfferPopUpContainer:nil];
+    
+    NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithCapacity:0];
+    [paramDict setObject:[[SharedPreferences sharedInstance] getUserID] forKey:@"user_id"];
+    [paramDict setObject:self.event.ID forKey:@"event_id"];
+    [paramDict setObject:_selectedOffer.ID forKey:@"offer_id"];
+    [paramDict setObject:_selectedOffer.offerTitle forKey:@"offer_title"];
+    [paramDict setObject:[NSString stringWithFormat:@"%ld",(long)_selectedOffer.value] forKey:@"offer_value"];
+    [paramDict setObject:[NSString stringWithFormat:@"%ld",(long)_selectedOffer.value] forKey:@"total_amount"];
+    [paramDict setObject:@"Cash" forKey:@"payment_method"];
+    [paramDict setObject:[NSString stringWithFormat:@"%ld",(long)_selectedOffer.value] forKey:@"sub_total"];
+    [paramDict setObject:@"4545.7765.767" forKey:@"mac_addr"];
+    
+    [NetworkManager bookOffer:paramDict withComplitionBlock:^(id result, NSError *err) {
+        NSLog(@"%@",result);
+        NSString *message = nil;
+        if (result && [[result objectForKey:@"status"] isEqualToString:@"Success"]) {
+            message = [NSString stringWithFormat:@"%@.\nYour offer booking number is %@",[result objectForKey:@"message"],[result objectForKey:@"booking_number"]];
+            [[SharedPreferences sharedInstance] showCommonAlertWithMessage:message withObject:self];
+            [self hideOfferPopUpContainer:nil];
+        }else{
+            message = [NSString stringWithFormat:@"%@.",[result objectForKey:@"message"]];
+        }
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:message withObject:self];
+
+    }];
+
 }
 
 - (IBAction)offerDisagreeBtnAction:(id)sender {

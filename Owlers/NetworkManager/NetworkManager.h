@@ -24,6 +24,9 @@ typedef void (^CompletionHandler)(id result, NSError *err);
 + (void)searchEventForString:(NSString *)searchString withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)getAllBooking:(CompletionHandler)completionBlock;
 + (void)fetchEventListForSelectedDate:(NSString *)dateString forLocation:(NSString *)locationID withComplitionHandler:(CompletionHandler)completionBlock;
++ (void)getEventDetails:(NSString *)eventID withComplitionBlock:(CompletionHandler)completionBlock;
++ (void)bookEvent:(NSDictionary *)dict withComplitionBlock:(CompletionHandler)completionBlock;
++ (void)bookOffer:(NSDictionary *)dict withComplitionBlock:(CompletionHandler)completionBlock;
 
 // Login
 + (void)signUpWithEmail:(NSString *)email andPassword:(NSString *)password andMobile:(NSString *)mobile andName:(NSString *)name withComplitionHandler:(CompletionHandler)completionBlock;

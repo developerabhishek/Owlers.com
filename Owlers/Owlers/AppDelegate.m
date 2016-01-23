@@ -29,12 +29,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    
-//    // Override point for customization after application launch.
-//    self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-//    
-//    [self setRootViewController];
-    
     [self initializePaytmSDK];
     
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
@@ -87,74 +81,6 @@
     //NSLog(@"Failed to get token, error: %@", error);
 }
 
-#pragma mark - Operation With Locaal database
--(void)saveLocalStoredSurveyOnServer:(NSArray *)array
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        //Background Thread
-        
-        for (int i = 0; i < [array count]; i++)
-        {
-            NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
-            [jsonDict setValue:[[array objectAtIndex:i] valueForKey:@"user_id"] forKey:@"user_id"];
-            [jsonDict setValue:[[array objectAtIndex:i] valueForKey:@"lat"] forKey:@"lat"];
-            [jsonDict setValue:[[array objectAtIndex:i] valueForKey:@"lng"] forKey:@"lng"];
-            [jsonDict setValue:[[array objectAtIndex:i] valueForKey:@"comment"] forKey:@"comment"];
-            
-            [jsonDict setValue:[[array objectAtIndex:i] valueForKey:@"currentTime"] forKey:@"date_time"];
-            
-            [jsonDict setValue:[[array objectAtIndex:i] valueForKey:@"answer"] forKey:@"questionlist"];
-            
-            [jsonDict setValue:@"0" forKey:@"distance"];
-            [jsonDict setValue:@"0" forKey:@"status"];
-            
-            // Code to send expense data on server
-            NSMutableData *body = [NSMutableData data];
-            NSError *writeError = nil;
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:jsonDict options:NSJSONWritingPrettyPrinted error:&writeError];
-            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            NSURL *postUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@/postaudit.php",BaseUrl]];
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:postUrl];
-            [request setCachePolicy:NSURLRequestUseProtocolCachePolicy];
-            [request setTimeoutInterval:7.0];
-            [request setHTTPMethod:@"POST"];
-            
-            NSString *contentType = [NSString stringWithFormat:@"application/json"];
-            [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-            [body appendData:[[NSString stringWithFormat:@"%@",jsonString] dataUsingEncoding:NSUTF8StringEncoding]];
-            [request setHTTPBody:body];
-            
-            // [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-            
-            NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-            
-            if (data.length > 0)
-            {
-                NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-                
-                if ([[parsedObject valueForKey:@"success"] integerValue] == 1)
-                {
-                    
-                    NSData *imageData = UIImagePNGRepresentation([[array objectAtIndex:i] valueForKey:@"survey_image"]);
-                    
-                    if (imageData.length > 0 )  // Means image is selected so upload in background
-                    {
-                        [self uploadSurveyImageImaBackGround:[parsedObject objectForKey:@"auditid"] withImage:[[array objectAtIndex:i] valueForKey:@"survey_image"] surveyId:[[array objectAtIndex:i] valueForKey:@"survey_id"]];
-                    }
-                    else
-                    {
-                        // delete survey from local database
-                       
-                        
-                    }
-                }
-            }
-        }
-    });
-}
-
-
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
@@ -174,70 +100,6 @@
     return NO;
     
 }
-
-
-
--(void)uploadSurveyImageImaBackGround:(NSString *)auditid withImage:(UIImage *)image surveyId:(NSString *)surveyId
-{
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        
-        NSData *imageData = UIImagePNGRepresentation(image);
-        
-        //Background Thread
-        NSMutableData *body = [NSMutableData data];
-        
-        NSString *postUrl=[[NSString stringWithFormat:@"%@/auditimage.php?auditid=%@",BaseUrl,auditid]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        
-        postUrl = [postUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-        [request setURL:[NSURL URLWithString:postUrl]];
-        
-        [request setCachePolicy:NSURLRequestUseProtocolCachePolicy];
-        
-        [request setTimeoutInterval:10.0];
-        
-        NSString *boundary = @"---------------------------14737809831466499882746641449";
-        
-        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
-        
-        [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-        
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[[NSString stringWithString:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"upload\"; filename=\"%@\"\r\n",@".png"]] dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [body appendData:[NSData dataWithData:imageData]];
-        
-        [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        [request setHTTPMethod:@"POST"];
-        
-        [request setHTTPBody:body];
-        
-        [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-         {
-             dispatch_async(dispatch_get_main_queue(), ^(void){
-                 //Run UI Updates
-                 
-                 if (data.length > 0)
-                 {
-                     NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-                     //NSLog(@"parsedObject =%@",parsedObject);
-                                      }
-                 else
-                 {
-                     //NSLog(@"Image is not uploaded due to some issue");
-                 }
-             });
-         }];
-    });
-}
-
-
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -273,26 +135,6 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-
-- (NSDictionary *)parametersDictionaryFromQueryString:(NSString *)queryString {
-    
-    NSMutableDictionary *md = [NSMutableDictionary dictionary];
-    
-    NSArray *queryComponents = [queryString componentsSeparatedByString:@"&"];
-    
-    for(NSString *s in queryComponents) {
-        NSArray *pair = [s componentsSeparatedByString:@"="];
-        if([pair count] != 2) continue;
-        
-        NSString *key = pair[0];
-        NSString *value = pair[1];
-        
-        md[key] = value;
-    }
-    
-    return md;
-}
-
 - (void)initializePaytmSDK{
     //You will get default PGMerchantConfiguration object. By setting the below properties of object you can make a fully configured merchant object.
     PGMerchantConfiguration *merchant = [PGMerchantConfiguration defaultConfiguration];
@@ -309,31 +151,6 @@
     merchant.industryID = @"Retail";
     merchant.channelID = @"WEB & WAP"; //provided by PG
 }
-
-//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-//{
-//    
-//    if ([[url scheme] isEqualToString:@"myapp"] == YES)
-//    {
-//        NSDictionary *d = [self parametersDictionaryFromQueryString:[url query]];
-//        
-//        NSString *token = d[@"oauth_token"];
-//        NSString *verifier = d[@"oauth_verifier"];
-//        
-//        LoginViewController *vc = (LoginViewController *)[[[self window] rootViewController] presentedViewController];
-//        [vc setOAuthToken:token oauthVerifier:verifier];
-//        
-//        return YES;
-//    }
- /*   else
-    {
-        return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication withSession:self.session];
-    }*/
-//    return NO;
-//
-//}
-
-
 
 
 @end

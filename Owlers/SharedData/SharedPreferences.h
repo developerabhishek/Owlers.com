@@ -18,6 +18,7 @@
 - (void)logoutUser;
 - (NSString *)getUserID;
 - (NSString *)getUserEmail;
-
+- (void)showCustomeLoading;
+- (void)removeCustomeLoading;
 
 @end
