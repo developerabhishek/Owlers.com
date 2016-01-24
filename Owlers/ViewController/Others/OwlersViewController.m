@@ -441,10 +441,6 @@ int currentPageIndex = 0;
 }
 
 
--(void)viewDidLayoutSubviews{
-    
-}
-
 - (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
 
 {
@@ -476,6 +472,7 @@ int currentPageIndex = 0;
     self.event.atmosphere = [eventDict objectForKey:@"atmosphere"];
     self.event.genreOfMusic = [eventDict objectForKey:@"genre_of_music"];
     self.event.sliderImages = [eventDict objectForKey:@"slider_images"];
+    self.event.terms = [eventDict objectForKey:@"event_terms"];
     
     [self.event.offers removeAllObjects];
     NSArray *arr = [eventDict objectForKey:@"offers"];
@@ -506,7 +503,6 @@ int currentPageIndex = 0;
     
     [self.offersCollectionView reloadData];
     
-    [self viewDidLayoutSubviews];
     [self downloadEventImages];
 
     if([eventDict objectForKey:@"discounts"]) {
@@ -689,19 +685,16 @@ int currentPageIndex = 0;
 
 - (IBAction)callBtnAction:(id)sender {
     
-    UIDevice *device = [UIDevice currentDevice];
-    if ([[device model] isEqualToString:@"iPhone"] ){
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:07381476718"]]];
-        
-       
-        NSURL *url = [NSURL URLWithString:@"telprompt://7381476718"];
-        [[UIApplication  sharedApplication] openURL:url];
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel://"]] ){
     
-        
         NSString *phoneNumber = @"+917381476718"; // dynamically assigned
         NSString *phoneURLString = [NSString stringWithFormat:@"tel:%@", phoneNumber];
         NSURL *phoneURL = [NSURL URLWithString:phoneURLString];
-        [[UIApplication sharedApplication] openURL:phoneURL];
+        if (phoneURL) {
+            [[UIApplication sharedApplication] openURL:phoneURL];
+        }else{
+            [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Your device doesn't support this feature." withObject:self];
+        }
         
     } else {
         [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Your device doesn't support this feature." withObject:self];

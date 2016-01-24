@@ -13,7 +13,8 @@ typedef void (^CompletionHandler)(id result, NSError *err);
 @interface NetworkManager : NSObject
 
 //Auction
-+ (void)fetchEventListForLocation:(NSString *)locationID withComplitionHandler:(CompletionHandler)completionBlock;
+//+ (void)fetchEventListForLocation:(NSString *)locationID withComplitionHandler:(CompletionHandler)completionBlock;
++ (void)fetchEventListForLocation:(NSString *)locationID withRefereshController:(BOOL)shoudRefresh  withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)loadAcutionsForCity:(NSString *)cityID withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)loadLocationWithComplitionHandler:(CompletionHandler)completionBlock;
 + (void)loadAuctionDetailsForAuction:(NSString *)auctionID withComplitionHandler:(CompletionHandler)completionBlock;

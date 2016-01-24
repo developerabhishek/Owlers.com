@@ -68,18 +68,14 @@
             break;
     }
     
-    if (segueIdentifier && ![segueIdentifier isEqualToString:@""]) {
+    if (segueIdentifier){
         [self performSegueWithIdentifier:segueIdentifier sender:nil];
     }
 }
 
-- (void)shareAction{
-    NSURL *url = [NSURL URLWithString:@"jfkdljfkjf"];
-    NSArray *objectsToShare = @[url];
-    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-    [self presentViewController:controller animated:YES completion:nil];
-}
-
+#pragma mark
+#pragma mark Private methods
+#pragma mark
 
 - (NSMutableArray*)actionDatalist {
     if (!_actionDatalist) {
@@ -99,5 +95,25 @@
     }
     return _actionDatalist;
 }
+
+- (void)shareAction{
+    NSString *textToShare = @"Please checkout the latest feature of owlers";
+    NSURL *url = [NSURL URLWithString:@"https://www.google.co.in/?gfe_rd=cr&ei=O-2kVoL5OeqK8Qf7_ovoDA"];
+    NSArray *objectsToShare = @[textToShare,url];
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+    
+    NSArray *excludeActivities = @[UIActivityTypeAirDrop,
+                                   UIActivityTypePrint,
+                                   UIActivityTypeAssignToContact,
+                                   UIActivityTypeSaveToCameraRoll,
+                                   UIActivityTypeAddToReadingList,
+                                   UIActivityTypePostToFlickr,
+                                   UIActivityTypePostToVimeo];
+    
+    controller.excludedActivityTypes = excludeActivities;
+    
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
 
 @end

@@ -29,11 +29,13 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
 
 //NSString *_urlstring =[NSString stringWithFormat:@"%@/list_events.php?location_id=%@",BaseUrl,location.ID];
 
-+ (void)fetchEventListForLocation:(NSString *)locationID withComplitionHandler:(CompletionHandler)completionBlock{
++ (void)fetchEventListForLocation:(NSString *)locationID withRefereshController:(BOOL)shoudRefresh  withComplitionHandler:(CompletionHandler)completionBlock{
     
     if ([SharedPreferences isNetworkAvailable])
     {
-        [[SharedPreferences sharedInstance] showCustomeLoading];
+        if (shoudRefresh) {
+            [[SharedPreferences sharedInstance] showCustomeLoading];
+        }
         
         AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];

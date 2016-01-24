@@ -74,7 +74,7 @@ UIRefreshControl *refreshControl;
         }
         if ([self.locationItems count]) {
             self.selectedLocation = [self.locationItems firstObject];
-            [self fetchEventsForLocation:self.selectedLocation];
+            [self fetchEventsForLocation:self.selectedLocation withCustomControlle:true];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -160,9 +160,7 @@ UIRefreshControl *refreshControl;
 
 - (void)handleRefresh:(id)sender
 {
-    [NetworkManager fetchEventListForLocation:@"1" withComplitionHandler:^(id result, NSError *err) {
-        [refreshControl endRefreshing];
-    }];
+    [self fetchEventsForLocation:self.selectedLocation withCustomControlle:false];
 }
 
 -(void)viewDidLayoutSubviews {
@@ -219,15 +217,18 @@ UIRefreshControl *refreshControl;
     self.selectedLocation = (Location*)[self.locationItems objectAtIndex:indexPath.row];
     [self setDateButtonTitleForDate:[NSDate date] withServiceCall:false];
     [self.locationBtn setTitle:self.selectedLocation.name forState:UIControlStateNormal];
-    [self fetchEventsForLocation:self.selectedLocation];
+    [self fetchEventsForLocation:self.selectedLocation withCustomControlle:true];
     
 }
 
--(void)fetchEventsForLocation:(Location*)location{
+-(void)fetchEventsForLocation:(Location*)location withCustomControlle:(BOOL)shouldShow{
     
-    [NetworkManager fetchEventListForLocation:location.ID withComplitionHandler:^(id result, NSError *err) {
+    [NetworkManager fetchEventListForLocation:location.ID withRefereshController:shouldShow withComplitionHandler:^(id result, NSError *err) {
         if (![[result objectForKey:@"total_result"] isKindOfClass:[NSNull class]] && [[result objectForKey:@"total_result"] integerValue]>0) {
             [self reloadTableData:result];
+            if (refreshControl) {
+                [refreshControl endRefreshing];
+            }
         }
     }];
 }

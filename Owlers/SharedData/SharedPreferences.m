@@ -101,7 +101,9 @@ static SharedPreferences *sharedInstance;
     for (UIWindow *window in frontToBackWindows){
         if (window.windowLevel == UIWindowLevelNormal) {
             UIImageView *imgeView = (UIImageView *)[window viewWithTag:123321];
-            [imgeView removeFromSuperview];
+            if (imgeView) {
+                [imgeView removeFromSuperview];
+            }
             break;
         }
     }
