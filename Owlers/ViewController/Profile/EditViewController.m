@@ -49,6 +49,10 @@
             UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * action)
                                  {
+                                     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(updateProfile)]) {
+                                         [self.delegate updateProfile];
+                                     }
+                                     
                                      [self.navigationController popViewControllerAnimated:YES];
                                      
                                  }];
@@ -61,8 +65,13 @@
 }
 
 - (IBAction)logout:(id)sender{
-    [[SharedPreferences sharedInstance] logoutUser];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    [[SharedPreferences sharedInstance] logoutUserWithSuccessBlock:^(BOOL isLoggedOut) {
+        if (isLoggedOut) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }];
 }
+
 
 @end

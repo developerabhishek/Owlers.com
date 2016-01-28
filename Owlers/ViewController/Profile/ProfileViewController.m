@@ -35,22 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [NetworkManager getUserProfileFromServerWithComplitionHandler:^(id result, NSError *err) {
-        if ([[result objectForKey:@"status"] isEqualToString:@"Y"]) {
-            serverDictionary = result;
-            _nameLabel.text=[result  objectForKey:@"name"];
-            _emaillabel.text=[result objectForKey:@"email"];
-            _mobileNoLabel.text=[result objectForKey:@"phone"];
-            if ([[result objectForKey:@"image_path"] length] > 2 ) {
-                NSURL *url = [[NSURL alloc] initWithString:[result objectForKey:@"image_path"]];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.profileImage sd_setImageWithURL:url
-                                    placeholderImage:[UIImage imageNamed:@"new_background_ullu.png"]];
-                });                
-            }
-        }
-    }];
-    
+    [self refreshProfile];
     [NetworkManager getAllBooking:^(id result, NSError *err) {
         
         if ([[result objectForKey:@"history"] isKindOfClass:[NSArray class]]) {
@@ -80,6 +65,30 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.bookingsTbl reloadData];
             });
+        }
+    }];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    //[self refreshProfile];
+}
+
+- (void)refreshProfile{
+
+    [NetworkManager getUserProfileFromServerWithComplitionHandler:^(id result, NSError *err) {
+        if ([[result objectForKey:@"status"] isEqualToString:@"Y"]) {
+            serverDictionary = result;
+            _nameLabel.text=[result  objectForKey:@"name"];
+            _emaillabel.text=[result objectForKey:@"email"];
+            _mobileNoLabel.text=[result objectForKey:@"phone"];
+            if ([[result objectForKey:@"image_path"] length] > 2 ) {
+                NSURL *url = [[NSURL alloc] initWithString:[result objectForKey:@"image_path"]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.profileImage sd_setImageWithURL:url
+                                         placeholderImage:[UIImage imageNamed:@"new_background_ullu.png"]];
+                });
+            }
         }
     }];
 }
@@ -143,13 +152,25 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    [self.profileImage setImage:chosenImage];
-    
-    
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    UIImage *dImage = [self scaleImage:image toSize:CGSizeMake(40,40)];
+    NSData *imageData = UIImageJPEGRepresentation(dImage, 0.7);
+    NSString *base64String = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    [NetworkManager uploadUserProfilePicture:base64String withComplitionHandler:^(id result, NSError *err){
+        [self refreshProfile];
+    }];
     [self dismissViewControllerAnimated:YES completion:^{
         [addImageButton setTitle:@"Change Image" forState:UIControlStateNormal];
     }];
+}
+
+
+- (UIImage *) scaleImage:(UIImage*)image toSize:(CGSize)newSize {
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -212,8 +233,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"segueEditCon"]) {
         EditViewController *controller = (EditViewController*)[segue destinationViewController];
+        controller.delegate = self;
         controller.dataDict = serverDictionary;
     }
+}
+
+- (void)updateProfile{
+    [self refreshProfile];
 }
 
 @end

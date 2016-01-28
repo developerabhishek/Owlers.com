@@ -798,7 +798,7 @@
                                                 <rect key="frame" x="47" y="4" width="253" height="39"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" red="0.25490196078431371" green="0.25490196078431371" blue="0.25490196078431371" alpha="1" colorSpace="calibratedRGB"/>
@@ -1712,6 +1712,16 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qde-b4-lbx">
                                 <rect key="frame" x="0.0" y="68" width="350" height="135"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZU0-Fl-bgF">
+                                        <rect key="frame" x="294" y="30" width="46" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Yzq-NJ-x3o"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="actionSheet:" destination="pZT-6I-Bo4" eventType="touchUpInside" id="d9v-ZI-A8J"/>
+                                        </connections>
+                                    </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile2-128.png" translatesAutoresizingMaskIntoConstraints="NO" id="cjc-bA-ct2">
                                         <rect key="frame" x="290" y="30" width="50" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1768,7 +1778,9 @@
                                     <constraint firstItem="ZDw-x7-as5" firstAttribute="trailing" secondItem="LxG-xG-gv5" secondAttribute="trailing" id="kiV-H8-Ccr"/>
                                     <constraint firstItem="nVH-s1-4OW" firstAttribute="leading" secondItem="LxG-xG-gv5" secondAttribute="leading" id="kyC-VK-Kn7"/>
                                     <constraint firstAttribute="trailing" secondItem="cjc-bA-ct2" secondAttribute="trailing" constant="10" id="qio-31-Zdg"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZU0-Fl-bgF" secondAttribute="trailing" constant="10" id="rTE-hr-YAi"/>
                                     <constraint firstItem="ZDw-x7-as5" firstAttribute="top" secondItem="nVH-s1-4OW" secondAttribute="bottom" constant="5" id="sTe-wD-wlm"/>
+                                    <constraint firstItem="ZU0-Fl-bgF" firstAttribute="top" secondItem="qde-b4-lbx" secondAttribute="top" constant="30" id="tPx-VY-yM4"/>
                                     <constraint firstAttribute="bottom" secondItem="saH-br-82N" secondAttribute="bottom" id="toe-kG-5Jn"/>
                                     <constraint firstItem="LxG-xG-gv5" firstAttribute="leading" secondItem="qde-b4-lbx" secondAttribute="leading" constant="10" id="wBj-MD-0PB"/>
                                     <constraint firstItem="LxG-xG-gv5" firstAttribute="top" secondItem="qde-b4-lbx" secondAttribute="top" constant="5" id="zHt-a3-fkM"/>
@@ -5693,9 +5705,9 @@
         <image name="woman_one.png" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0sS-F9-FBs"/>
-        <segue reference="dFM-Yw-7x1"/>
-        <segue reference="aBo-NO-HdI"/>
+        <segue reference="tNb-Um-tHJ"/>
+        <segue reference="raw-hh-jA5"/>
+        <segue reference="BHX-tv-XHf"/>
         <segue reference="4Xm-zK-GNa"/>
     </inferredMetricsTieBreakers>
 </document>

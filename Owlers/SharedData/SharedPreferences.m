@@ -54,10 +54,34 @@ static SharedPreferences *sharedInstance;
     return false;
 }
 
-- (void)logoutUser{    
-    NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
-    [defauls removeObjectForKey:@"userID"];
-    [defauls synchronize];
+- (void)logoutUserWithSuccessBlock:(void (^) (BOOL isLoggedOut))success{
+    
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"JNT" message:@"Are you sure you want to logout?" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                               handler:^(UIAlertAction * action)
+                         {
+                             [alertController dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    [alertController addAction:cancel];
+    
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault
+                                               handler:^(UIAlertAction * action)
+                         {
+                             NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
+                             [defauls removeObjectForKey:@"userID"];
+                             [defauls synchronize];
+                             success(true);
+                             
+                         }];
+    [alertController addAction:ok];
+    
+    UIViewController *vc= [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    if (vc) {
+        [vc presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 

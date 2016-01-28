@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol EditViewControllerDelegate <NSObject>
+- (void)updateProfile;
+@end
+
+
 @interface EditViewController : UIViewController
 
 @property(nonatomic,strong) NSDictionary *dataDict;
-
+@property(nonatomic,weak) id <EditViewControllerDelegate> delegate;
 - (IBAction)backBtnAction:(id)sender;
 - (IBAction)updateProfile:(id)sender;
 - (IBAction)logout:(id)sender;

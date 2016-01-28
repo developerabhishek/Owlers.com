@@ -402,6 +402,7 @@ UIRefreshControl *refreshControl;
     if (!self.searchBarContainer.hidden) {
         
         if(self.searchTxtField.text.length != 0){
+            [self.searchTxtField resignFirstResponder];
 
             [NetworkManager searchEventForString:self.searchTxtField.text.self withComplitionHandler:^(id result, NSError *err) {
                 [self reloadTableData:result];
@@ -436,8 +437,12 @@ UIRefreshControl *refreshControl;
     dispatch_async(dispatch_get_main_queue(), ^{
         SegueMenuItem *segueItem = (SegueMenuItem*)item;
         if ([segueItem.identifier isEqualToString:@"segueLogout"]) {
-            [[SharedPreferences sharedInstance] logoutUser];
-            [self refreshMenuList];
+
+            [[SharedPreferences sharedInstance] logoutUserWithSuccessBlock:^(BOOL isLoggedOut) {
+                if (isLoggedOut) {
+                    [self refreshMenuList];
+                }
+            }];
         }else {
             [self performSegueWithIdentifier:segueItem.identifier sender:nil];
         }

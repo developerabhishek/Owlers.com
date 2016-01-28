@@ -15,10 +15,11 @@
 + (BOOL)isNetworkAvailable;
 - (void)showCommonAlertWithMessage:(NSString *)alertMessage withObject:(UIViewController *)controllerObject;
 - (BOOL)isLogin;
-- (void)logoutUser;
+///- (void)logoutUser;
 - (NSString *)getUserID;
 - (NSString *)getUserEmail;
 - (void)showCustomeLoading;
 - (void)removeCustomeLoading;
+- (void)logoutUserWithSuccessBlock:(void (^) (BOOL isLoggedOut))success;
 
 @end

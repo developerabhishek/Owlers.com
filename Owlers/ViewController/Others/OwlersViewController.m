@@ -256,7 +256,7 @@ int currentPageIndex = 0;
                                                        animated:NO completion:nil];
                 });
             }}];
-        [scroll1 addSubview:temp_btn];
+        [scroll1 addSubview:temp_btn];  
     }
 }
 

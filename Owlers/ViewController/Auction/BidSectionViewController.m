@@ -65,6 +65,7 @@
 }
 
 - (IBAction)buyBtnAction:(id)sender {
+    
     [NetworkManager saveBidForAuction:self.auction.ID andBidAmount:self.auction.buyPrice andBuyNow:TRUE withComplitionHandler:^(id result, NSError *err){
         NSString* message = [result  objectForKey:@"message"];
         [[SharedPreferences sharedInstance] showCommonAlertWithMessage:message withObject:self];
@@ -72,9 +73,39 @@
 }
 
 - (IBAction)submitBtnAction:(id)sender {
+    
+    if ([self.bidAmtTextFld.text length] > 0) {
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"JNT" message:@"Are you sure you want to submit the bid?" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * action)
+                                 {
+                                     [alertController dismissViewControllerAnimated:YES completion:nil];
+                                     
+                                 }];
+        [alertController addAction:cancel];
+        
+        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action)
+                             {
+                                [self submitTheBid];
+                                 
+                             }];
+        [alertController addAction:ok];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please enter the bid amount." withObject:self];
+    }
+}
+
+- (void)submitTheBid{
     [NetworkManager saveBidForAuction:self.auction.ID andBidAmount:self.bidAmtTextFld.text andBuyNow:FALSE withComplitionHandler:^(id result, NSError *err) {
         if (![[result  objectForKey:@"status"] isEqualToString:@"Failure"]) {
             self.maxbidLabel.text = self.bidAmtTextFld.text;
+            [self.navigationController popViewControllerAnimated:YES];
         }
         NSString* message = [result  objectForKey:@"message"];
         [[SharedPreferences sharedInstance] showCommonAlertWithMessage:message withObject:self];

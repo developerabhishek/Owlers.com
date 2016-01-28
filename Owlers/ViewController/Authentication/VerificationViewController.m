@@ -56,11 +56,9 @@ NSDictionary *parsedObject;
                 NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
                 [user setObject:[result objectForKey:@"user_id"] forKey:@"userID"];
                 
-                NSUserDefaults *defauls = [NSUserDefaults standardUserDefaults];
-                
-                if ([defauls objectForKey:@"picture"]) {
+                if ([user objectForKey:@"picture"]) {
                     
-                    NSString *imageURLStr = [defauls objectForKey:@"picture"];
+                    NSString *imageURLStr = [user objectForKey:@"picture"];
                     NSURL *imageURL = [[NSURL alloc] initWithString:imageURLStr];
                     if (imageURL) {
                         NSData *imageData = [NSData dataWithContentsOfURL:imageURL options:NSDataReadingMapped error:nil];
