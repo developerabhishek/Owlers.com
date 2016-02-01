@@ -594,48 +594,6 @@ int currentPageIndex = 0;
 
 #pragma mark MapView Delegate
 
-//- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-//{
-//    // If it's the user location, just return nil.
-//    if ([annotation isKindOfClass:[MKUserLocation class]])
-//        return nil;
-//    
-//    // Handle any custom annotations.
-//    if ([annotation isKindOfClass:[MKPointAnnotation class]])
-//    {
-//        // Try to dequeue an existing pin view first.
-//        MKAnnotationView *pinView = (MKAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"CustomPinAnnotationView"];
-//        if (!pinView)
-//        {
-//            
-//            pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
-//            pinView.canShowCallout = YES;
-//            pinView.image = [UIImage imageNamed:@"location_cle.png"];
-//            
-//            pinView.calloutOffset = CGPointMake(0, 32);
-//            
-//            // Add a detail disclosure button to the callout.
-//            UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-//                      // Add an image to the left callout.
-//              
-//            UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location_cle.png"]];
-//            
-//          
-//            
-//            
-//            
-//            
-//            pinView.leftCalloutAccessoryView = iconView;
-//        } else {
-//            pinView.annotation = annotation;
-//        }
-//        return pinView;
-//    }
-//    
-//    return nil;
-//}
-//
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     showLocation = [locations objectAtIndex:0];
     [locationmanager stopUpdatingLocation];

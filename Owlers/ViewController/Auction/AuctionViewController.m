@@ -37,9 +37,9 @@
 @implementation AuctionViewController
 
 
-NSURLConnection *conne_ction ,*connection_;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadDataOnNotificationReceived:) name:@"BIDSUBMITTED" object:nil];
     [self loadData];
 }
 
@@ -236,5 +236,11 @@ NSURLConnection *conne_ction ,*connection_;
     [super viewDidAppear:YES];
     [self enableTimer];
 }
+
+- (void)loadDataOnNotificationReceived:(NSNotification *)notification{
+    [self loadData];
+
+}
+
 
 @end

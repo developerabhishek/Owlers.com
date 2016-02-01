@@ -105,6 +105,7 @@
     [NetworkManager saveBidForAuction:self.auction.ID andBidAmount:self.bidAmtTextFld.text andBuyNow:FALSE withComplitionHandler:^(id result, NSError *err) {
         if (![[result  objectForKey:@"status"] isEqualToString:@"Failure"]) {
             self.maxbidLabel.text = self.bidAmtTextFld.text;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"BIDSUBMITTED" object:nil];
             [self.navigationController popViewControllerAnimated:YES];
         }
         NSString* message = [result  objectForKey:@"message"];

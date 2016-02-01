@@ -61,7 +61,8 @@
 }
 
 - (IBAction)backBtnAction:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)maleMinusAction:(id)sender {
@@ -130,7 +131,7 @@
 - (IBAction)payNowAction:(id)sender {
 
     if (_maleCount + _femaleCount + _coupleCount) {
-        NSInteger totalPrice = ((_maleCount - _coupleCount)*self.event.malePrice )+ ((_femaleCount - _coupleCount)*self.event.femalePrice) + (_coupleCount*self.event.couplePrice);
+        NSInteger totalPrice = ((_maleCount - _coupleCount)*self.event.malePrice )+ ((_femaleCount - _coupleCount)*self.event.femalePrice) + (_coupleCount  *self.event.couplePrice);
 
         NSInteger discountedPrice  = totalPrice - ((totalPrice * self.event.discountValue)/100);
         NSString *sDiscountedPrice = [NSString stringWithFormat:@"%ld", (long)discountedPrice];

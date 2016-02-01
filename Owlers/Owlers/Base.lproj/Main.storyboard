@@ -3059,7 +3059,7 @@
                         <outlet property="scrollViewChildContainerHeightConstraint" destination="iyv-Od-Rg2" id="r1x-Sa-9WS"/>
                         <outlet property="scrollview" destination="E4C-N0-bHn" id="Hzj-I5-NfO"/>
                         <outlet property="sliderImageContainer" destination="bIy-cg-aCb" id="fkP-R1-9qG"/>
-                        <segue destination="UQU-vJ-DR4" kind="show" identifier="seguePayment" id="unI-8N-BKd"/>
+                        <segue destination="UQU-vJ-DR4" kind="presentation" identifier="seguePayment" id="unI-8N-BKd"/>
                         <segue destination="moN-EO-zgd" kind="show" identifier="segueRSVPLogin" id="aBo-NO-HdI"/>
                         <segue destination="5NS-mt-HL2" kind="show" identifier="segueSliderFullPage" animates="NO" id="Q5e-8h-iyt"/>
                     </connections>
@@ -5707,7 +5707,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="tNb-Um-tHJ"/>
         <segue reference="raw-hh-jA5"/>
-        <segue reference="BHX-tv-XHf"/>
+        <segue reference="aBo-NO-HdI"/>
         <segue reference="4Xm-zK-GNa"/>
     </inferredMetricsTieBreakers>
 </document>
