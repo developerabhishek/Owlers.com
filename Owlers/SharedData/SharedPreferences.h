@@ -21,5 +21,7 @@
 - (void)showCustomeLoading;
 - (void)removeCustomeLoading;
 - (void)logoutUserWithSuccessBlock:(void (^) (BOOL isLoggedOut))success;
+- (NSString *)getMonthName:(NSInteger)monthDigit;
+
 
 @end

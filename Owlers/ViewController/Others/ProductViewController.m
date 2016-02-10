@@ -93,6 +93,7 @@ UIRefreshControl *refreshControl;
     
     [self.productsTbl addSubview:refreshControl];
     
+    [self.searchTxtField setDelegate:self];
     /*****[CALENDER VIEW]*****/
     
     self.secondaryViewHeightConstraint.constant = 0;
@@ -259,9 +260,8 @@ UIRefreshControl *refreshControl;
 #pragma mark UITextField delegate
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
     [textField resignFirstResponder];
-    
+    [self displaySearchBarAction:nil];
     return YES;
 }
 
@@ -317,7 +317,16 @@ UIRefreshControl *refreshControl;
 }
 
 - (void)calendarView:(DSLCalendarView *)calendarView didChangeToVisibleMonth:(NSDateComponents *)month {
-    //NSLog(@"Now showing %@", month);
+
+    NSString *dateStr = [NSString stringWithFormat:@"%@ %ld", [[SharedPreferences sharedInstance] getMonthName:month.month],month.year];
+    
+    if (self.selectedLocation) {
+        [NetworkManager fetchEventListForSelectedDate:dateStr forLocation:self.selectedLocation.ID withComplitionHandler:^(id result, NSError *err) {
+            if (![[result objectForKey:@"total_result"] isKindOfClass:[NSNull class]] && [[result objectForKey:@"total_result"] integerValue]>0) {
+                [self reloadTableData:result];
+            }
+        }];
+    }
 }
 
 - (BOOL)day:(NSDateComponents*)day1 isBeforeDay:(NSDateComponents*)day2 {

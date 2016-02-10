@@ -14,6 +14,7 @@
 
 NSString *BaseURLLive   =   @"http://www.owlers.com/services";
 NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
+NSString *internetMessage   =   @"Please connect with internet";
 
 @implementation NetworkManager
 
@@ -26,8 +27,6 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
 }
 
 #pragma mark LoadAuction
-
-//NSString *_urlstring =[NSString stringWithFormat:@"%@/list_events.php?location_id=%@",BaseUrl,location.ID];
 
 + (void)fetchEventListForLocation:(NSString *)locationID withRefereshController:(BOOL)shoudRefresh  withComplitionHandler:(CompletionHandler)completionBlock{
     
@@ -52,7 +51,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -78,7 +77,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -108,7 +107,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
     
 }
@@ -134,7 +133,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -162,7 +161,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -185,7 +184,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
     
 }
@@ -209,7 +208,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -238,7 +237,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -262,7 +261,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -285,7 +284,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -312,7 +311,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -335,7 +334,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -358,7 +357,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -384,7 +383,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -407,7 +406,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -429,7 +428,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -451,7 +450,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -474,7 +473,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -496,7 +495,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -520,7 +519,7 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
@@ -543,10 +542,36 @@ NSString *BaseURLDemo   =   @"http://www.owlers.com/services";
         }];
         
     }else{
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"Please connect with internet" withObject:nil];
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
     }
 }
 
+#pragma mark
+#pragma mark OTP Confirmation
+#pragma mark
 
+
++ (void)confirmOTP:(NSString *)otp withComplitionHandler:(CompletionHandler)completionBlock{
+    
+    if ([SharedPreferences isNetworkAvailable])
+    {
+        [SVProgressHUD showWithStatus:@"Loading.." maskType:SVProgressHUDMaskTypeGradient];
+        AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] init];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        [manager GET:[NSString stringWithFormat:@"%@/otp_conf.php",BaseUrl] parameters:@{@"user_id" :[[SharedPreferences sharedInstance] getUserID], @"otp" : otp} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            NSDictionary *dataDict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            [SVProgressHUD dismiss];
+            completionBlock(dataDict, nil);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [SVProgressHUD dismiss];
+            completionBlock(nil, error);
+        }];
+        
+    }else{
+        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:internetMessage withObject:nil];
+    }
+}
 
 @end
