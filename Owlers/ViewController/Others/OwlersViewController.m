@@ -92,52 +92,6 @@ int currentPageIndex = 0;
        // NSLog(@"my url =%@",mapsURL);
     }
 }
-//-(void)offermethodcall{
-//    if (array_offers.count>0) {
-//        scroll_offer.backgroundColor = [UIColor yellowColor];
-//        scroll_offer.frame = CGRectMake(10, scroll_offer.frame.origin.y, 320*6, 50);
-//        scroll_offer.scrollEnabled = YES;
-//        scroll_offer.pagingEnabled=NO;
-//        scroll_offer.contentSize = CGSizeMake(420*3, 0);
-//        
-//        for (int i =0; i<=array_offers.count; i++) {
-//            
-//            
-//            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(i*self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
-//            if (i%2==0) {
-//                view.backgroundColor = [UIColor greenColor];
-//            }else
-//                view.backgroundColor = [UIColor blueColor];
-//            
-//            UIButton *btn_call = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 30, 30)];
-//            
-//            [btn_call setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-//            
-//            UIView *viewInside = [[UIView alloc] initWithFrame:CGRectMake(i*self.view.frame.size.width, 0, self.view.frame.size.width, 50)];
-//            UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, 30, 30)];
-//            
-//            UILabel *label = [[ UILabel alloc] initWithFrame:CGRectMake(40, 15, self.view.frame.size.width-50, 20)];
-//            
-//           // NSDictionary *tempdic = [array_offers objectAtIndex:i];
-//            
-//           // label.text = [tempdic objectForKey:@"title"];
-//            label.textColor = [UIColor blackColor];
-//            label.font = [UIFont systemFontOfSize:15];
-//            [viewInside addSubview:image];
-//            [viewInside addSubview:label];
-//            [view addSubview:btn_call];
-//            [view addSubview:viewInside];
-//            
-//            [scroll_offer addSubview:view];
-//            
-//            
-//        }
-//        
-//    }
-//    
-//    
-//    
-//}
 
 -(void)timerCalled
 {
@@ -220,6 +174,8 @@ int currentPageIndex = 0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHome) name:@"TRANSACTION_SUCCESSFULL" object:nil];
     
     [self.event.offers removeAllObjects];
     self.activity.hidden =YES;
@@ -230,6 +186,10 @@ int currentPageIndex = 0;
         [self createUIForController:result];
     }];
    }
+
+- (void)goToHome{
+    NSLog(@"Go to home");
+}
 
 - (void)downloadEventImages {
     [self.pageDatalist removeAllObjects];

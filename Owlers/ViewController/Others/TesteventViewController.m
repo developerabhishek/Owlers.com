@@ -220,7 +220,23 @@
 }
 
 - (void)didSucceedTransaction:(PGTransactionViewController *)controller response:(NSDictionary *)response{
-    [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"success" withObject:self];
+    
+    if ([[response objectForKey:@"STATUS"] isEqualToString:@"TXN_SUCCESS"]) {
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"JNT" message:[response objectForKey:@"RESPMSG"] preferredStyle:UIAlertControllerStyleAlert];
+
+        
+        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action)
+                             {
+                                 [controller dismissViewControllerAnimated:YES completion:nil];
+                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"TRANSACTION_SUCCESSFULL" object:nil];
+                             }];
+        [alertController addAction:ok];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }    
 }
 
 //Called when transaction fails with any reason. Response dictionary will be having details about the failed transaction.

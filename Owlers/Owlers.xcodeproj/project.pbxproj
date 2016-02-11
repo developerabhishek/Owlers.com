@@ -1047,6 +1047,7 @@
 				CBE9B0921C4C325F0073A504 /* GothamMedium.otf */,
 				CB17E6FB1C4ECC7A00EDA093 /* helve_unbold.ttf */,
 				4690B06E1C3AEAD7003A719C /* Images */,
+				46F211B81C3B904D00AB6AFE /* ViewController */,
 				CB9A4FD21C419B68003BA5AE /* Models */,
 				46F2121D1C3B906700AB6AFE /* NetworkManager */,
 				5B458F481BB3D30500EEADD7 /* Owlers */,
@@ -1056,7 +1057,6 @@
 				5B0214A31BDE3DA5005C8954 /* test Event */,
 				5B6EFD681BE49DAD00D97003 /* UIKit+AFNetworking */,
 				46F212271C3B907A00AB6AFE /* Utills */,
-				46F211B81C3B904D00AB6AFE /* ViewController */,
 				4690B1A41C3AEAF3003A719C /* Views */,
 			);
 			sourceTree = "<group>";
