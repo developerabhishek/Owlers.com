@@ -3775,7 +3775,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="350" height="550"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jTC-Ne-i6h">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jTC-Ne-i6h">
                                 <rect key="frame" x="0.0" y="20" width="350" height="48"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RI0-eY-aey">
@@ -3824,7 +3824,7 @@
                                     <constraint firstItem="BIu-Fg-Zwo" firstAttribute="top" secondItem="jTC-Ne-i6h" secondAttribute="top" id="ldn-c7-YK5"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oEs-M3-Gro">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oEs-M3-Gro">
                                 <rect key="frame" x="0.0" y="68" width="350" height="482"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P0l-Qb-0Bq">
@@ -5061,7 +5061,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="350" height="550"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nmZ-e5-AuC">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nmZ-e5-AuC">
                                 <rect key="frame" x="0.0" y="20" width="350" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1uB-rF-zS5">
@@ -5110,7 +5110,7 @@
                                     <constraint firstItem="1uB-rF-zS5" firstAttribute="bottom" secondItem="9AJ-mU-uHE" secondAttribute="top" id="zU7-Zy-gNc"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gl1-fB-Bts">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gl1-fB-Bts">
                                 <rect key="frame" x="0.0" y="70" width="350" height="480"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
@@ -5223,7 +5223,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="350" height="550"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RIG-84-5BJ">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RIG-84-5BJ">
                                 <rect key="frame" x="0.0" y="20" width="350" height="48"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVs-M1-Qpx">
@@ -5272,7 +5272,7 @@
                                     <constraint firstItem="Oe9-wp-Hfx" firstAttribute="top" secondItem="RIG-84-5BJ" secondAttribute="top" id="nHZ-Ta-QCD"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email  address below and we'll send a link to reset your password" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxS-A7-38P">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Enter your email  address below and we'll send a link to reset your password" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LxS-A7-38P">
                                 <rect key="frame" x="16" y="88" width="318" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Qgg-OM-c4t"/>
@@ -5281,7 +5281,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PHn-jx-sn2">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PHn-jx-sn2">
                                 <rect key="frame" x="0.0" y="168" width="350" height="60"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mAb-cA-YnR">
@@ -5338,7 +5338,7 @@
                                     <constraint firstItem="mAb-cA-YnR" firstAttribute="top" secondItem="PHn-jx-sn2" secondAttribute="top" id="tTv-L4-a2t"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HQh-jw-dZc">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HQh-jw-dZc">
                                 <rect key="frame" x="10" y="278" width="330" height="48"/>
                                 <color key="backgroundColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -5392,7 +5392,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="350" height="550"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P2f-YS-b7B">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P2f-YS-b7B">
                                 <rect key="frame" x="0.0" y="20" width="350" height="48"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQo-cc-rBZ">
@@ -5441,7 +5441,7 @@
                                     <constraint firstItem="OQo-cc-rBZ" firstAttribute="leading" secondItem="P2f-YS-b7B" secondAttribute="leading" id="ztk-C9-GmN"/>
                                 </constraints>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mlK-vS-DSa" userLabel="name">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mlK-vS-DSa" userLabel="name">
                                 <rect key="frame" x="0.0" y="88" width="350" height="52"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wFY-Rx-kf5">
@@ -5498,7 +5498,7 @@
                                     <constraint firstAttribute="trailing" secondItem="wFY-Rx-kf5" secondAttribute="trailing" id="vTg-Hb-Azo"/>
                                 </constraints>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnN-DM-TR9" userLabel="email">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cnN-DM-TR9" userLabel="email">
                                 <rect key="frame" x="0.0" y="156" width="350" height="52"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CwK-Hw-DTK">
@@ -5555,7 +5555,7 @@
                                     <constraint firstItem="CwK-Hw-DTK" firstAttribute="top" secondItem="cnN-DM-TR9" secondAttribute="top" id="wWo-uc-Kcx"/>
                                 </constraints>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FoL-Ds-E6z" userLabel="password">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FoL-Ds-E6z" userLabel="password">
                                 <rect key="frame" x="0.0" y="224" width="350" height="52"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1fc-Ng-HBc">
@@ -5612,7 +5612,7 @@
                                     <constraint firstItem="1fc-Ng-HBc" firstAttribute="leading" secondItem="FoL-Ds-E6z" secondAttribute="leading" id="qGd-vD-znw"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLN-Hv-2gA">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLN-Hv-2gA">
                                 <rect key="frame" x="15" y="306" width="320" height="48"/>
                                 <color key="backgroundColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
