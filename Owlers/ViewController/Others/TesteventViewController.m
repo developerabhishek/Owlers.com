@@ -62,7 +62,6 @@
 
 - (IBAction)backBtnAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)maleMinusAction:(id)sender {
@@ -221,6 +220,8 @@
 
 - (void)didSucceedTransaction:(PGTransactionViewController *)controller response:(NSDictionary *)response{
     
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    
     if ([[response objectForKey:@"STATUS"] isEqualToString:@"TXN_SUCCESS"]) {
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"JNT" message:[response objectForKey:@"RESPMSG"] preferredStyle:UIAlertControllerStyleAlert];
@@ -229,7 +230,7 @@
         UIAlertAction* ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action)
                              {
-                                 [controller dismissViewControllerAnimated:YES completion:nil];
+                                 [self dismissViewControllerAnimated:YES completion:nil];
                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"TRANSACTION_SUCCESSFULL" object:nil];
                              }];
         [alertController addAction:ok];
@@ -241,7 +242,7 @@
 
 //Called when transaction fails with any reason. Response dictionary will be having details about the failed transaction.
 - (void)didFailTransaction:(PGTransactionViewController *)controller error:(NSError *)error response:(NSDictionary *)response{
-    [[SharedPreferences sharedInstance] showCommonAlertWithMessage:@"fail" withObject:self];
+    [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[response objectForKey:@"RESPMSG"] withObject:self];
 }
 
 //Called when a transaction is cancelled by the user. Response dictionary will be having details about the cancelled transaction.
