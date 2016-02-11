@@ -99,7 +99,7 @@ static SharedPreferences *sharedInstance;
 - (void)showCustomeLoading{
     
     NSEnumerator *frontToBackWindows = [[[UIApplication sharedApplication]windows]reverseObjectEnumerator];
-    UIImageView *loadingImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"global_icon_left_logo.png"]];
+    UIImageView *loadingImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"launcher2.png"]];
     [loadingImage setTag:123321];
     
     for (UIWindow *window in frontToBackWindows){
