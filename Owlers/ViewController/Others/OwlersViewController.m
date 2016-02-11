@@ -166,7 +166,7 @@ int currentPageIndex = 0;
         SliderFullViewController *controller = (SliderFullViewController*)segue.destinationViewController;
         controller.pageDatalist = self.pageDatalist;
     }else if ([segue.identifier isEqualToString:@"seguePayment"]) {
-        TesteventViewController *controller = (TesteventViewController*)segue.destinationViewController;
+        TesteventViewController *controller = (TesteventViewController *)[(UINavigationController*)segue.destinationViewController topViewController];
         controller.event = self.event;
     }
 }

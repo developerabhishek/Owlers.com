@@ -1075,7 +1075,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2iy-rH-3hi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-91" y="1313"/>
+            <point key="canvasLocation" x="-46" y="1540"/>
         </scene>
         <!--Auction View Controller-->
         <scene sceneID="gcD-8D-tS7">
@@ -3061,7 +3061,7 @@
                         <outlet property="scrollViewChildContainerHeightConstraint" destination="iyv-Od-Rg2" id="r1x-Sa-9WS"/>
                         <outlet property="scrollview" destination="E4C-N0-bHn" id="Hzj-I5-NfO"/>
                         <outlet property="sliderImageContainer" destination="bIy-cg-aCb" id="fkP-R1-9qG"/>
-                        <segue destination="UQU-vJ-DR4" kind="presentation" identifier="seguePayment" id="unI-8N-BKd"/>
+                        <segue destination="nXt-5C-02j" kind="presentation" identifier="seguePayment" id="unI-8N-BKd"/>
                         <segue destination="moN-EO-zgd" kind="show" identifier="segueRSVPLogin" id="aBo-NO-HdI"/>
                         <segue destination="5NS-mt-HL2" kind="show" identifier="segueSliderFullPage" animates="NO" id="Q5e-8h-iyt"/>
                     </connections>
@@ -5008,6 +5008,7 @@
                             <constraint firstItem="Tpp-Uq-ecN" firstAttribute="leading" secondItem="TIV-Jz-u9T" secondAttribute="leading" id="tlj-sE-fH4"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="CF7-Li-zTH"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="350" height="550"/>
                     <connections>
@@ -5031,7 +5032,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R71-8x-CDK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1168" y="-730"/>
+            <point key="canvasLocation" x="1722" y="-730"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QcD-Kd-VjK">
@@ -5144,7 +5145,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VLn-l3-xfp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1672" y="-457"/>
+            <point key="canvasLocation" x="2484" y="-457"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="U6e-n5-jyX">
@@ -5681,6 +5682,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uul-4P-Rle" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-46" y="848"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="k09-0J-GrB">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="nXt-5C-02j" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="350" height="550"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Inm-BN-rzS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UQU-vJ-DR4" kind="relationship" relationship="rootViewController" id="5mP-d7-SrB"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tx3-P3-zb3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1168" y="-730"/>
         </scene>
     </scenes>
     <resources>
