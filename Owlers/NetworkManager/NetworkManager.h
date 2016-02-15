@@ -38,6 +38,6 @@ typedef void (^CompletionHandler)(id result, NSError *err);
 + (void)editUserProfile:(NSString *)name andMobileNumber:(NSString *)mobile withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)forgetPasswordForEmail:(NSString *)email withComplitionHandler:(CompletionHandler)completionBlock;
 + (void)uploadUserProfilePicture:(NSString *)profilePic withComplitionHandler:(CompletionHandler)completionBlock;
-
++ (void)confirmOTP:(NSString *)otp withComplitionHandler:(CompletionHandler)completionBlock;
 
 @end

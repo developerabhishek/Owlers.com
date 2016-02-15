@@ -20,6 +20,8 @@
 #import "AppDelegate.h"
 #import "SharedPreferences.h"
 #import "NetworkManager.h"
+#import "TransactionOTPViewController.h"
+
 
 //static NSString * const kClientID = @"509181039153-i4mnrf976n999ornrh2eafeeg1cf4oka.apps.googleusercontent.com";
 static NSString * const kClientID = @"535074141806-q9b5s9g5u52q4omhope3am42eu1hk0gh.apps.googleusercontent.com";
@@ -84,24 +86,28 @@ static NSString * const kClientID = @"535074141806-q9b5s9g5u52q4omhope3am42eu1hk
 {
     [NetworkManager loginWithEmail:self.emailtxtfld.text andPassword:self.pwdtextfld.text withComplitionHandler:^(id result, NSError *err) {
         
-        if (result && [[result valueForKey:@"status"]  isEqual: @"success"])
+        if (result && [[result valueForKey:@"status"]  isEqualToString: @"success"])
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:[result valueForKey:@"user_email"] forKey:@"userEmail"];
+            [defaults setObject:self.emailtxtfld.text forKey:@"userEmail"];
             [defaults setObject:[result valueForKey:@"user_id"] forKey:@"userID"];
             [defaults synchronize];
 
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"JNT" message:[result valueForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
+            if ([[result valueForKey:@"otp_conf"] isEqualToString:@"Pending"]) {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"JNT" message:[result valueForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action)
+                                     {
+                                         [self moveToOtpPage];
+                                     }];
+                [alertController addAction:ok];
+                [self presentViewController:alertController animated:YES completion:nil];
+            }else{
+                [self.navigationController popViewControllerAnimated:YES];
+                [self loginSuccess];
+            }
             
-            UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction * action)
-                                 {
-                                     [self.navigationController popViewControllerAnimated:YES];
-                                     [self loginSuccess];
-                                     
-                                 }];
-            [alertController addAction:ok];
-            [self presentViewController:alertController animated:YES completion:nil];
         }else{
             [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[result valueForKey:@"message"] withObject:self];
         }
@@ -261,6 +267,14 @@ static NSString * const kClientID = @"535074141806-q9b5s9g5u52q4omhope3am42eu1hk
     NSMutableArray *marr = [NSMutableArray arrayWithArray:arr];
     [marr addObject:productCon];
     [self.navigationController setViewControllers:marr animated:NO];
+}
+
+- (void)moveToOtpPage{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                         bundle:nil];
+    TransactionOTPViewController *yourViewController = (TransactionOTPViewController *)[storyboard instantiateViewControllerWithIdentifier:@"segueOTP"];
+    [self.navigationController pushViewController:yourViewController animated:YES];
+    
 }
 
 @end

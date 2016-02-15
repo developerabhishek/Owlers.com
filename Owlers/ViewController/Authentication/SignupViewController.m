@@ -11,13 +11,13 @@
 #import "Header.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import "ProductViewController.h"
 #import "SVProgressHUD.h"
 #import "SharedPreferences.h"
 #import "NetworkManager.h"
 #import <GoogleOpenSource/GoogleOpenSource.h>
 #import <GooglePlus/GooglePlus.h>
 #import "VerificationViewController.h"
+#import "LoginViewController.h"
 
 
 @interface SignupViewController () <GPPSignInDelegate>
@@ -88,13 +88,31 @@
 
     [NetworkManager signUpWithEmail:self.emailTxtFld.text andPassword:self.pwdTxtFld.text andMobile:self.mobileNoTxtFld.text andName:self.userNameTxtFld.text withComplitionHandler:^(id result, NSError *err) {
         
-        [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[result valueForKey:@"message"] withObject:self];
         
-        if ([[result valueForKey:@"status"]  isEqual: @"success"])
-        {
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setObject:[result objectForKey:@"user_id"] forKey:@"userID"];
-            [userDefaults synchronize];            
+        if ([[result valueForKey:@"status"]  isEqual: @"success"]){
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"JNT" message:[result valueForKey:@"message"] preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * action)
+                                 {
+                                     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                     [userDefaults setObject:[result objectForKey:@"user_id"] forKey:@"userID"];
+                                     [userDefaults synchronize];
+                                    
+                                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                                          bundle:nil];
+                                     LoginViewController *yourViewController = (LoginViewController *)[storyboard instantiateViewControllerWithIdentifier:@"segueLogin"];
+                                     [self.navigationController pushViewController:yourViewController animated:YES];
+
+                                     
+                                 }];
+            [alertController addAction:ok];
+            
+            [self.navigationController presentViewController:alertController animated:YES completion:nil];
+        }else{
+            [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[result valueForKey:@"message"]
+                                                                withObject:self];
         }
     }];
 }

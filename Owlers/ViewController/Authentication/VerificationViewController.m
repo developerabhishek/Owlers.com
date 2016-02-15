@@ -12,6 +12,7 @@
 #import "ProductViewController.h"
 #import "SharedPreferences.h"
 #import "NetworkManager.h"
+#import "TransactionOTPViewController.h"
 
 @interface VerificationViewController ()
 
@@ -64,15 +65,13 @@ NSDictionary *parsedObject;
                         NSData *imageData = [NSData dataWithContentsOfURL:imageURL options:NSDataReadingMapped error:nil];
                         NSString *base64String = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
                         [NetworkManager uploadUserProfilePicture:base64String withComplitionHandler:^(id result, NSError *err){
-                            [self signUpSuccess];
+                            [self moveToOtpPage];
                         }];
                     }else{
-                        [self signUpSuccess];
-                        //[self.navigationController popViewControllerAnimated:YES];
+                        [self moveToOtpPage];
                     }
                 }else{
-                    [self signUpSuccess];
-//                    [self.navigationController popViewControllerAnimated:YES];
+                    [self moveToOtpPage];
                 }
             }else{
                 [[SharedPreferences sharedInstance] showCommonAlertWithMessage:[result valueForKey:@"message"] withObject:self];
@@ -101,21 +100,14 @@ NSDictionary *parsedObject;
     
     return true;
 }
-- (void)signUpSuccess {
-    // If SignUp screen is came from Product screen then pop it from stack else create the product view controller and set it on top of stack without signup screen
-        NSArray *arr = [self.navigationController viewControllers];
-        for (UIViewController *controller in arr) {
-            if ([controller isMemberOfClass:[ProductViewController class]]) {
-                [self.navigationController popToViewController:controller animated:YES];
-                return;
-            }
-        }
-        ProductViewController *productCon = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-        NSMutableArray *marr = [NSMutableArray arrayWithArray:arr];
-        [marr addObject:productCon];
-        [self.navigationController setViewControllers:marr animated:NO];
-}
 
+- (void)moveToOtpPage{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                         bundle:nil];
+    TransactionOTPViewController *yourViewController = (TransactionOTPViewController *)[storyboard instantiateViewControllerWithIdentifier:@"segueOTP"];
+    [self.navigationController pushViewController:yourViewController animated:YES];
+
+}
 
 - (IBAction)backBtnAction:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dPD-0a-YuN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dPD-0a-YuN">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -1498,7 +1498,7 @@
         <!--TransactionOTP View Controller-->
         <scene sceneID="Tan-Se-SRk">
             <objects>
-                <viewController id="yQb-fq-iIO" customClass="TransactionOTPViewController" sceneMemberID="viewController">
+                <viewController restorationIdentifier="segueOTP" storyboardIdentifier="segueOTP" id="yQb-fq-iIO" customClass="TransactionOTPViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nuV-4s-G1h"/>
                         <viewControllerLayoutGuide type="bottom" id="wbb-al-V66"/>
@@ -1569,7 +1569,7 @@
                                 <rect key="frame" x="0.0" y="138" width="350" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Security Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OsO-jP-mTF">
-                                        <rect key="frame" x="5" y="0.0" width="118" height="50"/>
+                                        <rect key="frame" x="10" y="0.0" width="113" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" none="YES"/>
@@ -1591,7 +1591,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="OsO-jP-mTF" firstAttribute="leading" secondItem="upq-CJ-4ZB" secondAttribute="leading" constant="5" id="8XZ-nT-x3x"/>
+                                    <constraint firstItem="OsO-jP-mTF" firstAttribute="leading" secondItem="upq-CJ-4ZB" secondAttribute="leading" constant="10" id="8XZ-nT-x3x"/>
                                     <constraint firstItem="OsO-jP-mTF" firstAttribute="trailing" secondItem="upq-CJ-4ZB" secondAttribute="trailing" multiplier="0.35" id="9hV-ze-yld"/>
                                     <constraint firstItem="OsO-jP-mTF" firstAttribute="top" secondItem="upq-CJ-4ZB" secondAttribute="top" id="CII-11-s1Q"/>
                                     <constraint firstAttribute="height" constant="50" id="Fcv-RK-nEQ"/>
@@ -1637,12 +1637,13 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="350" height="550"/>
                     <connections>
+                        <outlet property="otpBGView" destination="upq-CJ-4ZB" id="gct-0D-B1N"/>
                         <outlet property="otpTxtFld" destination="dhz-P5-XGv" id="A8y-Bb-rc4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Q3-2Q-cal" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-722" y="4301"/>
+            <point key="canvasLocation" x="-672" y="4101"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="2NZ-ts-MoO">
@@ -2589,16 +2590,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="350" height="970"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vSW-AP-imP">
+                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vSW-AP-imP">
                                 <rect key="frame" x="0.0" y="20" width="350" height="950"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4V-2w-iam">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a4V-2w-iam">
                                         <rect key="frame" x="0.0" y="0.0" width="350" height="950"/>
                                         <connections>
                                             <action selector="hideOfferPopUpContainer:" destination="vV1-jd-xZW" eventType="touchUpInside" id="RHc-lL-d21"/>
                                         </connections>
                                     </button>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u7j-QK-6sH">
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u7j-QK-6sH">
                                         <rect key="frame" x="5" y="320" width="340" height="310"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OWLERS MENU" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0W-FZ-Fry">
@@ -2749,7 +2750,7 @@
                                     <constraint firstAttribute="bottom" secondItem="a4V-2w-iam" secondAttribute="bottom" id="wMl-9v-pc8"/>
                                 </constraints>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lhw-zY-lFT">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lhw-zY-lFT">
                                 <rect key="frame" x="0.0" y="20" width="350" height="48"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TbB-8b-JOR">
@@ -2798,7 +2799,7 @@
                                     <constraint firstAttribute="bottom" secondItem="5Ce-il-5Dn" secondAttribute="bottom" id="rsh-Vm-L6d"/>
                                 </constraints>
                             </view>
-                            <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bIy-cg-aCb" userLabel="ContainerView">
+                            <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bIy-cg-aCb" userLabel="ContainerView">
                                 <rect key="frame" x="0.0" y="68" width="350" height="200"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -2808,10 +2809,10 @@
                                     <segue destination="nrr-Ql-gpB" kind="embed" identifier="segueOwelrsPageContainer" id="4Xm-zK-GNa"/>
                                 </connections>
                             </containerView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" semanticContentAttribute="spatial" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="event_details_overlay.png" translatesAutoresizingMaskIntoConstraints="NO" id="SDc-S5-7Ld">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" semanticContentAttribute="spatial" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="event_details_overlay.png" translatesAutoresizingMaskIntoConstraints="NO" id="SDc-S5-7Ld">
                                 <rect key="frame" x="0.0" y="68" width="350" height="200"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUO-H7-yQ7" userLabel="EventLbl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Event" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUO-H7-yQ7" userLabel="EventLbl">
                                 <rect key="frame" x="10" y="118" width="330" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="bz9-EE-CHg"/>
@@ -2820,7 +2821,7 @@
                                 <color key="textColor" red="1" green="0.58039215690000001" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="venue" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZj-tn-B4h" userLabel="VenueLbl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="venue" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZj-tn-B4h" userLabel="VenueLbl">
                                 <rect key="frame" x="10" y="158" width="330" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="OIa-Bc-Jdo"/>
@@ -2829,7 +2830,7 @@
                                 <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E4C-N0-bHn">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E4C-N0-bHn">
                                 <rect key="frame" x="0.0" y="268" width="350" height="654"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IV0-Gh-7C5" userLabel="ChildViewContainer">
@@ -3919,7 +3920,7 @@
         <!--Login View Controller-->
         <scene sceneID="TZc-Ll-Ygu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" id="moN-EO-zgd" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController restorationIdentifier="segueLogin" storyboardIdentifier="segueLogin" id="moN-EO-zgd" customClass="LoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0H7-uP-a7q"/>
                         <viewControllerLayoutGuide type="bottom" id="P7v-gh-BHx"/>

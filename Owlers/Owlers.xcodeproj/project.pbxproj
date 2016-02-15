@@ -576,8 +576,8 @@
 		CBB9AE0A1C43EB9100D77D34 /* MenuPopUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuPopUpViewController.m; sourceTree = "<group>"; };
 		CBB9AE0C1C43F10100D77D34 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
 		CBB9AE0D1C43F10100D77D34 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
-		CBE22C7E1C71CD3700A4333A /* TransactionOTPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransactionOTPViewController.h; sourceTree = "<group>"; };
-		CBE22C7F1C71CD3700A4333A /* TransactionOTPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionOTPViewController.m; sourceTree = "<group>"; };
+		CBE22C7E1C71CD3700A4333A /* TransactionOTPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionOTPViewController.h; path = ../Others/TransactionOTPViewController.h; sourceTree = "<group>"; };
+		CBE22C7F1C71CD3700A4333A /* TransactionOTPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransactionOTPViewController.m; path = ../Others/TransactionOTPViewController.m; sourceTree = "<group>"; };
 		CBE9B0751C4A25D90073A504 /* LocationMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationMenuItem.h; sourceTree = "<group>"; };
 		CBE9B0761C4A25D90073A504 /* LocationMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationMenuItem.m; sourceTree = "<group>"; };
 		CBE9B0781C4A41770073A504 /* AuctionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuctionTableViewCell.h; sourceTree = "<group>"; };
@@ -950,6 +950,8 @@
 				46F211C81C3B904D00AB6AFE /* ChangePasswordViewController.m */,
 				46F211CA1C3B904D00AB6AFE /* ForgotpasswordViewController.h */,
 				46F211CB1C3B904D00AB6AFE /* ForgotpasswordViewController.m */,
+				CBE22C7E1C71CD3700A4333A /* TransactionOTPViewController.h */,
+				CBE22C7F1C71CD3700A4333A /* TransactionOTPViewController.m */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -973,8 +975,6 @@
 				CBB9AE0A1C43EB9100D77D34 /* MenuPopUpViewController.m */,
 				CB17E6F81C4EA01C00EDA093 /* SliderFullViewController.h */,
 				CB17E6F91C4EA01C00EDA093 /* SliderFullViewController.m */,
-				CBE22C7E1C71CD3700A4333A /* TransactionOTPViewController.h */,
-				CBE22C7F1C71CD3700A4333A /* TransactionOTPViewController.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
