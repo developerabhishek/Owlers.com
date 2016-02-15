@@ -30,12 +30,16 @@
             <string>Gotham-Book</string>
             <string>Gotham-Book</string>
             <string>Gotham-Book</string>
+            <string>Gotham-Book</string>
+            <string>Gotham-Book</string>
+            <string>Gotham-Book</string>
         </mutableArray>
         <mutableArray key="GothamHTF-Book.ttf">
             <string>GothamHTF-Book</string>
             <string>GothamHTF-Book</string>
         </mutableArray>
         <mutableArray key="GothamMedium.otf">
+            <string>Gotham-Medium</string>
             <string>Gotham-Medium</string>
             <string>Gotham-Medium</string>
             <string>Gotham-Medium</string>
@@ -1490,6 +1494,155 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uXC-Ak-xct" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-548" y="3340"/>
+        </scene>
+        <!--TransactionOTP View Controller-->
+        <scene sceneID="Tan-Se-SRk">
+            <objects>
+                <viewController id="yQb-fq-iIO" customClass="TransactionOTPViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nuV-4s-G1h"/>
+                        <viewControllerLayoutGuide type="bottom" id="wbb-al-V66"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4jm-8H-Jh6">
+                        <rect key="frame" x="0.0" y="0.0" width="350" height="550"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2OW-gf-4Xc">
+                                <rect key="frame" x="0.0" y="20" width="350" height="48"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mx1-Wa-m3Z">
+                                        <rect key="frame" x="0.0" y="0.0" width="42" height="47"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="42" id="ZJF-bU-SsW"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="5" minY="8" maxX="5" maxY="8"/>
+                                        <state key="normal" image="navbargoldbackarrow.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backBtnAction:" destination="yQb-fq-iIO" eventType="touchUpInside" id="wyn-sE-q7d"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verification" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGL-oS-cM3">
+                                        <rect key="frame" x="55" y="0.0" width="240" height="47"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES"/>
+                                            <bool key="isElement" value="NO"/>
+                                        </accessibility>
+                                        <fontDescription key="fontDescription" name="Gotham-Medium" family="Gotham" pointSize="16"/>
+                                        <color key="textColor" red="1" green="0.58039215690000001" blue="0.090196078430000007" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZNf-9d-me1">
+                                        <rect key="frame" x="0.0" y="47" width="350" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="88i-Fi-c6f"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="TGL-oS-cM3" firstAttribute="trailing" secondItem="2OW-gf-4Xc" secondAttribute="trailing" constant="-55" id="FI8-BZ-m2W"/>
+                                    <constraint firstItem="TGL-oS-cM3" firstAttribute="top" secondItem="2OW-gf-4Xc" secondAttribute="top" id="KZn-b2-BcT"/>
+                                    <constraint firstItem="mx1-Wa-m3Z" firstAttribute="leading" secondItem="2OW-gf-4Xc" secondAttribute="leading" id="UUY-Tf-z9J"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZNf-9d-me1" secondAttribute="trailing" id="fdW-XD-pi7"/>
+                                    <constraint firstAttribute="height" constant="48" id="hwq-XI-oYB"/>
+                                    <constraint firstItem="mx1-Wa-m3Z" firstAttribute="top" secondItem="2OW-gf-4Xc" secondAttribute="top" id="j3K-Uz-bdy"/>
+                                    <constraint firstItem="mx1-Wa-m3Z" firstAttribute="bottom" secondItem="ZNf-9d-me1" secondAttribute="top" id="jfd-79-bLy"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZNf-9d-me1" secondAttribute="bottom" id="kSC-GR-q7o"/>
+                                    <constraint firstItem="TGL-oS-cM3" firstAttribute="bottom" secondItem="ZNf-9d-me1" secondAttribute="top" id="tJm-60-xna"/>
+                                    <constraint firstItem="TGL-oS-cM3" firstAttribute="leading" secondItem="mx1-Wa-m3Z" secondAttribute="trailing" constant="13" id="vcr-KD-vah"/>
+                                    <constraint firstItem="ZNf-9d-me1" firstAttribute="leading" secondItem="2OW-gf-4Xc" secondAttribute="leading" id="zLf-fz-nm5"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please check your mobile to verify OTP." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Yp-w8-Onl">
+                                <rect key="frame" x="0.0" y="73" width="350" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="5pK-0k-5t1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upq-CJ-4ZB" userLabel="OTP">
+                                <rect key="frame" x="0.0" y="138" width="350" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Security Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OsO-jP-mTF">
+                                        <rect key="frame" x="5" y="0.0" width="118" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES"/>
+                                        </accessibility>
+                                        <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="14"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter OTP Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dhz-P5-XGv">
+                                        <rect key="frame" x="133" y="0.0" width="214" height="50"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="sLQ-fV-0fT" id="WWA-8G-n05"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="OsO-jP-mTF" firstAttribute="leading" secondItem="upq-CJ-4ZB" secondAttribute="leading" constant="5" id="8XZ-nT-x3x"/>
+                                    <constraint firstItem="OsO-jP-mTF" firstAttribute="trailing" secondItem="upq-CJ-4ZB" secondAttribute="trailing" multiplier="0.35" id="9hV-ze-yld"/>
+                                    <constraint firstItem="OsO-jP-mTF" firstAttribute="top" secondItem="upq-CJ-4ZB" secondAttribute="top" id="CII-11-s1Q"/>
+                                    <constraint firstAttribute="height" constant="50" id="Fcv-RK-nEQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="OsO-jP-mTF" secondAttribute="bottom" id="RdD-Uk-wGH"/>
+                                    <constraint firstAttribute="bottom" secondItem="dhz-P5-XGv" secondAttribute="bottom" id="amt-oN-DBO"/>
+                                    <constraint firstItem="dhz-P5-XGv" firstAttribute="trailing" secondItem="upq-CJ-4ZB" secondAttribute="trailing" constant="-3" id="dnK-zp-Xq7"/>
+                                    <constraint firstItem="dhz-P5-XGv" firstAttribute="top" secondItem="upq-CJ-4ZB" secondAttribute="top" id="eva-Rc-TiB"/>
+                                    <constraint firstItem="dhz-P5-XGv" firstAttribute="leading" secondItem="OsO-jP-mTF" secondAttribute="trailing" constant="10" id="r7O-Lw-GJn"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mlg-9w-6uZ">
+                                <rect key="frame" x="15" y="213" width="320" height="48"/>
+                                <color key="backgroundColor" red="0.14901960780000001" green="0.16862745100000001" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="sAA-WO-AAG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="19"/>
+                                <state key="normal" title="SUBMIT">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="submitBtnAction:" destination="yQb-fq-iIO" eventType="touchUpInside" id="dyG-kz-DCQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2OW-gf-4Xc" firstAttribute="top" secondItem="nuV-4s-G1h" secondAttribute="bottom" id="AsK-WL-Hq0"/>
+                            <constraint firstItem="upq-CJ-4ZB" firstAttribute="top" secondItem="0Yp-w8-Onl" secondAttribute="bottom" constant="5" id="D8K-Zu-ynY"/>
+                            <constraint firstItem="Mlg-9w-6uZ" firstAttribute="leading" secondItem="4jm-8H-Jh6" secondAttribute="leading" constant="15" id="EcM-ur-IUG"/>
+                            <constraint firstItem="Mlg-9w-6uZ" firstAttribute="trailing" secondItem="4jm-8H-Jh6" secondAttribute="trailing" constant="-15" id="GT3-88-Zyk"/>
+                            <constraint firstItem="Mlg-9w-6uZ" firstAttribute="top" secondItem="upq-CJ-4ZB" secondAttribute="bottom" constant="25" id="Iau-uN-nRs"/>
+                            <constraint firstAttribute="trailing" secondItem="2OW-gf-4Xc" secondAttribute="trailing" id="M27-tS-k62"/>
+                            <constraint firstItem="0Yp-w8-Onl" firstAttribute="top" secondItem="2OW-gf-4Xc" secondAttribute="bottom" constant="5" id="REm-23-oN5"/>
+                            <constraint firstItem="upq-CJ-4ZB" firstAttribute="leading" secondItem="4jm-8H-Jh6" secondAttribute="leading" id="TKT-tG-ZGP"/>
+                            <constraint firstItem="2OW-gf-4Xc" firstAttribute="leading" secondItem="4jm-8H-Jh6" secondAttribute="leading" id="f75-Vj-ccf"/>
+                            <constraint firstAttribute="trailing" secondItem="0Yp-w8-Onl" secondAttribute="trailing" id="fOi-FZ-Un5"/>
+                            <constraint firstAttribute="trailing" secondItem="upq-CJ-4ZB" secondAttribute="trailing" id="fcQ-Zs-ghm"/>
+                            <constraint firstItem="0Yp-w8-Onl" firstAttribute="leading" secondItem="4jm-8H-Jh6" secondAttribute="leading" id="s6g-vF-4O6"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="350" height="550"/>
+                    <connections>
+                        <outlet property="otpTxtFld" destination="dhz-P5-XGv" id="A8y-Bb-rc4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Q3-2Q-cal" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-722" y="4301"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="2NZ-ts-MoO">

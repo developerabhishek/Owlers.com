@@ -234,6 +234,7 @@
 		CBB9AE081C43E9C500D77D34 /* SegueMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB9AE071C43E9C500D77D34 /* SegueMenuItem.m */; };
 		CBB9AE0B1C43EB9100D77D34 /* MenuPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB9AE0A1C43EB9100D77D34 /* MenuPopUpViewController.m */; };
 		CBB9AE0E1C43F10100D77D34 /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CBB9AE0D1C43F10100D77D34 /* MenuTableViewCell.m */; };
+		CBE22C801C71CD3700A4333A /* TransactionOTPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE22C7F1C71CD3700A4333A /* TransactionOTPViewController.m */; };
 		CBE9B0771C4A25D90073A504 /* LocationMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE9B0761C4A25D90073A504 /* LocationMenuItem.m */; };
 		CBE9B07A1C4A41770073A504 /* AuctionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE9B0791C4A41770073A504 /* AuctionTableViewCell.m */; };
 		CBE9B07D1C4A5CDF0073A504 /* Auction.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE9B07C1C4A5CDF0073A504 /* Auction.m */; };
@@ -575,6 +576,8 @@
 		CBB9AE0A1C43EB9100D77D34 /* MenuPopUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuPopUpViewController.m; sourceTree = "<group>"; };
 		CBB9AE0C1C43F10100D77D34 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
 		CBB9AE0D1C43F10100D77D34 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
+		CBE22C7E1C71CD3700A4333A /* TransactionOTPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransactionOTPViewController.h; sourceTree = "<group>"; };
+		CBE22C7F1C71CD3700A4333A /* TransactionOTPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionOTPViewController.m; sourceTree = "<group>"; };
 		CBE9B0751C4A25D90073A504 /* LocationMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationMenuItem.h; sourceTree = "<group>"; };
 		CBE9B0761C4A25D90073A504 /* LocationMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationMenuItem.m; sourceTree = "<group>"; };
 		CBE9B0781C4A41770073A504 /* AuctionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuctionTableViewCell.h; sourceTree = "<group>"; };
@@ -970,6 +973,8 @@
 				CBB9AE0A1C43EB9100D77D34 /* MenuPopUpViewController.m */,
 				CB17E6F81C4EA01C00EDA093 /* SliderFullViewController.h */,
 				CB17E6F91C4EA01C00EDA093 /* SliderFullViewController.m */,
+				CBE22C7E1C71CD3700A4333A /* TransactionOTPViewController.h */,
+				CBE22C7F1C71CD3700A4333A /* TransactionOTPViewController.m */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -1448,6 +1453,7 @@
 				CB9A4FE01C4243A0003BA5AE /* ProductTableViewCell.m in Sources */,
 				5B6EFD4A1BE49CE600D97003 /* AFURLConnectionOperation.m in Sources */,
 				46F212171C3B904D00AB6AFE /* ProfileViewController.m in Sources */,
+				CBE22C801C71CD3700A4333A /* TransactionOTPViewController.m in Sources */,
 				46581A961C3D9D1B00CDF50C /* UIImage+MultiFormat.m in Sources */,
 				46F2122E1C3B907A00AB6AFE /* AsyncImageView.m in Sources */,
 				46F2122F1C3B907A00AB6AFE /* KIImagePager.m in Sources */,
