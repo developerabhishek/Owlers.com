@@ -93,6 +93,16 @@ UIRefreshControl *refreshControl;
     
     [self.productsTbl addSubview:refreshControl];
     
+    [self.searchTxtField setBorderStyle:UITextBorderStyleNone];
+    [self.searchTxtField setBackgroundColor:[UIColor clearColor]];
+    [self.searchTxtField setTextColor:[UIColor whiteColor]];
+    
+    if ([self.searchTxtField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+        self.searchTxtField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Search Event" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    } else {
+        NSLog(@"Cannot set placeholder text's color, because deployment target is earlier than iOS 6.0");
+        // TODO: Add fall-back code to set placeholder color.
+    }
     [self.searchTxtField setDelegate:self];
     /*****[CALENDER VIEW]*****/
     
